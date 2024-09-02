@@ -7,8 +7,8 @@ class WelcomeController < ApplicationController
 
   # GET /:id
   def show
-    id = params[:id]
-    @id = id
+    shape = params[:shape]
+    @shape = shape
     render 'show'
   end
 
