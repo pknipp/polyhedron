@@ -5,9 +5,9 @@ class WelcomeController < ApplicationController
 
   end
 
-  # GET /:id
+  # GET /:shape
   def show
-    shape = params[:shape]
+    shape = URI.decode(params[:shape])
     puts shape
     @shape = shape
     render 'show'
