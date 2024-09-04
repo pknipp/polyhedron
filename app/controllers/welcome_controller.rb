@@ -7,7 +7,8 @@ class WelcomeController < ApplicationController
 
   # GET /:shape
   def show
-    shape = URI.decode(params[:shape])
+    shape_uri = URI.parse(params[:shape])
+    shape = shape_uri.decode_www_form_component
     puts shape
     @shape = shape
     render 'show'
