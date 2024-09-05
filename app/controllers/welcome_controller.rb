@@ -23,8 +23,8 @@ class WelcomeController < ApplicationController
     puts shape
     shape_arr = shape.split("),(")
     puts shape_arr
-    @triangle = shape[0]
-    @tetrahedron = shape[1]
+    @triangle = shape_arr[0]
+    @tetrahedron = shape_arr[1]
     render 'show'
   end
 
