@@ -1,11 +1,12 @@
 <html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <body>
-      <p align="center">
+      <div style="text-align:center">
         <h3>Polyhedron generation and rendering</h3>
-      </p>
+      </div>
       <div>
         <b>Overview:</b> This endpoint renders a <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie a 3-dimensional shape whose faces are triangular.
       </div>
+      <br/>
       <div>
         <b>Instructions:</b> After <tt>...herokuapp.com</tt> above you should type something that resembles an array of arrays, as follows:
         <ul>
@@ -18,13 +19,14 @@
         </ul>
         Note that this will return html.  Json will only be returned in the case of errors.
       </div>
+      <br/>
       <div>
         <b>Example:</b> <tt>/[(A,B,C,12,5,13),(A,B,C,D,12*37,3,4)]</tt> generates the asymmetric tetrahedron indicated below
       </div>
       <div style="text-align:center">
-      <div>Click and drag in order to rotate polyhedron</div>
+      <h4>Click and drag in order to rotate polyhedron</h4>
       <div>
-        <span>Perspective:</span>
+        <span><b>Perspective:</b></span>
         <label class="radio-inline">
           <input type="radio" name="optradio" checked value="Infinity">None
         </label>
