@@ -1,11 +1,3 @@
-TO_DO:
-- array w/1 element: 1 point (labeled) in svg
-- array w/1 element: 2 points, separated by 1 distance
-- array w/1 element: 3 points, separated by 3 distances
-- array w/1 more element: 4 points (3 old + 1 new) and 3 distances
-- array w/2 more elements, each w/4 points (3 old + 1 new) and 3 distances
-- etc
-
 # ruby-getting-started
 
 A barebones Rails app, which can easily be deployed to Heroku.
