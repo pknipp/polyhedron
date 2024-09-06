@@ -7,6 +7,7 @@ class WelcomeController < ApplicationController
 
   # GET /:shape
   def show
+    @size = 900
     shape = params[:shape]
     first_char = shape[0]
     shape = shape[1..-1]
