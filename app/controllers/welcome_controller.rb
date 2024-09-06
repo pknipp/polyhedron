@@ -28,8 +28,8 @@ class WelcomeController < ApplicationController
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|
       (0..3).each{|i|
-        mins[i] = (mins[i], vertex[i]).min
-        maxs[i] = (maxs[i], vertex[i]).max
+        mins[i] = [mins[i], vertex[i]].min
+        maxs[i] = [maxs[i], vertex[i]].max
       }
     }
     origin = []
