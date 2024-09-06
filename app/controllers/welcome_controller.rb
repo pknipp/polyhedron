@@ -19,7 +19,8 @@ class WelcomeController < ApplicationController
     shape = shape[0..-2]
     shape_arr = shape.split("),(")
     triangle = shape_arr[0].split(",")
-    @triangle_names = triangle.first(3)
+    @vertex_names = triangle.first(3)
+    @edge_lengths = triangle.last(3)
     # @tetrahedron = shape_arr[1]
     render 'show'
   end
