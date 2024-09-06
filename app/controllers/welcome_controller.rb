@@ -44,6 +44,7 @@ class WelcomeController < ApplicationController
         vertex[i] = ratio * (vertex[i] - origin[i]) * svg_size / size
       }
     }
+    puts vertices
     @vertices = vertices
     render 'show'
   end
