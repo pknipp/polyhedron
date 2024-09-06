@@ -34,13 +34,12 @@ class WelcomeController < ApplicationController
     }
     origin = []
     size = 0
-    puts mins
-    puts maxs
-    puts size
     (0..3).each{|i|
       origin.push((maxs[i] + mins[i]) / 2)
       size = [size, maxs[i] - mins[i]].max
     }
+    puts origin
+    puts size
     ratio = 0.8
     vertices.each{|vertex|
       (0..3).each{|i|
