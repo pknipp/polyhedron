@@ -5,6 +5,18 @@ class WelcomeController < ApplicationController
 
   end
 
+  class Vertex
+    attr_accessor :name, :coords
+
+    def initialize(name, coords)
+      @name = name
+      @age = coords
+    end
+  end
+
+  # Create an instance of the Person class
+  person = Person.new("Alice", 30)
+
   # GET /:shape
   def show
     shape = params[:shape]
@@ -20,9 +32,10 @@ class WelcomeController < ApplicationController
     triangle = shape_arr[0].split(",")
     svg_size = 900
     @size = svg_size
-    @vertex_names = triangle.first(3)
+    vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
-    vertices = [[0,0,0]]
+    vertices = [Vertex.new(vertex_names[0][0,0,0]]
+    Continue doing class stuff here.
     vertices.push([edge_lengths[0].to_f, 0, 0])
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
