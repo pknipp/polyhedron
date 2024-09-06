@@ -23,7 +23,7 @@ class WelcomeController < ApplicationController
     @vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     vertices = [[0,0,0]]
-    vertices.push([edge_lengths[0], 0, 0])
+    vertices.push([edge_lengths[0].to_f, 0, 0])
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|
