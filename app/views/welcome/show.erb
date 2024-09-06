@@ -21,172 +21,170 @@
     </ul>
   </div>
 </div>
-
 <div style="text-align:center">
-      <h4>Click and drag in order to rotate polyhedron</h4>
-      <div>
-        <span><b>Perspective:</b></span>
-        <label class="radio-inline">
-          <input type="radio" name="optradio" checked value="Infinity">None
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="optradio" value="2">Some
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="optradio" value="1">Lots
-        </label>
-      </div>
-      <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" width="900" height="900" xmlns="http://www.w3.org/2000/svg">
-        <!-- Asymmetric tetrahedron -->
-        <g class="vertices">
-          <text x="90" y="370" z="330" dx="-5" dy=".3em">A</text>
-          <text x="810" y="370" z="330" dx="-5" dy=".3em">B</text>
-          <text x="810" y="670" z="330" dx="-5" dy=".3em">C</text>
-          <text x="810" y="478" z="570" dx="-5" dy=".3em">D</text>
-        </g>
-        <g class="edges">
-          <line x1="90" y1="370" z1="330" x2="810" y2="670" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
-          <line x1="90" y1="370" z1="330" x2="810" y2="370" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
-          <line x1="810" y1="370" z1="330" x2="810" y2="670" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
-          <line x1="810" y1="478" z1="570" x2="810" y2="670" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
-          <line x1="810" y1="478" z1="570" x2="810" y2="370" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
-          <line x1="810" y1="478" z1="570" x2="90" y2="370" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
-        </g>
-      </svg>
-    </div>
-  # </body>
-  <script>
-    let svg = document.getElementById("svg");
-    let lines = Array.from(svg.getElementsByTagName("line"));
-    let texts = Array.from(svg.getElementsByTagName("text"));
-    let inputs = Array.from(document.getElementsByTagName("input"));
-    let origin = 450;
-    const setLineAttributes = (line, pair, perspective) => {
-      let zAvg = 0;
-      pair.forEach((end, j) => {
-        let z = end[2];
-        zAvg += z;
-        for (k = 0; k < 2; k++) {
-          end[k] = end[k] * (1 + z / perspective);
-        }
-        [`x${1 + j}`, `y${1 + j}`, `z${1 + j}`].forEach((dir,k) => line.setAttribute(dir, end[k] + origin));
-      });
-      zAvg /= 2;
-      line.setAttribute("stroke-width", 1 + zAvg / perspective);
-      let darkness = `rgb(${(Math.round(100 * (1 - (1 + zAvg / perspective) / 2)) + "% ").repeat(3)})`;
-      line.setAttribute("stroke", darkness);
-    };
-    const setTextAttributes = (text, point, perspective) => {
+  <h4>Click and drag in order to rotate polyhedron</h4>
+  <div>
+    <span><b>Perspective:</b></span>
+    <label class="radio-inline">
+      <input type="radio" name="optradio" checked value="Infinity">None
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio" value="2">Some
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio" value="1">Lots
+    </label>
+  </div>
+  <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" width="900" height="900" xmlns="http://www.w3.org/2000/svg">
+    <!-- Asymmetric tetrahedron -->
+    <g class="vertices">
+      <text x="450" y="450" z="450" dx="-5" dy=".3em">A</text>
+      # <text x="810" y="370" z="330" dx="-5" dy=".3em">B</text>
+      # <text x="810" y="670" z="330" dx="-5" dy=".3em">C</text>
+      # <text x="810" y="478" z="570" dx="-5" dy=".3em">D</text>
+    </g>
+    # <g class="edges">
+      # <line x1="90" y1="370" z1="330" x2="810" y2="670" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
+      # <line x1="90" y1="370" z1="330" x2="810" y2="370" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
+      # <line x1="810" y1="370" z1="330" x2="810" y2="670" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
+      # <line x1="810" y1="478" z1="570" x2="810" y2="670" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
+      # <line x1="810" y1="478" z1="570" x2="810" y2="370" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
+      # <line x1="810" y1="478" z1="570" x2="90" y2="370" z2="330"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/>
+    # </g>
+  </svg>
+</div>
+
+<script>
+  let svg = document.getElementById("svg");
+  let lines = Array.from(svg.getElementsByTagName("line"));
+  let texts = Array.from(svg.getElementsByTagName("text"));
+  let inputs = Array.from(document.getElementsByTagName("input"));
+  let origin = 450;
+  const setLineAttributes = (line, pair, perspective) => {
+    let zAvg = 0;
+    pair.forEach((end, j) => {
+      let z = end[2];
+      zAvg += z;
       for (k = 0; k < 2; k++) {
-        point[k] = point[k] * (1 + point[2] / perspective);
+        end[k] = end[k] * (1 + z / perspective);
       }
-      ["x", "y", "z"].forEach((dir,k) => text.setAttribute(dir, point[k] + origin));
-    };
-    const stopMoving = svg => svg.setAttribute("is-dragging", "F");
-    const changePerspective = (svg, lines, texts, checked, perspective) => {
-      if (checked) {
-        let oldPerspective = Number(svg.getAttribute("perspective") * origin);
-        svg.setAttribute("perspective", perspective);
-        perspective *= origin;
-        lines.forEach(line => {
-          let pair = [];
-          for (j = 1; j < 3; j++) {
-            let end = [`x${j}`, `y${j}`, `z${j}`].map(dir => (Number(line.getAttribute(dir)) - origin));
-            [0, 1].forEach(k => {
-              end[k] /= (1 + end[2]  / oldPerspective);
-            });
-            pair.push(end);
-          }
-          setLineAttributes(line, pair, perspective);
-        });
-        texts.forEach(text => {
-          let point = ["x", "y", "z"].map(dir => (Number(text.getAttribute(dir)) - origin));
+      [`x${1 + j}`, `y${1 + j}`, `z${1 + j}`].forEach((dir,k) => line.setAttribute(dir, end[k] + origin));
+    });
+    zAvg /= 2;
+    line.setAttribute("stroke-width", 1 + zAvg / perspective);
+    let darkness = `rgb(${(Math.round(100 * (1 - (1 + zAvg / perspective) / 2)) + "% ").repeat(3)})`;
+    line.setAttribute("stroke", darkness);
+  };
+  const setTextAttributes = (text, point, perspective) => {
+    for (k = 0; k < 2; k++) {
+      point[k] = point[k] * (1 + point[2] / perspective);
+    }
+    ["x", "y", "z"].forEach((dir,k) => text.setAttribute(dir, point[k] + origin));
+  };
+  const stopMoving = svg => svg.setAttribute("is-dragging", "F");
+  const changePerspective = (svg, lines, texts, checked, perspective) => {
+    if (checked) {
+      let oldPerspective = Number(svg.getAttribute("perspective") * origin);
+      svg.setAttribute("perspective", perspective);
+      perspective *= origin;
+      lines.forEach(line => {
+        let pair = [];
+        for (j = 1; j < 3; j++) {
+          let end = [`x${j}`, `y${j}`, `z${j}`].map(dir => (Number(line.getAttribute(dir)) - origin));
           [0, 1].forEach(k => {
-            point[k] /= (1 + point[2]  / oldPerspective);
+            end[k] /= (1 + end[2]  / oldPerspective);
           });
-          setTextAttributes(text, point, perspective);
+          pair.push(end);
+        }
+        setLineAttributes(line, pair, perspective);
+      });
+      texts.forEach(text => {
+        let point = ["x", "y", "z"].map(dir => (Number(text.getAttribute(dir)) - origin));
+        [0, 1].forEach(k => {
+          point[k] /= (1 + point[2]  / oldPerspective);
         });
-      }
-    };
-    function throttle(svg, lines, texts, e, interval) {
-      // A flag variable to track whether the function is running or not
-      let isRunning = false;
-      let perspective = Number(svg.getAttribute("perspective")) * origin;
-      // Return a function that takes arguments
-      return () => {
-          // If the function is not running
-          if (!isRunning) {
-              // Set the flag to true
-              isRunning = true;
-              let isDragging = svg.getAttribute("is-dragging");
-              let mouse = svg.getAttribute("mouse");
-              mouse = mouse.split(',').map(val => Number(val));
-              if (isDragging === "T") {
-                let mouseNew = [e.offsetX, e.offsetY];
-                svg.setAttribute("mouse", mouseNew.join(','));
-                let dxy = mouseNew.map((newVal, i) => newVal - mouse[i]);
-                let thz = -Math.atan2(dxy[0], dxy[1]);
-                let cz = Math.cos(thz);
-                let sz = Math.sin(thz);
-                // Following factor (0.01) makes the UX feel right.
-                let thx = 0.02 * Math.sqrt(dxy[0] * dxy[0] + dxy[1] * dxy[1]);
-                let cx = Math.cos(thx);
-                let sx = Math.sin(thx);
-                // Below are rows of a 3x3 rotation matrix obtained as follows:
-                // Rotation about z-axis, rotation about x-axis, ending by
-                // negation of the original rotation about the z-axis.
-                let rotx = [cz * cz + cx * sz * sz, cz * sz * (1 - cx), -sx * sz];
-                let roty = [sz * cz * (1 - cx), sz * sz + cx * cz * cz, sx * cz];
-                let rotz = [sx * sz, -sx * cz, cx];
-                let rots = [rotx, roty, rotz];
-                lines.forEach(line => {
-                  const pair = [];
-                  for (j = 1; j < 3; j++) {
-                    let end = [`x${j}`, `y${j}`, `z${j}`].map(dir => (Number(line.getAttribute(dir)) - origin));
-                    [0, 1].forEach(k => end[k] /= (1 + end[2] / perspective));
-                    let endNew = [];
-                    // Implement the rotation transformation.
-                    for (const rot of rots) {
-                      endNew.push(rot.reduce((val, element, i) => {
-                        return val + element * end[i];
-                      }, 0));
-                    }
-                    pair.push(endNew);
-                  }
-                  setLineAttributes(line, pair, perspective);
-                });
-                texts.forEach(text => {
-                  let point = ["x", "y", "z"].map(dir => (Number(text.getAttribute(dir)) - origin));
-                  [0, 1].forEach(k => point[k] /= (1 + point[2] / perspective));
-                  let pointNew = [];
-                    // Implement the rotation transformation.
+        setTextAttributes(text, point, perspective);
+      });
+    }
+  };
+  function throttle(svg, lines, texts, e, interval) {
+    // A flag variable to track whether the function is running or not
+    let isRunning = false;
+    let perspective = Number(svg.getAttribute("perspective")) * origin;
+    // Return a function that takes arguments
+    return () => {
+        // If the function is not running
+        if (!isRunning) {
+            // Set the flag to true
+            isRunning = true;
+            let isDragging = svg.getAttribute("is-dragging");
+            let mouse = svg.getAttribute("mouse");
+            mouse = mouse.split(',').map(val => Number(val));
+            if (isDragging === "T") {
+              let mouseNew = [e.offsetX, e.offsetY];
+              svg.setAttribute("mouse", mouseNew.join(','));
+              let dxy = mouseNew.map((newVal, i) => newVal - mouse[i]);
+              let thz = -Math.atan2(dxy[0], dxy[1]);
+              let cz = Math.cos(thz);
+              let sz = Math.sin(thz);
+              // Following factor (0.01) makes the UX feel right.
+              let thx = 0.02 * Math.sqrt(dxy[0] * dxy[0] + dxy[1] * dxy[1]);
+              let cx = Math.cos(thx);
+              let sx = Math.sin(thx);
+              // Below are rows of a 3x3 rotation matrix obtained as follows:
+              // Rotation about z-axis, rotation about x-axis, ending by
+              // negation of the original rotation about the z-axis.
+              let rotx = [cz * cz + cx * sz * sz, cz * sz * (1 - cx), -sx * sz];
+              let roty = [sz * cz * (1 - cx), sz * sz + cx * cz * cz, sx * cz];
+              let rotz = [sx * sz, -sx * cz, cx];
+              let rots = [rotx, roty, rotz];
+              lines.forEach(line => {
+                const pair = [];
+                for (j = 1; j < 3; j++) {
+                  let end = [`x${j}`, `y${j}`, `z${j}`].map(dir => (Number(line.getAttribute(dir)) - origin));
+                  [0, 1].forEach(k => end[k] /= (1 + end[2] / perspective));
+                  let endNew = [];
+                  // Implement the rotation transformation.
                   for (const rot of rots) {
-                    pointNew.push(rot.reduce((val, element, i) => {
-                      return val + element * point[i];
+                    endNew.push(rot.reduce((val, element, i) => {
+                      return val + element * end[i];
                     }, 0));
                   }
-                  setTextAttributes(text, pointNew, perspective);
-                });
-              }
-              // Set a timer that will reset the flag after the interval
-              setTimeout(() => {
-                  // Set the flag to false
-                  isRunning = false;
-              }, interval);
-          }
-      };
-    }
-    // document is repainted no more frequently than every 10 ms.
-    svg.addEventListener("mousemove", e => throttle(svg, lines, texts, e, 10)());
-    svg.addEventListener("mousedown", e => {
-      svg.setAttribute("is-dragging", "T");
-      svg.setAttribute("mouse", e.offsetX + "," + e.offsetY);
-    });
-    svg.addEventListener("mouseleave", e => stopMoving(svg));
-    svg.addEventListener("mouseup", e => stopMoving(svg));
-    inputs.forEach(input => input.addEventListener(
-      "change",
-      e => changePerspective(svg, lines, texts, input.checked, Number(input.value)),
-    ));
-  </script>
-# </html>
+                  pair.push(endNew);
+                }
+                setLineAttributes(line, pair, perspective);
+              });
+              texts.forEach(text => {
+                let point = ["x", "y", "z"].map(dir => (Number(text.getAttribute(dir)) - origin));
+                [0, 1].forEach(k => point[k] /= (1 + point[2] / perspective));
+                let pointNew = [];
+                  // Implement the rotation transformation.
+                for (const rot of rots) {
+                  pointNew.push(rot.reduce((val, element, i) => {
+                    return val + element * point[i];
+                  }, 0));
+                }
+                setTextAttributes(text, pointNew, perspective);
+              });
+            }
+            // Set a timer that will reset the flag after the interval
+            setTimeout(() => {
+                // Set the flag to false
+                isRunning = false;
+            }, interval);
+        }
+    };
+  }
+  // document is repainted no more frequently than every 10 ms.
+  svg.addEventListener("mousemove", e => throttle(svg, lines, texts, e, 10)());
+  svg.addEventListener("mousedown", e => {
+    svg.setAttribute("is-dragging", "T");
+    svg.setAttribute("mouse", e.offsetX + "," + e.offsetY);
+  });
+  svg.addEventListener("mouseleave", e => stopMoving(svg));
+  svg.addEventListener("mouseup", e => stopMoving(svg));
+  inputs.forEach(input => input.addEventListener(
+    "change",
+    e => changePerspective(svg, lines, texts, input.checked, Number(input.value)),
+  ));
+</script>
