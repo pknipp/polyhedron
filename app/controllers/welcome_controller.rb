@@ -17,7 +17,8 @@ class WelcomeController < ApplicationController
     second_to_last_char = shape[-1]
     shape = shape[0..-2]
     shape_arr = shape.split("),(")
-    @triangle = shape_arr[0].split(",")
+    triangle = shape_arr[0].split(",")
+    @triangle_names = triangle.first(3)
     # @tetrahedron = shape_arr[1]
     render 'show'
   end
