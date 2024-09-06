@@ -35,7 +35,7 @@
       <input type="radio" name="optradio" value="1">Lots
     </label>
   </div>
-  <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" <% "width=#{size}" %> height="900" xmlns="http://www.w3.org/2000/svg">
+  <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" <%= "width=#{@size}" %> height="900" xmlns="http://www.w3.org/2000/svg">
     <g class="vertices">
       <text x="450" y="450" z="450" dx="-5" dy=".3em"><%= @triangle_names[0] %></text>
     </g>
