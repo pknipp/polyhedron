@@ -37,7 +37,7 @@
   </div>
   <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" <%= "width=#{@size}" %> <%= "height=#{@size}" %> xmlns="http://www.w3.org/2000/svg">
     <g class="vertices">
-      <text <%= "x=#{@size / 2}" %> y="450" z="450" dx="-5" dy=".3em"><%= @triangle_names[0] %></text>
+      <text <%= "x=#{@size / 2}" %> <%= "y=#{@size}" %> <%= "z=#{@size}" %> dx="-5" dy=".3em"><%= @triangle_names[0] %></text>
     </g>
   </svg>
 </div>
@@ -47,7 +47,7 @@
   let lines = Array.from(svg.getElementsByTagName("line"));
   let texts = Array.from(svg.getElementsByTagName("text"));
   let inputs = Array.from(document.getElementsByTagName("input"));
-  let origin = 450;
+  let origin = <%= @size / 2 %>;
   const setLineAttributes = (line, pair, perspective) => {
     let zAvg = 0;
     pair.forEach((end, j) => {
