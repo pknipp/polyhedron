@@ -27,14 +27,14 @@ class WelcomeController < ApplicationController
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|
-      (0..3).each{|i|
+      (0..2).each{|i|
         mins[i] = [mins[i], vertex[i]].min
         maxs[i] = [maxs[i], vertex[i]].max
       }
     }
     origin = []
     size = 0
-    (0..3).each{|i|
+    (0..2).each{|i|
       origin.push((maxs[i] + mins[i]) / 2)
       size = [size, maxs[i] - mins[i]].max
     }
@@ -42,7 +42,7 @@ class WelcomeController < ApplicationController
     puts size
     ratio = 0.8
     vertices.each{|vertex|
-      (0..3).each{|i|
+      (0..2).each{|i|
         vertex[i] = ratio * (vertex[i] - origin[i]) * svg_size / size
       }
     }
