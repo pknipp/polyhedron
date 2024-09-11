@@ -13,9 +13,6 @@ class WelcomeController < ApplicationController
     end
   end
 
-  # Create an instance of the Person class
-  person = Person.new("Alice", 30)
-
   # GET /:shape
   def show
     shape = params[:shape]
