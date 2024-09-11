@@ -33,6 +33,11 @@ class WelcomeController < ApplicationController
     vertices = [Vertex.new(vertex_names[0], [0, 0, 0])]
     a = edge_lengths[0].to_f
     vertices.push(Vertex.new(vertex_names[1], [a, 0, 0]))
+    b = edge_lengths[1].to_f
+    c = edge_lengths[2].to_f
+    ax = (a * a + c * c - b * b) / 2 / a
+    ay = Math.sqrt(c * c - ax * ax)
+    vertices.push(Vertex.new(vertex_names[2], [ax, ay, 0]))
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|
