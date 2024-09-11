@@ -31,7 +31,7 @@
     <g class="vertices">
 
       <% @vertices.each do |vertex| %>
-        <text <%= "x=#{vertex.coords[0] + @size / 2} y=#{@size / 2} z=#{vertex.coords[2] + @size / 2} dx=#{-5 * vertex.name.length} dy=.3em" %>>
+        <text <%= "x=#{vertex.coords[0] + @size / 2} y=#{vertex.coords[1] + @size / 2} z=#{vertex.coords[2] + @size / 2} dx=#{-5 * vertex.name.length} dy=.3em" %>>
           <%= vertex.name %>
         </text>
 
