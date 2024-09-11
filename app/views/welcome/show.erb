@@ -29,7 +29,7 @@
   </div>
   <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" <%= "width=#{@size}" %> <%= "height=#{@size}" %> xmlns="http://www.w3.org/2000/svg">
     <g class="vertices">
-      <text <%= "x=#{@vertices[0].coords[0] + @size / 2}" %> <%= "y=#{@vertices[0].coords[1] + @size / 2}" %> <%= "z=#{@vertices[0].coords[2] + @size / 2}" %> <% "dx=#{-5 * @vertex[0].name.length}" %> dy=".3em"><%= @vertices[0].name %></text>
+      <text <%= "x=#{@vertices[0].coords[0] + @size / 2}" %> <%= "y=#{@vertices[0].coords[1] + @size / 2}" %> <%= "z=#{@vertices[0].coords[2] + @size / 2}" %> <% "dx=#{-5 * @vertices[0].name.length}" %> dy=".3em"><%= @vertices[0].name %></text>
       <text <%= "x=#{@vertices[1].coords[0] + @size / 2}" %> <%= "y=#{@vertices[1].coords[1] + @size / 2}" %> <%= "z=#{@vertices[1].coords[2] + @size / 2}" %> dx="-5" dy=".3em"><%= @vertices[1].name %></text>
     </g>
     <g class="edges">
