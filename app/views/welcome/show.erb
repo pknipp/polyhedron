@@ -4,7 +4,8 @@
       <li>improve handling of perspective</li>
       <li>parse url for ...</li>
       <ul>
-        <li> array w/1 element: 3 points, separated by 3 distances (triangle centered and scaled)</li>
+        <li> render vertices using a loop rather than hard-wiring
+        <li> render edges (lines) using a loop rather than hard-wiring (which will involve passing another array into show: "edges")
         <li> array w/1+1 elements: 2nd having 4 points (3 old + 1 new) and three distances, thereby rendering a tetrahedron</li>
         <li> array w/1+<i>n</i> elements: as continuation of above, thereby rendering a non-tetrahedral simplicial polyhedron</li>
         <li> error handling for above</li>
@@ -28,9 +29,14 @@
   </div>
   <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" <%= "width=#{@size}" %> <%= "height=#{@size}" %> xmlns="http://www.w3.org/2000/svg">
     <g class="vertices">
-      <text <%= "x=#{@vertices[0].coords[0] + @size / 2}" %> <%= "y=#{@vertices[0].coords[1] + @size / 2}" %> <%= "z=#{@vertices[0].coords[2] + @size / 2}" %> <%= "dx=#{-5 * @vertices[0].name.length}" %> dy=".3em"><%= @vertices[0].name %></text>
-      <text <%= "x=#{@vertices[1].coords[0] + @size / 2}" %> <%= "y=#{@vertices[1].coords[1] + @size / 2}" %> <%= "z=#{@vertices[1].coords[2] + @size / 2}" %> <%= "dx=#{-5 * @vertices[1].name.length}" %> dy=".3em"><%= @vertices[1].name %></text>
-      <text <%= "x=#{@vertices[2].coords[0] + @size / 2}" %> <%= "y=#{@vertices[2].coords[1] + @size / 2}" %> <%= "z=#{@vertices[2].coords[2] + @size / 2}" %> <%= "dx=#{-5 * @vertices[2].name.length}" %> dy=".3em"><%= @vertices[2].name %></text>
+      <% @vertices.each do |vertex| %>
+        <%= <text <%= "x=#{@vertex.coords[0] + @size / 2}" %> <%= "y=#{@vertex.coords[1] + @size / 2}" %> <%= "z=#{@vertex.coords[2] + @size / 2}" %> <%= "dx=#{-5 * @vertex.name.length}" %> dy=".3em"><%= @vertex.name %></text> %>
+      <%end %>
+
+      # <text <%= "x=#{@vertices[0].coords[0] + @size / 2}" %> <%= "y=#{@vertices[0].coords[1] + @size / 2}" %> <%= "z=#{@vertices[0].coords[2] + @size / 2}" %> <%= "dx=#{-5 * @vertices[0].name.length}" %> dy=".3em"><%= @vertices[0].name %></text>
+      # <text <%= "x=#{@vertices[1].coords[0] + @size / 2}" %> <%= "y=#{@vertices[1].coords[1] + @size / 2}" %> <%= "z=#{@vertices[1].coords[2] + @size / 2}" %> <%= "dx=#{-5 * @vertices[1].name.length}" %> dy=".3em"><%= @vertices[1].name %></text>
+      # <text <%= "x=#{@vertices[2].coords[0] + @size / 2}" %> <%= "y=#{@vertices[2].coords[1] + @size / 2}" %> <%= "z=#{@vertices[2].coords[2] + @size / 2}" %> <%= "dx=#{-5 * @vertices[2].name.length}" %> dy=".3em"><%= @vertices[2].name %></text>
+      
     </g>
     <g class="edges">
       <line <%= "x1=#{@vertices[0].coords[0] + @size / 2}" %> <%= "y1=#{@vertices[0].coords[1] + @size / 2}" %> <%= "z1=#{@vertices[0].coords[2] + @size / 2}" %> <%= "x2=#{@vertices[1].coords[0] + @size / 2}" %> <%= "y2=#{@vertices[1].coords[1] + @size / 2}" %> <%= "z2=#{@vertices[1].coords[2] + @size / 2}" %> stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted" />
