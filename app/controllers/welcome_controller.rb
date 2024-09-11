@@ -31,7 +31,8 @@ class WelcomeController < ApplicationController
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     vertices = [Vertex.new(vertex_names[0], [0, 0, 0])]
-    vertices.push(Vertex.new(vertex_names[1], [edge_lengths[0].to_f, 0, 0]))
+    a = edge_lengths[0].to_f
+    vertices.push(Vertex.new(vertex_names[1], [a, 0, 0]))
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|
