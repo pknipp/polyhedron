@@ -13,6 +13,13 @@ class WelcomeController < ApplicationController
     end
   end
 
+  class Edge
+    attr_accessor :ends
+    def initialize(ends)
+      @ends = ends
+    end
+  end
+
   # GET /:shape
   def show
     shape = params[:shape]
@@ -30,14 +37,21 @@ class WelcomeController < ApplicationController
     @size = svg_size
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
-    vertices = [Vertex.new(vertex_names[0], [0, 0, 0])]
-    a = edge_lengths[0].to_f
-    vertices.push(Vertex.new(vertex_names[1], [a, 0, 0]))
-    b = edge_lengths[1].to_f
-    c = edge_lengths[2].to_f
-    ax = (a * a + c * c - b * b) / 2 / a
-    ay = Math.sqrt(c * c - ax * ax)
-    vertices.push(Vertex.new(vertex_names[2], [ax, ay, 0]))
+    b = Vertex.new(vertex_names[0], [0, 0, 0])
+    vertices = [b]
+    edges = []
+    A = edge_lengths[0].to_f
+    c = Vertex.new(vertex_names[1], [A, 0, 0])
+    vertices.push(c)
+    edges.push(Edge.new([b, c]))
+    B = edge_lengths[1].to_f
+    C = edge_lengths[2].to_f
+    ax = (A * A + C * C - B * B) / 2 / A
+    ay = Math.sqrt(C * C - ax * ax)
+    a = Vertex.new(vertex_names[2], [ax, ay, 0])
+    vertices.push(a)
+    edges.push(Edge.new([c, a]))
+    edges.push(Edge.new([a, b]))
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|
@@ -52,17 +66,19 @@ class WelcomeController < ApplicationController
       origin.push((maxs[i] + mins[i]) / 2)
       size = [size, maxs[i] - mins[i]].max
     }
-    puts origin
-    puts size
     ratio = 0.8
-    vertices.each{|vertex|
-      (0..2).each{|i|
+    (0..2).each{|i|
+      vertices.each{|vertex|
         vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
       }
+      edges.each{|edge|
+        edge.each{|end|
+          end.coords[i] = ratio * (end.coords[i] - origin[i]) * svg_size / size
+        }
+      }
     }
-    puts vertices[0].name
-    puts vertices[0].coords
     @vertices = vertices
+    @edges = edges
     render 'show'
   end
 
