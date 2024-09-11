@@ -7,10 +7,9 @@ class WelcomeController < ApplicationController
 
   class Vertex
     attr_accessor :name, :coords
-
     def initialize(name, coords)
       @name = name
-      @age = coords
+      @coords = coords
     end
   end
 
@@ -34,15 +33,14 @@ class WelcomeController < ApplicationController
     @size = svg_size
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
-    vertices = [Vertex.new(vertex_names[0][0,0,0]]
-    Continue doing class stuff here.
-    vertices.push([edge_lengths[0].to_f, 0, 0])
+    vertices = [Vertex.new(vertex_names[0], [0, 0, 0])]
+    vertices.push(Vertex.new(vertex_names[1], [edge_lengths[0].to_f, 0, 0]))
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|
       (0..2).each{|i|
-        mins[i] = [mins[i], vertex[i]].min
-        maxs[i] = [maxs[i], vertex[i]].max
+        mins[i] = [mins[i], vertices[i].coords[i]].min
+        maxs[i] = [maxs[i], vertices[i].coords[i]].max
       }
     }
     origin = []
@@ -56,7 +54,7 @@ class WelcomeController < ApplicationController
     ratio = 0.8
     vertices.each{|vertex|
       (0..2).each{|i|
-        vertex[i] = ratio * (vertex[i] - origin[i]) * svg_size / size
+        vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
       }
     }
     puts vertices
