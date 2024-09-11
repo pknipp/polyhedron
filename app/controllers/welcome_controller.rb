@@ -60,7 +60,8 @@ class WelcomeController < ApplicationController
         vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
       }
     }
-    puts vertices
+    puts vertices[0].name
+    puts vertices[0].coords
     @vertices = vertices
     render 'show'
   end
