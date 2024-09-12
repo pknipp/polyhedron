@@ -71,11 +71,11 @@ class WelcomeController < ApplicationController
       vertices.each{|vertex|
         vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
       }
-      edges.each{|edge|
-        edge.ends.each{|endpt|
-          endpt.coords[i] = ratio * (endpt.coords[i] - origin[i]) * svg_size / size
-        }
-      }
+      # edges.each{|edge|
+        # edge.ends.each{|endpt|
+          # endpt.coords[i] = ratio * (endpt.coords[i] - origin[i]) * svg_size / size
+        # }
+      # }
     }
     @vertices = vertices
     @edges = edges
