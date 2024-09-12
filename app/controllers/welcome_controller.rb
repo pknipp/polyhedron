@@ -67,15 +67,10 @@ class WelcomeController < ApplicationController
       size = [size, maxs[i] - mins[i]].max
     }
     ratio = 0.8
-    (0..2).each{|i|
-      vertices.each{|vertex|
+    vertices.each{|vertex|
+      (0..2).each{|i|
         vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
       }
-      # edges.each{|edge|
-        # edge.ends.each{|endpt|
-          # endpt.coords[i] = ratio * (endpt.coords[i] - origin[i]) * svg_size / size
-        # }
-      # }
     }
     @vertices = vertices
     @edges = edges
