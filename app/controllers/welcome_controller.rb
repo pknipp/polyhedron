@@ -44,6 +44,7 @@ class WelcomeController < ApplicationController
     first_char = shape[0]
     @error = "Hello error"
     render :error
+    return
     shape = shape[1..-1]
     second_char = shape[0]
     shape = shape[1..-1]
