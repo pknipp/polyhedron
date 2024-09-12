@@ -42,8 +42,11 @@ class WelcomeController < ApplicationController
     # parse the entire url
     shape = params[:shape].gsub(/\s+/, "")
     first_char = shape[0]
-    @error = "Hello error"
-    render :error
+    if first_char != "["
+      @error = "The path's first character should be [, not " + first_char + "."
+      render :error
+      return
+    end
     return
     shape = shape[1..-1]
     second_char = shape[0]
