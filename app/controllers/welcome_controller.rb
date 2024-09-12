@@ -138,6 +138,7 @@ class WelcomeController < ApplicationController
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each_value {|vertex|
+      puts vertex.coords
       (0..2).each{|i|
         mins[i] = [mins[i], vertex.coords[i]].min
         maxs[i] = [maxs[i], vertex.coords[i]].max
