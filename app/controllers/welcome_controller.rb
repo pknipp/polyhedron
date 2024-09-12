@@ -21,6 +21,8 @@ class WelcomeController < ApplicationController
 
   # GET /:shape
   def show
+    svg_size = 900
+    @size = svg_size
     # parse the entire url
     shape = params[:shape]
     shape = shape.gsub(/\s+/, "")
@@ -38,8 +40,6 @@ class WelcomeController < ApplicationController
     # parse the first triangle
     triangle = shape_arr[0].split(",")
     # TODO: error message unless triangle has 6 elements
-    svg_size = 900
-    @size = svg_size
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     a = Vertex.new([0, 0, 0])
@@ -66,9 +66,9 @@ class WelcomeController < ApplicationController
       # return error if this name is already in vertices hashmap
     end
     bc = edge_lengths[1].to_f
-    ca = edge_lengths[2].to_f
-    cx = (ca * ca + ab * ab - bc * bc) / 2 / ab
-    cy = Math.sqrt(ca * ca - cx * cx)
+    ac = edge_lengths[2].to_f
+    cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
+    cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new([cx, cy, 0])
     if first_name < zeroth_name
       swap = first_name
@@ -88,6 +88,48 @@ class WelcomeController < ApplicationController
     # parse the (first) tetrahedron
     tetrahedron = shape_arr[1].split(",")
     # TODO: error message unless tetrahedron has 7 elements
+    vertex_names = tetrahedron.first(4)
+    existing = vertex_names.first(3)
+    if !vertices.has_key?(existing[0]) || !vertices.has_key?(existing[1]) || !vertices.has_key?(existing[2])
+      # return error if any of these names are not already in vertices hashmap
+    end
+    new_name = vertex_names.last(1)[0]
+    if vertices.has_key?(new_name)
+      # return error if this name is already in vertices hashmap
+    end
+    edge_lengths = triangle.last(3)
+    ad = edge_lengths[0].to_f
+    bd = edge_lengths[1].to_f
+    cd = edge_lengths[2].to_f
+    dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
+    s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
+    dy = (s * cx * cx - dx * cx + s * cy * cy) / ac / cy
+    dz = Math.sqrt(ad * ad - dx * dx - dy * dy)
+    d = Vertex.new([dx, dy, dz])
+    zeroth_name = existing[0]
+    first_name = new_name
+    if first_name < zeroth_name
+      swap = first_name
+      first_name = zeroth_name
+      zeroth_name = swap
+    end
+    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    zeroth_name = existing[1]
+    first_name = new_name
+    if first_name < zeroth_name
+      swap = first_name
+      first_name = zeroth_name
+      zeroth_name = swap
+    end
+    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    zeroth_name = existing[2]
+    first_name = new_name
+    if first_name < zeroth_name
+      swap = first_name
+      first_name = zeroth_name
+      zeroth_name = swap
+    end
+    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
