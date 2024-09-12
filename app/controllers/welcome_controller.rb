@@ -110,7 +110,7 @@ class WelcomeController < ApplicationController
     puts dx
     puts dy
     puts dz
-    d = Vertex.new([dx, dy, dz])
+    vertices[new_name] = Vertex.new([dx, dy, dz])
     puts d.coords
     zeroth_name = existing[0]
     first_name = new_name
