@@ -40,9 +40,9 @@ class WelcomeController < ApplicationController
     svg_size = 900
     @size = svg_size
     vertices = {}
-    @vertices = vertices
+    # @vertices = vertices
     edges = {}
-    @edges = edges
+    # @edges = edges
     # parse the entire url
     shape = params[:shape].gsub(/\s+/, "")
     first_char = shape[0]
