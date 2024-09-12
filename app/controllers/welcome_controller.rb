@@ -118,7 +118,7 @@ class WelcomeController < ApplicationController
       origin.push((maxs[i] + mins[i]) / 2)
       size = [size, maxs[i] - mins[i]].max
     }
-    //Following value attempts to prevent object from rotating out of svg cube.
+    # Following value attempts to prevent object from rotating out of svg cube.
     ratio = 0.7
     vertices.each_value {|vertex|
       (0..2).each{|i|
