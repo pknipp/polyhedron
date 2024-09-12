@@ -37,21 +37,21 @@ class WelcomeController < ApplicationController
     @size = svg_size
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
-    b = Vertex.new(vertex_names[0], [0, 0, 0])
-    vertices = [b]
+    a = Vertex.new(vertex_names[0], [0, 0, 0])
+    vertices = [a]
     edges = []
-    a_len = edge_lengths[0].to_f
-    c = Vertex.new(vertex_names[1], [a_len, 0, 0])
+    ab = edge_lengths[0].to_f
+    b = Vertex.new(vertex_names[1], [ab, 0, 0])
+    vertices.push(b)
+    edges.push(Edge.new([a, b]))
+    bc = edge_lengths[1].to_f
+    ca = edge_lengths[2].to_f
+    cx = (ca * ca + ab * ab - bc * bc) / 2 / ab
+    ay = Math.sqrt(ca * ca - cx * cx)
+    c = Vertex.new(vertex_names[2], [cx, cy, 0])
     vertices.push(c)
     edges.push(Edge.new([b, c]))
-    b_len = edge_lengths[1].to_f
-    c_len = edge_lengths[2].to_f
-    ax = (a_len * a_len + c_len * c_len - b_len * b_len) / 2 / a_len
-    ay = Math.sqrt(c_len * c_len - ax * ax)
-    a = Vertex.new(vertex_names[2], [ax, ay, 0])
-    vertices.push(a)
     edges.push(Edge.new([c, a]))
-    edges.push(Edge.new([a, b]))
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|

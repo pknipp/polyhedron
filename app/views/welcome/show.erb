@@ -4,7 +4,6 @@
       <li>improve handling of perspective</li>
       <li>parse url for ...</li>
       <ul>
-        <li> render edges (lines) using a loop rather than hard-wiring (which will involve passing another array into show: "edges")
         <li> array w/1+1 elements: 2nd having 4 points (3 old + 1 new) and three distances, thereby rendering a tetrahedron</li>
         <li> array w/1+<i>n</i> elements: as continuation of above, thereby rendering a non-tetrahedral simplicial polyhedron</li>
         <li> error handling for above</li>
@@ -35,7 +34,6 @@
       <%end %>
     </g>
     <g class="edges">
-
       <% @edges.each do |edge| %>
         <line <%= "x1=#{edge.ends[0].coords[0] + @size / 2} y1=#{edge.ends[0].coords[1] + @size / 2} z1=#{edge.ends[0].coords[2] + @size / 2} x2=#{edge.ends[1].coords[0] + @size / 2} y2=#{edge.ends[1].coords[1] + @size / 2} z2=#{edge.ends[1].coords[2] + @size / 2} stroke=rgb(50%50%50%) stroke-width=1 pointer-events=visiblePainted" %>>
         </line>
