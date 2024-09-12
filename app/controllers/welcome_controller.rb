@@ -118,7 +118,8 @@ class WelcomeController < ApplicationController
       origin.push((maxs[i] + mins[i]) / 2)
       size = [size, maxs[i] - mins[i]].max
     }
-    ratio = 0.8
+    //Following value attempts to prevent object from rotating out of svg cube.
+    ratio = 0.7
     vertices.each_value {|vertex|
       (0..2).each{|i|
         vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
@@ -128,5 +129,4 @@ class WelcomeController < ApplicationController
     @edges = edges
     render 'show'
   end
-
 end
