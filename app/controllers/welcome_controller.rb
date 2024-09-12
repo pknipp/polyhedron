@@ -46,7 +46,7 @@ class WelcomeController < ApplicationController
     vertices = {}
     edges = {}
     vertices[zeroth_name] = a
-    if vertices.has_key?[first_name]
+    if vertices.has_key?(first_name)
       # return error if this name is already in vertices hashmap
     else
       vertices[first_name] = Vertex.new([ab, 0, 0])
@@ -60,7 +60,7 @@ class WelcomeController < ApplicationController
     edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
     zeroth_name = vertex_names[1]
     first_name = vertex_names[2]
-    if vertices.has_key?[first_name]
+    if vertices.has_key?(first_name)
       # return error if this name is already in vertices hashmap
     end
     bc = edge_lengths[1].to_f
