@@ -106,9 +106,7 @@ class WelcomeController < ApplicationController
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
     dy = (s * cx * cx - dx * cx + s * cy * cy) / ac / cy
     arg = ad * ad - dx * dx - dy * dy
-    puts arg
     dz = Math.sqrt(arg)
-    puts dz
     puts dx
     puts dy
     puts dz
