@@ -41,44 +41,47 @@ class WelcomeController < ApplicationController
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     a = Vertex.new([0, 0, 0])
-    [first_name, second_name] = vertex_names.first(2)
+    zeroth_name = vertex_names[0]
+    first_name = vertex_names[1]
     vertices = {}
     edges = {}
-    vertices[first_name] = a
-    if vertices.has_key?[second_name]
-      # return error if second_name is already in vertices hashmap
+    vertices[zeroth_name] = a
+    if vertices.has_key?[first_name]
+      # return error if this name is already in vertices hashmap
     else
-      vertices[second_name] = Vertex.new([ab, 0, 0])
+      vertices[first_name] = Vertex.new([ab, 0, 0])
     end
     ab = edge_lengths[0].to_f
-    if second_name < first_name
+    if first_name < zeroth_name
       swap = first_name
-      second_name = first_name
-      first_name = swap
+      first_name = zeroth_name
+      zeroth_name = swap
     end
-    edges[first_name + "'" + second_name] = Edge.new([vertices[first_name], vertices[second_name]])
-    [first_name, second_name] = vertex_names.last(2)
-    if vertices.has_key?[second_name]
-      # return error if second_name is already in vertices hashmap
+    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    zeroth_name = vertex_names[1]
+    first_name = vertex_names[2]
+    if vertices.has_key?[first_name]
+      # return error if this name is already in vertices hashmap
     end
     bc = edge_lengths[1].to_f
     ca = edge_lengths[2].to_f
     cx = (ca * ca + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ca * ca - cx * cx)
-    vertices[second_name] = Vertex.new([cx, cy, 0])
-    if second_name < first_name
+    vertices[first_name] = Vertex.new([cx, cy, 0])
+    if first_name < zeroth_name
       swap = first_name
-      second_name = first_name
-      first_name = swap
+      first_name = zeroth_name
+      zeroth_name = swap
     end
-    edges[first_name + "'" + second_name] = Edge.new([vertices[first_name], vertices[second_name]])
-    [first_name, second_name] = [vertex_names[0], vertex_names[2]]
-    if second_name < first_name
+    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    zeroth_name = vertex_names[0]
+    first_name = vertex_names[2]
+    if first_name < zeroth_name
       swap = first_name
-      second_name = first_name
-      first_name = swap
+      first_name = zeroth_name
+      zeroth_name = swap
     end
-    edges[first_name + "'" + second_name] = Edge.new([vertices[first_name], vertices[second_name]])
+    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
 
     # parse the (first) tetrahedron
     tetrahedron = shape_arr[1].split(",")
