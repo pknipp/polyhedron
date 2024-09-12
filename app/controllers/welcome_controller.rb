@@ -54,6 +54,7 @@ class WelcomeController < ApplicationController
     else
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
+    puts vertices[first_name]
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
@@ -108,6 +109,7 @@ class WelcomeController < ApplicationController
     puts arg
     dz = Math.sqrt(arg)
     d = Vertex.new([dx, dy, dz])
+    puts d
     zeroth_name = existing[0]
     first_name = new_name
     if first_name < zeroth_name
@@ -132,7 +134,7 @@ class WelcomeController < ApplicationController
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
-    puts edges
+    # puts edges
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
