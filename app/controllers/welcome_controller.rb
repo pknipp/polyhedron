@@ -22,6 +22,7 @@ class WelcomeController < ApplicationController
 
   # GET /:shape
   def show
+    # parse the entire url
     shape = params[:shape]
     first_char = shape[0]
     shape = shape[1..-1]
@@ -32,6 +33,8 @@ class WelcomeController < ApplicationController
     second_to_last_char = shape[-1]
     shape = shape[0..-2]
     shape_arr = shape.split("),(")
+
+    # parse the first triangle
     triangle = shape_arr[0].split(",")
     svg_size = 900
     @size = svg_size
@@ -52,6 +55,12 @@ class WelcomeController < ApplicationController
     vertices.push(c)
     edges.push(Edge.new([b, c]))
     edges.push(Edge.new([c, a]))
+
+    # parse the (first) tetrahedron
+    tetrahedron = shape_arr[1].split(",")
+
+    # based on max/min values of cartesian components of vertices,
+    # determine the svg's origin and size
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each{|vertex|

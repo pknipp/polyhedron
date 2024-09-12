@@ -4,6 +4,8 @@
       <li>improve handling of perspective</li>
       <li>parse url for ...</li>
       <ul>
+        <li> Make vertices a hashmap (name -> coords) rather than an array of Vertex objects, to prevent duplication.
+        <li> Make edges a hashmap (stringified sorted array of name pair -> Edge instance), for same reason as above.
         <li> array w/1+1 elements: 2nd having 4 points (3 old + 1 new) and three distances, thereby rendering a tetrahedron</li>
         <li> array w/1+<i>n</i> elements: as continuation of above, thereby rendering a non-tetrahedral simplicial polyhedron</li>
         <li> error handling for above</li>
