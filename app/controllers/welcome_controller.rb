@@ -108,6 +108,10 @@ class WelcomeController < ApplicationController
     arg = ad * ad - dx * dx - dy * dy
     puts arg
     dz = Math.sqrt(arg)
+    puts dz
+    puts dx
+    puts dy
+    puts dz
     d = Vertex.new([dx, dy, dz])
     puts d
     zeroth_name = existing[0]
