@@ -2,7 +2,6 @@ class WelcomeController < ApplicationController
 
   # GET /
   def index
-
   end
 
   class Vertex
@@ -21,6 +20,15 @@ class WelcomeController < ApplicationController
 
   def number(string)
     string = string.sub('*', '.').to_f
+  end
+
+  def make_edge(zeroth_name, first_name, vertices, edges)
+    if first_name < zeroth_name
+      swap = first_name
+      first_name = zeroth_name
+      zeroth_name = swap
+    end
+    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
   end
 
   # GET /:shape
@@ -58,12 +66,14 @@ class WelcomeController < ApplicationController
     else
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
+
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+
     zeroth_name = vertex_names[1]
     first_name = vertex_names[2]
     if vertices.has_key?(first_name)
@@ -74,14 +84,17 @@ class WelcomeController < ApplicationController
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new([cx, cy, 0])
+
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+
     zeroth_name = vertex_names[0]
     first_name = vertex_names[2]
+
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
@@ -105,11 +118,7 @@ class WelcomeController < ApplicationController
     ad = number(edge_lengths[0])
     bd = number(edge_lengths[1])
     cd = number(edge_lengths[2])
-    puts ad
-    puts bd
-    puts cd
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
-    puts dx
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
     dy = (s * ac - dx * cx) / cy
     arg = ad * ad - dx * dx - dy * dy
@@ -117,36 +126,39 @@ class WelcomeController < ApplicationController
     vertices[new_name] = Vertex.new([dx, dy, dz])
     zeroth_name = existing[0]
     first_name = new_name
+
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+
     zeroth_name = existing[1]
     first_name = new_name
+
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+
     zeroth_name = existing[2]
     first_name = new_name
+
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
-    # puts edges
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each_value {|vertex|
-      # puts vertex.coords
       (0..2).each{|i|
         mins[i] = [mins[i], vertex.coords[i]].min
         maxs[i] = [maxs[i], vertex.coords[i]].max
