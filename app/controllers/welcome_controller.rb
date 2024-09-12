@@ -59,7 +59,7 @@ class WelcomeController < ApplicationController
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
     zeroth_name = vertex_names[1]
     first_name = vertex_names[2]
     if vertices.has_key?(first_name)
@@ -75,7 +75,7 @@ class WelcomeController < ApplicationController
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
     zeroth_name = vertex_names[0]
     first_name = vertex_names[2]
     if first_name < zeroth_name
@@ -83,7 +83,7 @@ class WelcomeController < ApplicationController
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
 
     # parse the (first) tetrahedron
     tetrahedron = shape_arr[1].split(",")
@@ -115,7 +115,7 @@ class WelcomeController < ApplicationController
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
     zeroth_name = existing[1]
     first_name = new_name
     if first_name < zeroth_name
@@ -123,7 +123,7 @@ class WelcomeController < ApplicationController
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
     zeroth_name = existing[2]
     first_name = new_name
     if first_name < zeroth_name
@@ -131,7 +131,7 @@ class WelcomeController < ApplicationController
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
     puts edges
 
     # based on max/min values of cartesian components of vertices,
