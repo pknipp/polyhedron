@@ -40,14 +40,14 @@ class WelcomeController < ApplicationController
     b = Vertex.new(vertex_names[0], [0, 0, 0])
     vertices = [b]
     edges = []
-    A = edge_lengths[0].to_f
+    a_len = edge_lengths[0].to_f
     c = Vertex.new(vertex_names[1], [A, 0, 0])
     vertices.push(c)
     edges.push(Edge.new([b, c]))
-    B = edge_lengths[1].to_f
-    C = edge_lengths[2].to_f
-    ax = (A * A + C * C - B * B) / 2 / A
-    ay = Math.sqrt(C * C - ax * ax)
+    b_len = edge_lengths[1].to_f
+    c_len = edge_lengths[2].to_f
+    ax = (a_len * a_len + c_len * c_len - b_len * b_len) / 2 / a_len
+    ay = Math.sqrt(c_len * c_len - ax * ax)
     a = Vertex.new(vertex_names[2], [ax, ay, 0])
     vertices.push(a)
     edges.push(Edge.new([c, a]))
