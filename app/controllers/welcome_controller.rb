@@ -19,6 +19,11 @@ class WelcomeController < ApplicationController
     end
   end
 
+  def number(string)
+    string = string.sub('*', '.')
+    string.to_f
+  end
+
   # GET /:shape
   def show
     svg_size = 900
@@ -48,7 +53,7 @@ class WelcomeController < ApplicationController
     vertices = {}
     edges = {}
     vertices[zeroth_name] = a
-    ab = edge_lengths[0].to_f
+    ab = number(edge_lengths[0])
     if vertices.has_key?(first_name)
       # return error if this name is already in vertices hashmap
     else
