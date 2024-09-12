@@ -97,11 +97,11 @@ class WelcomeController < ApplicationController
     if vertices.has_key?(new_name)
       # return error if this name is already in vertices hashmap
     end
-    edge_lengths = triangle.last(3)
+    edge_lengths = tetrahedron.last(3)
     ad = edge_lengths[0].to_f
     bd = edge_lengths[1].to_f
     cd = edge_lengths[2].to_f
-    puts ab
+    puts ad
     puts bd
     puts cd
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
