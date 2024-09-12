@@ -41,7 +41,7 @@ class WelcomeController < ApplicationController
     vertices = [b]
     edges = []
     a_len = edge_lengths[0].to_f
-    c = Vertex.new(vertex_names[1], [A, 0, 0])
+    c = Vertex.new(vertex_names[1], [a_len, 0, 0])
     vertices.push(c)
     edges.push(Edge.new([b, c]))
     b_len = edge_lengths[1].to_f
