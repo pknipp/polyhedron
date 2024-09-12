@@ -20,8 +20,7 @@ class WelcomeController < ApplicationController
   end
 
   def number(string)
-    string = string.sub('*', '.')
-    string.to_f
+    string = string.sub('*', '.').to_f
   end
 
   # GET /:shape
@@ -70,8 +69,8 @@ class WelcomeController < ApplicationController
     if vertices.has_key?(first_name)
       # return error if this name is already in vertices hashmap
     end
-    bc = edge_lengths[1].to_f
-    ac = edge_lengths[2].to_f
+    bc =number(edge_lengths[1])
+    ac =number(edge_lengths[2])
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new([cx, cy, 0])
@@ -103,9 +102,9 @@ class WelcomeController < ApplicationController
       # return error if this name is already in vertices hashmap
     end
     edge_lengths = tetrahedron.last(3)
-    ad = edge_lengths[0].to_f
-    bd = edge_lengths[1].to_f
-    cd = edge_lengths[2].to_f
+    ad = number(edge_lengths[0])
+    bd = number(edge_lengths[1])
+    cd = number(edge_lengths[2])
     puts ad
     puts bd
     puts cd
