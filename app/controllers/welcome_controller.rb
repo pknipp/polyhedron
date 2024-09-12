@@ -54,8 +54,9 @@ class WelcomeController < ApplicationController
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     a = Vertex.new([0, 0, 0])
-    zeroth_name = vertex_names[0]
-    first_name = vertex_names[1]
+    # zeroth_name = vertex_names[0]
+    # first_name = vertex_names[1]
+    zeroth_name, first_name = vertex_names.first(2)
     vertices = {}
     edges = {}
     vertices[zeroth_name] = a
