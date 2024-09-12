@@ -54,7 +54,7 @@ class WelcomeController < ApplicationController
     else
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
-    puts vertices[first_name]
+    puts vertices[first_name].coords
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
@@ -113,7 +113,7 @@ class WelcomeController < ApplicationController
     puts dy
     puts dz
     d = Vertex.new([dx, dy, dz])
-    puts d
+    puts d.coords
     zeroth_name = existing[0]
     first_name = new_name
     if first_name < zeroth_name
