@@ -4,6 +4,10 @@ class WelcomeController < ApplicationController
   def index
   end
 
+  # ERROR
+  def error
+  end
+
   class Vertex
     attr_accessor :coords
     def initialize(coords)
@@ -38,6 +42,8 @@ class WelcomeController < ApplicationController
     # parse the entire url
     shape = params[:shape].gsub(/\s+/, "")
     first_char = shape[0]
+    @error = "Hello error"
+    render 'error'
     shape = shape[1..-1]
     second_char = shape[0]
     shape = shape[1..-1]
