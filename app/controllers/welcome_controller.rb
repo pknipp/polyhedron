@@ -132,6 +132,7 @@ class WelcomeController < ApplicationController
       zeroth_name = swap
     end
     edges[zeroth_name + "'" + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    puts edges
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
