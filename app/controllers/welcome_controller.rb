@@ -66,13 +66,14 @@ class WelcomeController < ApplicationController
     else
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
+    make_edge(zeroth_name, first_name, vertices, edges)
 
-    if first_name < zeroth_name
-      swap = first_name
-      first_name = zeroth_name
-      zeroth_name = swap
-    end
-    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    # if first_name < zeroth_name
+      # swap = first_name
+      # first_name = zeroth_name
+      # zeroth_name = swap
+    # end
+    # edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
 
     zeroth_name = vertex_names[1]
     first_name = vertex_names[2]
