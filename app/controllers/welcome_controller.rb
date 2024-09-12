@@ -47,7 +47,7 @@ class WelcomeController < ApplicationController
     bc = edge_lengths[1].to_f
     ca = edge_lengths[2].to_f
     cx = (ca * ca + ab * ab - bc * bc) / 2 / ab
-    ay = Math.sqrt(ca * ca - cx * cx)
+    cy = Math.sqrt(ca * ca - cx * cx)
     c = Vertex.new(vertex_names[2], [cx, cy, 0])
     vertices.push(c)
     edges.push(Edge.new([b, c]))
