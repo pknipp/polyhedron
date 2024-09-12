@@ -38,7 +38,6 @@ class WelcomeController < ApplicationController
     # parse the entire url
     shape = params[:shape]
     shape = shape.gsub(/\s+/, "")
-    # TODO: put something in instructions in re avoiding this
     first_char = shape[0]
     shape = shape[1..-1]
     second_char = shape[0]
@@ -67,36 +66,17 @@ class WelcomeController < ApplicationController
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
     make_edge(zeroth_name, first_name, vertices, edges)
-
-    zeroth_name = vertex_names[1]
     first_name = vertex_names[2]
     if vertices.has_key?(first_name)
       # return error if this name is already in vertices hashmap
     end
-    bc =number(edge_lengths[1])
-    ac =number(edge_lengths[2])
+    bc = number(edge_lengths[1])
+    ac = number(edge_lengths[2])
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new([cx, cy, 0])
-    make_edge(zeroth_name, first_name, vertices, edges)
-
-    # if first_name < zeroth_name
-      # swap = first_name
-      # first_name = zeroth_name
-      # zeroth_name = swap
-    # end
-    # edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
-
-    make_edge(vertex_names[0], vertex_names[2], vertices, edges)
-    # zeroth_name = vertex_names[0]
-    # first_name = vertex_names[2]
-#
-    # if first_name < zeroth_name
-      # swap = first_name
-      # first_name = zeroth_name
-      # zeroth_name = swap
-    # end
-    # edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    make_edge(vertex_names[1], first_name, vertices, edges)
+    make_edge(vertex_names[0], first_name, vertices, edges)
 
     # parse the (first) tetrahedron
     tetrahedron = shape_arr[1].split(",")
@@ -121,31 +101,8 @@ class WelcomeController < ApplicationController
     dz = Math.sqrt(arg)
     vertices[new_name] = Vertex.new([dx, dy, dz])
     make_edge(existing[0], new_name, vertices, edges)
-
-    # if first_name < zeroth_name
-      # swap = first_name
-      # first_name = zeroth_name
-      # zeroth_name = swap
-    # end
-    # edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
-
     make_edge(existing[1], new_name, vertices, edges)
-
-    # if first_name < zeroth_name
-      # swap = first_name
-      # first_name = zeroth_name
-      # zeroth_name = swap
-    # end
-    # edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
-
     make_edge(existing[2], new_name, vertices, edges)
-
-    # if first_name < zeroth_name
-      # swap = first_name
-      # first_name = zeroth_name
-      # zeroth_name = swap
-    # end
-    # edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
