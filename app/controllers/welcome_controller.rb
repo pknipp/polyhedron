@@ -47,23 +47,43 @@ class WelcomeController < ApplicationController
     shape = params[:shape].gsub(/\s+/, "")
     first_char = shape[0]
     if first_char != "["
-      @error = "The path's first character should be [, not " + first_char + "."
+      @error = "The path's first character should be '[' not '" + first_char + "'."
       render :error
       return
     end
     return
     shape = shape[1..-1]
     second_char = shape[0]
+    if second_char != "("
+      @error = "The path's second character should be '(' not '" + second_char + "'."
+      render :error
+      return
+    end
     shape = shape[1..-1]
     last_char = shape[-1]
+    if last_char != "]"
+      @error = "The path's last character should be ']' not '" + last_char + "'."
+      render :error
+      return
+    end
     shape = shape[0..-2]
     second_to_last_char = shape[-1]
+    if second_to_last_char != ")"
+      @error = "The path's second to last character should be ')' not '" + second_to_last_char + "'."
+      render :error
+      return
+    end
     shape = shape[0..-2]
     shape_arr = shape.split("),(")
 
     # parse the first triangle
     triangle = shape_arr[0].split(",")
     # TODO: error message unless triangle has 6 elements
+    if triangle.length != 6
+      @error = "The first element of the path's array should have 6 elements, not " + triangle.length + "."
+      render :error
+      return
+    end
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     a = Vertex.new([0, 0, 0])
@@ -71,7 +91,9 @@ class WelcomeController < ApplicationController
     vertices[zeroth_name] = a
     ab = number(edge_lengths[0])
     if vertices.has_key?(first_name)
-      # return error if this name is already in vertices hashmap
+      @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
+      render :error
+      return
     else
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
