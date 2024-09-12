@@ -103,7 +103,7 @@ class WelcomeController < ApplicationController
     cd = edge_lengths[2].to_f
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
-    dy = (s * cx * cx - dx * cx + s * cy * cy) / ac / cy
+    dy = (s * ac * ac - dx * cx) / ac / cy
     arg = ad * ad - dx * dx - dy * dy
     dz = Math.sqrt(arg)
     vertices[new_name] = Vertex.new([dx, dy, dz])
