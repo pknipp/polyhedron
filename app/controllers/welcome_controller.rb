@@ -46,12 +46,12 @@ class WelcomeController < ApplicationController
     vertices = {}
     edges = {}
     vertices[zeroth_name] = a
+    ab = edge_lengths[0].to_f
     if vertices.has_key?(first_name)
       # return error if this name is already in vertices hashmap
     else
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
-    ab = edge_lengths[0].to_f
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
