@@ -78,7 +78,7 @@ class WelcomeController < ApplicationController
     # parse the first triangle
     triangle = shape_arr[0].split(",")
     if triangle.length != 6
-      @error = "The first element of the path's array should have 6 elements, not " + triangle.length + "."
+      @error = "The first element of the path's array should have 6 elements, not " + triangle.length.to_s + "."
       render :error
       return
     end
