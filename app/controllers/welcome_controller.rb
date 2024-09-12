@@ -98,7 +98,9 @@ class WelcomeController < ApplicationController
     make_edge(zeroth_name, first_name, vertices, edges)
     first_name = vertex_names[2]
     if vertices.has_key?(first_name)
-      # return error if this name is already in vertices hashmap
+      @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
+      render :error
+      return
     end
     bc = number(edge_lengths[1])
     ac = number(edge_lengths[2])
