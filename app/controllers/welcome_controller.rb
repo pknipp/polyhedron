@@ -104,7 +104,9 @@ class WelcomeController < ApplicationController
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
     dy = (s * cx * cx - dx * cx + s * cy * cy) / ac / cy
-    dz = Math.sqrt(ad * ad - dx * dx - dy * dy)
+    arg = ad * ad - dx * dx - dy * dy
+    puts arg
+    dz = Math.sqrt(arg)
     d = Vertex.new([dx, dy, dz])
     zeroth_name = existing[0]
     first_name = new_name
