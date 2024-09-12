@@ -23,7 +23,8 @@ class WelcomeController < ApplicationController
   def show
     # parse the entire url
     shape = params[:shape]
-    # TODO: remove any whitespace, and put something in instructions in re avoiding this
+    shape = shape.gsub(/\s+/, "")
+    # TODO: put something in instructions in re avoiding this
     first_char = shape[0]
     shape = shape[1..-1]
     second_char = shape[0]
@@ -36,6 +37,7 @@ class WelcomeController < ApplicationController
 
     # parse the first triangle
     triangle = shape_arr[0].split(",")
+    # TODO: error message unless triangle has 6 elements
     svg_size = 900
     @size = svg_size
     vertex_names = triangle.first(3)
@@ -85,6 +87,7 @@ class WelcomeController < ApplicationController
 
     # parse the (first) tetrahedron
     tetrahedron = shape_arr[1].split(",")
+    # TODO: error message unless tetrahedron has 7 elements
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
