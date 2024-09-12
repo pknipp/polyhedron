@@ -101,7 +101,11 @@ class WelcomeController < ApplicationController
     ad = edge_lengths[0].to_f
     bd = edge_lengths[1].to_f
     cd = edge_lengths[2].to_f
+    puts ab
+    puts bd
+    puts cd
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
+    puts dx
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
     dy = (s * ac - dx * cx) / cy
     arg = ad * ad - dx * dx - dy * dy
@@ -138,7 +142,7 @@ class WelcomeController < ApplicationController
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
     vertices.each_value {|vertex|
-      puts vertex.coords
+      # puts vertex.coords
       (0..2).each{|i|
         mins[i] = [mins[i], vertex.coords[i]].min
         maxs[i] = [maxs[i], vertex.coords[i]].max
