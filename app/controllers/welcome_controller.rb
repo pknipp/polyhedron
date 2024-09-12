@@ -36,8 +36,7 @@ class WelcomeController < ApplicationController
     svg_size = 900
     @size = svg_size
     # parse the entire url
-    shape = params[:shape]
-    shape = shape.gsub(/\s+/, "")
+    shape = params[:shape].gsub(/\s+/, "")
     first_char = shape[0]
     shape = shape[1..-1]
     second_char = shape[0]
@@ -54,8 +53,6 @@ class WelcomeController < ApplicationController
     vertex_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     a = Vertex.new([0, 0, 0])
-    # zeroth_name = vertex_names[0]
-    # first_name = vertex_names[1]
     zeroth_name, first_name = vertex_names.first(2)
     vertices = {}
     edges = {}
