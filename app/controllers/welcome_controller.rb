@@ -22,14 +22,14 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def string_to_number(string)
-    string = string.sub('*', '.').to_f
-  end
+  # def string_to_number(string)
+    # string = string.sub('*', '.').to_f
+  # end
 
   # def is_number(string)
     # string = string.sub('*', '.')
     # if string.include?('.')
-# 
+#
     # number = string_to_number(string)
     # puts string
     # puts number
@@ -123,8 +123,18 @@ class WelcomeController < ApplicationController
       render :error
       return
     end
-    bc = string_to_number(edge_lengths[1])
-    ac = string_to_number(edge_lengths[2])
+    bc = Float(edge_lengths[1]) rescue nil
+    if bc.nil?
+      @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
+      render :error
+      return
+    end
+    ac = Float(edge_lengths[2]) rescue nil
+    if ac.nil?
+      @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
+      render :error
+      return
+    end
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new([cx, cy, 0])
@@ -145,9 +155,24 @@ class WelcomeController < ApplicationController
       # return error if this name is already in vertices hashmap
     end
     edge_lengths = tetrahedron.last(3)
-    ad = string_to_number(edge_lengths[0])
-    bd = string_to_number(edge_lengths[1])
-    cd = string_to_number(edge_lengths[2])
+    ad = Float(edge_lengths[0]) rescue nil
+    if ad.nil?
+      @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
+      render :error
+      return
+    end
+    bd = Float(edge_lengths[1]) rescue nil
+    if bd.nil?
+      @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
+      render :error
+      return
+    end
+    cd = Float(edge_lengths[2]) rescue nil
+    if cd.nil?
+      @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
+      render :error
+      return
+    end
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
     dy = (s * ac - dx * cx) / cy
