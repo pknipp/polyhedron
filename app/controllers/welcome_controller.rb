@@ -155,7 +155,7 @@ class WelcomeController < ApplicationController
       # return error if this name is already in vertices hashmap
     end
     edge_lengths = tetrahedron.last(3)
-    ad = Float(edge_lengths[0]) rescue nil
+    ad = Float(edge_lengths[0].sub('*', '.')) rescue nil
     if ad.nil?
       @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
       render :error
