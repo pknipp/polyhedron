@@ -103,7 +103,7 @@ class WelcomeController < ApplicationController
       # return
     # end
     # ab = string_to_number(edge_lengths[0])
-    ab = Float(edge_lengths[0]) rescue nil
+    ab = Float(edge_lengths[0].sub('*', '.')) rescue nil
     if ab.nil?
       @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
       render :error
@@ -123,13 +123,13 @@ class WelcomeController < ApplicationController
       render :error
       return
     end
-    bc = Float(edge_lengths[1]) rescue nil
+    bc = Float(edge_lengths[1].sub('*', '.')) rescue nil
     if bc.nil?
       @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
       render :error
       return
     end
-    ac = Float(edge_lengths[2]) rescue nil
+    ac = Float(edge_lengths[2].sub('*', '.')) rescue nil
     if ac.nil?
       @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
       render :error
@@ -161,13 +161,13 @@ class WelcomeController < ApplicationController
       render :error
       return
     end
-    bd = Float(edge_lengths[1]) rescue nil
+    bd = Float(edge_lengths[1].sub('*', '.')) rescue nil
     if bd.nil?
       @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
       render :error
       return
     end
-    cd = Float(edge_lengths[2]) rescue nil
+    cd = Float(edge_lengths[2].sub('*', '.')) rescue nil
     if cd.nil?
       @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
       render :error
