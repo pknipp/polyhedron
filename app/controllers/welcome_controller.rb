@@ -28,6 +28,8 @@ class WelcomeController < ApplicationController
 
   def is_number(string)
     number = string_to_number(string)
+    puts string
+    puts number
     string == number.to_s.sub('.', '*')
   end
 
