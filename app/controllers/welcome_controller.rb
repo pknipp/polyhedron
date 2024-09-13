@@ -39,6 +39,7 @@ class WelcomeController < ApplicationController
     @vertices = vertices
     edges = {}
     @edges = edges
+    
     # parse the entire url
     shape = params[:shape].gsub(/\s+/, "")
     first_char = shape[0]
@@ -83,12 +84,6 @@ class WelcomeController < ApplicationController
     a = Vertex.new([0, 0, 0])
     zeroth_name, first_name = vertex_names.first(2)
     vertices[zeroth_name] = a
-    # if !is_number(edge_lengths[0])
-      # @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
-      # render :error
-      # return
-    # end
-    # ab = string_to_number(edge_lengths[0])
     ab = Float(edge_lengths[0].sub('*', '.')) rescue nil
     if ab.nil?
       @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
@@ -129,7 +124,11 @@ class WelcomeController < ApplicationController
 
     # parse the (first) tetrahedron
     tetrahedron = shape_arr[1].split(",")
-    # TODO: error message unless tetrahedron has 7 elements
+    if tetrahedron.length != 7
+      @error = "The second element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
+      render :error
+      return
+    end
     vertex_names = tetrahedron.first(4)
     existing = vertex_names.first(3)
     existing_string = "[" + existing.join(", ") + "]"
@@ -138,7 +137,9 @@ class WelcomeController < ApplicationController
     end
     new_name = vertex_names.last(1)[0]
     if vertices.has_key?(new_name)
-      # return error if this name is already in vertices hashmap
+      @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
+      render :error
+      return
     end
     edge_lengths = tetrahedron.last(3)
     ad = Float(edge_lengths[0].sub('*', '.')) rescue nil
