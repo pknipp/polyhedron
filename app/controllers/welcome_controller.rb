@@ -22,20 +22,6 @@ class WelcomeController < ApplicationController
     end
   end
 
-  # def string_to_number(string)
-    # string = string.sub('*', '.').to_f
-  # end
-
-  # def is_number(string)
-    # string = string.sub('*', '.')
-    # if string.include?('.')
-#
-    # number = string_to_number(string)
-    # puts string
-    # puts number
-    # string == number.to_s.sub('.', '*')
-  # end
-
   def make_edge(zeroth_name, first_name, vertices, edges)
     if first_name < zeroth_name
       swap = first_name

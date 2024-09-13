@@ -12,16 +12,18 @@
         <b>Instructions:</b> After <tt>...herokuapp.com</tt> above the user should type something that resembles an array of arrays, as follows:
         <ul>
           <li>
-            <b>First element:</b> This is be a six-element array that characterizes the first triangular face of the polyhedron.  Each of the first three elements is a string that names a vertex, and all characters for this string are legal except for a comma. (The use of whitespace in any string is allowed but discouraged.) The last three elements should be the lengths<sup>*</sup> of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 3rd and 1st vertices respectively.
+            <b>First element:</b> This is be a six-element array that characterizes the first triangular face of the polyhedron.  Each of the first three elements is a string that names a vertex, and all characters for this string are legal except for a comma. The last three elements should be the lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 3rd and 1st vertices respectively.
           </li>
           <li>
-            <b>Subsequent elements (optional):</b>  Each of these is a seven-element array that characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the first three is a string (name) for an existing vertex of the polyhedron, and the fourth is a string that names the vertex added here.  As for the first element, no string may contain a comma.  (In the remaining instructions these vertices are called "existing" or "added".) The last three elements are the lengths<sup>*</sup> of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the other vertices, when the existing vertices are viewed clockwise.
+            <b>Subsequent elements (optional):</b>  Each of these is a seven-element array that characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the first three is a string (name) for an existing vertex of the polyhedron, and the fourth is a string that names the vertex added here. (In the remaining instructions these vertices are called "existing" or "added".) The last three elements are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the other vertices, when the existing vertices are viewed clockwise.
           </li>
         </ul>
         Notes:
-        <ul>
-          <li> This will return html.  Json will only be returned in the case of errors.</li>
-          <li><sup>*</sup>A decimal point should be represented by an asterisk rather than by a period, owing to the fact that the latter has a special meaning in a url.</li>
+        <br/> This will only return html (not json), even for the case of errors.
+        <br/> Rules for urls:<ul>
+        <li> The use of whitespace is allowed but discouraged.</li>
+        <li> Commas are prohibited except for separating elements in arrays.</li>
+        <li> Numbers may be represented in many different ways except that any decimal point should be represented by an asterisk rather than by a period owing to the fact that the latter has a special meaning in a url.</li>
         </ul>
       </div>
       <br/>
