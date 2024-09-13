@@ -22,8 +22,13 @@ class WelcomeController < ApplicationController
     end
   end
 
-  def number(string)
+  def string_to_number(string)
     string = string.sub('*', '.').to_f
+  end
+
+  def is_number(string)
+    number = string_to_number(string)
+    string == number.to_s.sub('.', '*')
   end
 
   def make_edge(zeroth_name, first_name, vertices, edges)
@@ -87,7 +92,7 @@ class WelcomeController < ApplicationController
     a = Vertex.new([0, 0, 0])
     zeroth_name, first_name = vertex_names.first(2)
     vertices[zeroth_name] = a
-    ab = number(edge_lengths[0])
+    ab = string_to_number(edge_lengths[0])
     if vertices.has_key?(first_name)
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
       render :error
@@ -102,8 +107,8 @@ class WelcomeController < ApplicationController
       render :error
       return
     end
-    bc = number(edge_lengths[1])
-    ac = number(edge_lengths[2])
+    bc = string_to_number(edge_lengths[1])
+    ac = string_to_number(edge_lengths[2])
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new([cx, cy, 0])
@@ -115,6 +120,7 @@ class WelcomeController < ApplicationController
     # TODO: error message unless tetrahedron has 7 elements
     vertex_names = tetrahedron.first(4)
     existing = vertex_names.first(3)
+    existing_string = "[" + existing.join(", ") + "]"
     if !vertices.has_key?(existing[0]) || !vertices.has_key?(existing[1]) || !vertices.has_key?(existing[2])
       # return error if any of these names are not already in vertices hashmap
     end
@@ -123,9 +129,9 @@ class WelcomeController < ApplicationController
       # return error if this name is already in vertices hashmap
     end
     edge_lengths = tetrahedron.last(3)
-    ad = number(edge_lengths[0])
-    bd = number(edge_lengths[1])
-    cd = number(edge_lengths[2])
+    ad = string_to_number(edge_lengths[0])
+    bd = string_to_number(edge_lengths[1])
+    cd = string_to_number(edge_lengths[2])
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
     dy = (s * ac - dx * cx) / cy
