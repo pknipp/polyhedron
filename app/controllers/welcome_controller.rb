@@ -27,6 +27,9 @@ class WelcomeController < ApplicationController
   end
 
   def is_number(string)
+    string = string.sub('*', '.')
+    if string.include?('.')
+
     number = string_to_number(string)
     puts string
     puts number
@@ -94,12 +97,18 @@ class WelcomeController < ApplicationController
     a = Vertex.new([0, 0, 0])
     zeroth_name, first_name = vertex_names.first(2)
     vertices[zeroth_name] = a
-    if !is_number(edge_lengths[0])
+    # if !is_number(edge_lengths[0])
+      # @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
+      # render :error
+      # return
+    # end
+    # ab = string_to_number(edge_lengths[0])
+    ab = Float(edge_lengths[0]) rescue nil
+    if ab.nil?
       @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
       render :error
       return
     end
-    ab = string_to_number(edge_lengths[0])
     if vertices.has_key?(first_name)
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
       render :error
