@@ -134,7 +134,7 @@ class WelcomeController < ApplicationController
     existing_string = "[" + triangle_names.join(", ") + "]"
     base = base_names.join("-")
     if !vertices.has_key?(base_names[0])
-      @error = "A vertex (" + base_names[0] ") named in the base (" + base + ") of a tetrahedron does not seem one of the existing ones ([" + existing_string + ")."
+      @error = "A vertex (" + base_names[0] + ") named in the base (" + base + ") of a tetrahedron does not seem one of the existing ones ([" + existing_string + ")."
       render :error
       return
     end
