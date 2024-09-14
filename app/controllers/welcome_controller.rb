@@ -138,9 +138,9 @@ class WelcomeController < ApplicationController
       render :error
       return
     end
-    if !vertices.has_key?(existing[0]) || !vertices.has_key?(existing[1]) || !vertices.has_key?(existing[2])
+    # if !vertices.has_key?(existing[0]) || !vertices.has_key?(existing[1]) || !vertices.has_key?(existing[2])
       # return error if any of these names are not already in vertices hashmap
-    end
+    # end
     new_name = tetrahedron_names.last(1)[0]
     if vertices.has_key?(new_name)
       @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
@@ -172,9 +172,9 @@ class WelcomeController < ApplicationController
     arg = ad * ad - dx * dx - dy * dy
     dz = Math.sqrt(arg)
     vertices[new_name] = Vertex.new([dx, dy, dz])
-    make_edge(existing[0], new_name, vertices, edges)
-    make_edge(existing[1], new_name, vertices, edges)
-    make_edge(existing[2], new_name, vertices, edges)
+    make_edge(base_names[0], new_name, vertices, edges)
+    make_edge(base_names[1], new_name, vertices, edges)
+    make_edge(base_names[2], new_name, vertices, edges)
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
