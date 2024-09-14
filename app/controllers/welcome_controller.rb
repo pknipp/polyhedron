@@ -131,12 +131,13 @@ class WelcomeController < ApplicationController
     end
     tetrahedron_names = tetrahedron.first(4)
     base_names = tetrahedron_names.first(3)
-    existing_string = "[" + triangle_names.join(", ") + "]"
     base = base_names.join("-")
-    if !vertices.has_key?(base_names[0])
-      @error = "A vertex (" + base_names[0] + ") named in the base (" + base + ") of a tetrahedron does not seem one of the existing ones ([" + existing_string + ")."
-      render :error
-      return
+    base_names.each do |base_name|
+      if !vertices.has_key?(base_name)
+        @error = "A vertex (" + base_name + ") named in the base (" + base + ") of a tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
+        render :error
+        return
+      end
     end
     # if !vertices.has_key?(existing[0]) || !vertices.has_key?(existing[1]) || !vertices.has_key?(existing[2])
       # return error if any of these names are not already in vertices hashmap
