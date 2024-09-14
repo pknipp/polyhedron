@@ -45,8 +45,7 @@ class WelcomeController < ApplicationController
     first_char = shape[0]
     if first_char != "["
       @error = "The path's first character should be '[' not '" + first_char + "'."
-      render :error
-      return
+      return render :error
     end
     shape = shape[1..-1]
     second_char = shape[0]
@@ -139,9 +138,6 @@ class WelcomeController < ApplicationController
         return
       end
     end
-    # if !vertices.has_key?(existing[0]) || !vertices.has_key?(existing[1]) || !vertices.has_key?(existing[2])
-      # return error if any of these names are not already in vertices hashmap
-    # end
     new_name = tetrahedron_names.last(1)[0]
     if vertices.has_key?(new_name)
       @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
