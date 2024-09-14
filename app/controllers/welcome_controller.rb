@@ -39,7 +39,7 @@ class WelcomeController < ApplicationController
     @vertices = vertices
     edges = {}
     @edges = edges
-    
+
     # parse the entire url
     shape = params[:shape].gsub(/\s+/, "")
     first_char = shape[0]
@@ -79,10 +79,10 @@ class WelcomeController < ApplicationController
       render :error
       return
     end
-    vertex_names = triangle.first(3)
+    triangle_names = triangle.first(3)
     edge_lengths = triangle.last(3)
     a = Vertex.new([0, 0, 0])
-    zeroth_name, first_name = vertex_names.first(2)
+    zeroth_name, first_name = triangle_names.first(2)
     vertices[zeroth_name] = a
     ab = Float(edge_lengths[0].sub('*', '.')) rescue nil
     if ab.nil?
@@ -98,7 +98,7 @@ class WelcomeController < ApplicationController
       vertices[first_name] = Vertex.new([ab, 0, 0])
     end
     make_edge(zeroth_name, first_name, vertices, edges)
-    first_name = vertex_names[2]
+    first_name = triangle_names[2]
     if vertices.has_key?(first_name)
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
       render :error
@@ -119,8 +119,8 @@ class WelcomeController < ApplicationController
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new([cx, cy, 0])
-    make_edge(vertex_names[1], first_name, vertices, edges)
-    make_edge(vertex_names[0], first_name, vertices, edges)
+    make_edge(triangle_names[1], first_name, vertices, edges)
+    make_edge(triangle_names[0], first_name, vertices, edges)
 
     # parse the (first) tetrahedron
     tetrahedron = shape_arr[1].split(",")
@@ -129,13 +129,19 @@ class WelcomeController < ApplicationController
       render :error
       return
     end
-    vertex_names = tetrahedron.first(4)
-    existing = vertex_names.first(3)
-    existing_string = "[" + existing.join(", ") + "]"
+    tetrahedron_names = tetrahedron.first(4)
+    base_names = tetrahedron_names.first(3)
+    existing_string = "[" + triangle_names.join(", ") + "]"
+    base = base_names.join("-")
+    if !vertices.has_key?(base_names[0])
+      @error = "A vertex (" + base_names[0] ") named in the base (" + base + ") of a tetrahedron does not seem one of the existing ones ([" + existing_string + ")."
+      render :error
+      return
+    end
     if !vertices.has_key?(existing[0]) || !vertices.has_key?(existing[1]) || !vertices.has_key?(existing[2])
       # return error if any of these names are not already in vertices hashmap
     end
-    new_name = vertex_names.last(1)[0]
+    new_name = tetrahedron_names.last(1)[0]
     if vertices.has_key?(new_name)
       @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
       render :error
