@@ -4,6 +4,13 @@
       <li>MVP:
         <ul>
           <li> Parse url for an array with 1 + <i>n</i> elements in order to generate and render more tetrahedra, thereby rendering non-tetrahedral simplicial polyhedra.</li>
+          <li> Bifurcation of endpoints, as follows:</li>
+          <ul>
+            <li> Existing endpoints starts with <tt>edges</tt>.
+            <li> New set starts with <tt>coordinates</tt>.
+            <li> First part of path is array of vertices, each of which includes name and 3 coordinates.
+            <li> Second part of path is array of pairs of vertices which should be connected by an edge.
+          </ul>
         </ul>
       </li>
       <li>Stretch:
