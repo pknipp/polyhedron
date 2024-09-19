@@ -149,11 +149,13 @@ class WelcomeController < ApplicationController
       return render :error
     end
     dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
+    puts dx
     s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
     dy = (s * ac - dx * cx) / cy
+    puts dy
     dz_sq = ad * ad - dx * dx - dy * dy
     if dz_sq < 0
-      @error = "The three edge lengths cannot form a tetrahedron above this triangle."
+      @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
       return render :error
     end
     vertices[new_name] = Vertex.new([dx, dy, Math.sqrt(dz_sq)])
