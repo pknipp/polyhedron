@@ -24,6 +24,33 @@ class WelcomeController < ApplicationController
     end
   end
 
+  class VertexPlusEdgeLength
+    attr_accessor :vertex
+    attr_accessor :edge_length
+    def initialize(vertex, edge_length)
+        @vertex = vertex
+        @edge_length = edge_length
+    end
+  end
+
+  class tetrahedron
+    attr_accessor :vertices
+    attr_accessor :apex
+    def initialize(vertices, apex)
+      @vertices = vertices
+      @apex = apex
+    end
+  end
+
+  class tetrahedron
+    attr_accessor :vertices
+    attr_accessor :edge_lengths
+    def initialize(vertices, edge_lengths)
+      @vertices = vertices
+      @edge_lengths = edge_lengths
+    end
+  end
+
   def make_edge(zeroth_name, first_name, vertices, edges)
     if first_name < zeroth_name
       swap = first_name
@@ -116,27 +143,27 @@ class WelcomeController < ApplicationController
 
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
-    tetrahedra.each_with_index {|tetrahedron_string, index|
-      tetrahedron = tetrahedron_string.split(",")
-      if tetrahedron.length != 7
-        @error = "The " + (index + 1).to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
+    tetrahedra.each_with_index {|tetrahedron_string, i|
+      tetrahedron_array = tetrahedron_string.split(",")
+      if tetrahedron_array.length != 7
+        @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
         return render :error
       end
-      tetrahedron_names = tetrahedron.first(4)
-      base_names = tetrahedron_names.first(3)
-      base = base_names.join("-")
-      base_names.each do |base_name|
-        if !vertices.has_key?(base_name)
-          @error = "A vertex (" + base_name + ") named in the base (" + base + ") of a tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
-          return render :error
-        end
-      end
-      new_name = tetrahedron_names.last(1)[0]
+      base_names = tetrahedron_array.first(4)
+      new_name = base_names.pop
       if vertices.has_key?(new_name)
         @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
         return render :error
       end
-      edge_length_strings = tetrahedron.last(3)
+      base = base_names.join("-")
+      base_names.each_with_index |name, j|
+        if !vertices.has_key?(name)
+          @error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
+          return render :error
+        end
+      end
+
+      triangle_length_strings = tetrahedron.last(3)
       lengths = edge_length_strings.map {|length|
         parse_attempt = Float(length.sub('*', '.')) rescue nil
         if parse_attempt.nil?
