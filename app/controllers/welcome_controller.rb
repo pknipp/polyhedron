@@ -112,56 +112,60 @@ class WelcomeController < ApplicationController
     make_edge(triangle_names[1], first_name, vertices, edges)
     make_edge(triangle_names[0], first_name, vertices, edges)
 
-    # parse the (first) tetrahedron
-    tetrahedron = shape_arr[1].split(",")
-    if tetrahedron.length != 7
-      @error = "The second element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
-      return render :error
-    end
-    tetrahedron_names = tetrahedron.first(4)
-    base_names = tetrahedron_names.first(3)
-    base = base_names.join("-")
-    base_names.each do |base_name|
-      if !vertices.has_key?(base_name)
-        @error = "A vertex (" + base_name + ") named in the base (" + base + ") of a tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
+    # parse the tetrahedra
+    tetrahedra = shape_arr.drop(1)
+    tetrahedra.each_with_index {|tetrahedron_string, index|
+      tetrahedron = tetrahedron_string.split(",")
+      if tetrahedron.length != 7
+        @error = "The " + (index + 1) + "-th element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
         return render :error
       end
-    end
-    new_name = tetrahedron_names.last(1)[0]
-    if vertices.has_key?(new_name)
-      @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
-      return render :error
-    end
-    edge_lengths = tetrahedron.last(3)
-    ad = Float(edge_lengths[0].sub('*', '.')) rescue nil
-    if ad.nil?
-      @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
-      return render :error
-    end
-    bd = Float(edge_lengths[1].sub('*', '.')) rescue nil
-    if bd.nil?
-      @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
-      return render :error
-    end
-    cd = Float(edge_lengths[2].sub('*', '.')) rescue nil
-    if cd.nil?
-      @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
-      return render :error
-    end
-    dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
-    puts dx
-    s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
-    dy = (s * ac - dx * cx) / cy
-    puts dy
-    dz_sq = ad * ad - dx * dx - dy * dy
-    if dz_sq < 0
-      @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
-      return render :error
-    end
-    vertices[new_name] = Vertex.new([dx, dy, Math.sqrt(dz_sq)])
-    make_edge(base_names[0], new_name, vertices, edges)
-    make_edge(base_names[1], new_name, vertices, edges)
-    make_edge(base_names[2], new_name, vertices, edges)
+      tetrahedron_names = tetrahedron.first(4)
+      base_names = tetrahedron_names.first(3)
+      base = base_names.join("-")
+      base_names.each do |base_name|
+        if !vertices.has_key?(base_name)
+          @error = "A vertex (" + base_name + ") named in the base (" + base + ") of a tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
+          return render :error
+        end
+      end
+      new_name = tetrahedron_names.last(1)[0]
+      if vertices.has_key?(new_name)
+        @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
+        return render :error
+      end
+      edge_lengths = tetrahedron.last(3)
+      ad = Float(edge_lengths[0].sub('*', '.')) rescue nil
+      if ad.nil?
+        @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
+        return render :error
+      end
+      bd = Float(edge_lengths[1].sub('*', '.')) rescue nil
+      if bd.nil?
+        @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
+        return render :error
+      end
+      cd = Float(edge_lengths[2].sub('*', '.')) rescue nil
+      if cd.nil?
+        @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
+        return render :error
+      end
+      dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
+      puts dx
+      s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
+      dy = (s * ac - dx * cx) / cy
+      puts dy
+      dz_sq = ad * ad - dx * dx - dy * dy
+      if dz_sq < 0
+        @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
+        return render :error
+      end
+      vertices[new_name] = Vertex.new([dx, dy, Math.sqrt(dz_sq)])
+      make_edge(base_names[0], new_name, vertices, edges)
+      make_edge(base_names[1], new_name, vertices, edges)
+      make_edge(base_names[2], new_name, vertices, edges)
+
+    }
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
