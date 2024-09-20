@@ -116,7 +116,6 @@ class WelcomeController < ApplicationController
     tetrahedra = shape_arr.drop(1)
     tetrahedra.each_with_index {|tetrahedron_string, index|
       tetrahedron = tetrahedron_string.split(",")
-      puts tetrahedron
       if tetrahedron.length != 7
         @error = "The " + (index + 1) + "-th element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
         return render :error
@@ -159,14 +158,12 @@ class WelcomeController < ApplicationController
         # @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
         # return render :error
       # end
-      ad = length[0]
-      bd = length[1]
-      cd = length[2]
+      ad = lengths[0]
+      bd = lengths[1]
+      cd = lengths[2]
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
-      puts dx
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
-      puts dy
       dz_sq = ad * ad - dx * dx - dy * dy
       if dz_sq < 0
         @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
