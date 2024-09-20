@@ -9,8 +9,10 @@ class WelcomeController < ApplicationController
   end
 
   class Vertex
+    attr_accessor :name
     attr_accessor :coords
-    def initialize(coords)
+    def initialize(name, coords)
+      @name = name
       @coords = coords
     end
   end
@@ -76,8 +78,8 @@ class WelcomeController < ApplicationController
     end
     triangle_names = triangle.first(3)
     edge_lengths = triangle.last(3)
-    a = Vertex.new([0, 0, 0])
     zeroth_name, first_name = triangle_names.first(2)
+    a = Vertex.new(zeroth_name, [0, 0, 0])
     vertices[zeroth_name] = a
     ab = Float(edge_lengths[0].sub('*', '.')) rescue nil
     if ab.nil?
@@ -88,7 +90,7 @@ class WelcomeController < ApplicationController
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
       return render :error
     else
-      vertices[first_name] = Vertex.new([ab, 0, 0])
+      vertices[first_name] = Vertex.new(first_name, [ab, 0, 0])
     end
     make_edge(zeroth_name, first_name, vertices, edges)
     first_name = triangle_names[2]
@@ -108,7 +110,7 @@ class WelcomeController < ApplicationController
     end
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
-    vertices[first_name] = Vertex.new([cx, cy, 0])
+    vertices[first_name] = Vertex.new(first_name, [cx, cy, 0])
     make_edge(triangle_names[1], first_name, vertices, edges)
     make_edge(triangle_names[0], first_name, vertices, edges)
 
@@ -154,7 +156,7 @@ class WelcomeController < ApplicationController
         @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
         return render :error
       end
-      vertices[new_name] = Vertex.new([dx, dy, Math.sqrt(dz_sq)])
+      vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
       make_edge(base_names[0], new_name, vertices, edges)
       make_edge(base_names[1], new_name, vertices, edges)
       make_edge(base_names[2], new_name, vertices, edges)
