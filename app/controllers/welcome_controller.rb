@@ -42,15 +42,6 @@ class WelcomeController < ApplicationController
     end
   end
 
-  class tetrahedron
-    attr_accessor :vertices
-    attr_accessor :edge_lengths
-    def initialize(vertices, edge_lengths)
-      @vertices = vertices
-      @edge_lengths = edge_lengths
-    end
-  end
-
   def make_edge(zeroth_name, first_name, vertices, edges)
     if first_name < zeroth_name
       swap = first_name
