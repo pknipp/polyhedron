@@ -117,7 +117,7 @@ class WelcomeController < ApplicationController
     tetrahedra.each_with_index {|tetrahedron_string, index|
       tetrahedron = tetrahedron_string.split(",")
       if tetrahedron.length != 7
-        @error = "The " + (index + 1) + "-th element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
+        @error = "The " + (index + 1).to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
         return render :error
       end
       tetrahedron_names = tetrahedron.first(4)
@@ -143,21 +143,6 @@ class WelcomeController < ApplicationController
         end
         parse_attempt
       }
-      # ad = Float(edge_lengths[0].sub('*', '.')) rescue nil
-      # if ad.nil?
-        # @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
-        # return render :error
-      # end
-      # bd = Float(edge_lengths[1].sub('*', '.')) rescue nil
-      # if bd.nil?
-        # @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
-        # return render :error
-      # end
-      # cd = Float(edge_lengths[2].sub('*', '.')) rescue nil
-      # if cd.nil?
-        # @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
-        # return render :error
-      # end
       ad = lengths[0]
       bd = lengths[1]
       cd = lengths[2]
