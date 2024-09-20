@@ -134,22 +134,33 @@ class WelcomeController < ApplicationController
         @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
         return render :error
       end
-      edge_lengths = tetrahedron.last(3)
-      ad = Float(edge_lengths[0].sub('*', '.')) rescue nil
-      if ad.nil?
-        @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
-        return render :error
-      end
-      bd = Float(edge_lengths[1].sub('*', '.')) rescue nil
-      if bd.nil?
-        @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
-        return render :error
-      end
-      cd = Float(edge_lengths[2].sub('*', '.')) rescue nil
-      if cd.nil?
-        @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
-        return render :error
-      end
+      edge_length_strings = tetrahedron.last(3)
+      lengths = edge_length_strings.map {|length|
+        parse_attempt = Float(length.sub('*', '.')) rescue nil
+        if parse_attempt.nil?
+          @error = "The path fragment " + length + " cannot be parsed as a number."
+          return render :error
+        end
+        parse_attempt
+      }
+      # ad = Float(edge_lengths[0].sub('*', '.')) rescue nil
+      # if ad.nil?
+        # @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
+        # return render :error
+      # end
+      # bd = Float(edge_lengths[1].sub('*', '.')) rescue nil
+      # if bd.nil?
+        # @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
+        # return render :error
+      # end
+      # cd = Float(edge_lengths[2].sub('*', '.')) rescue nil
+      # if cd.nil?
+        # @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
+        # return render :error
+      # end
+      ad = length[0]
+      bd = length[1]
+      cd = length[2]
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
       puts dx
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
