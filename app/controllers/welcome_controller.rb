@@ -116,6 +116,7 @@ class WelcomeController < ApplicationController
     tetrahedra = shape_arr.drop(1)
     tetrahedra.each_with_index {|tetrahedron_string, index|
       tetrahedron = tetrahedron_string.split(",")
+      puts tetrahedron
       if tetrahedron.length != 7
         @error = "The " + (index + 1) + "-th element of the path's array should have 7 elements, not " + tetrahedron.length.to_s + "."
         return render :error
