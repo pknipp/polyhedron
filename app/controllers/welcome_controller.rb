@@ -23,24 +23,24 @@ class WelcomeController < ApplicationController
       @ends = ends
     end
   end
-
-  # class VertexPlusEdgeLength
-    # attr_accessor :vertex
-    # attr_accessor :edge_length
-    # def initialize(vertex, edge_length)
-        # @vertex = vertex
-        # @edge_length = edge_length
-    # end
-  # end
 #
-  # class Tetrahedron
-    # attr_accessor :vertices
-    # attr_accessor :apex
-    # def initialize(vertices, apex)
-      # @vertices = vertices
-      # @apex = apex
-    # end
-  # end
+  class VertexPlusEdgeLength
+    attr_accessor :vertex
+    attr_accessor :edge_length
+    def initialize(vertex, edge_length)
+        @vertex = vertex
+        @edge_length = edge_length
+    end
+  end
+
+  class Tetrahedron
+    attr_accessor :vertices
+    attr_accessor :apex
+    def initialize(vertices, apex)
+      @vertices = vertices
+      @apex = apex
+    end
+  end
 
   def make_edge(zeroth_name, first_name, vertices, edges)
     if first_name < zeroth_name
@@ -135,6 +135,7 @@ class WelcomeController < ApplicationController
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
     tetrahedra.each_with_index {|tetrahedron_string, i|
+      tetrahedron = Tetrahedron.new([], nil)
       tetrahedron_array = tetrahedron_string.split(",")
       if tetrahedron_array.length != 7
         @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
@@ -148,14 +149,15 @@ class WelcomeController < ApplicationController
       end
       base = base_names.join("-")
       edge_length_strings = tetrahedron_array.last(3)
-      tetrahedron_edges = []
+      tetrahedron_vertices = []
       for j in 0..2 do
         name = base_names[j]
         length_string = edge_length_strings[j]
         length_attempt = Float(length_string.sub('*', '.')) rescue nil
         error = nil
         if vertices.has_key?(name) && !length_attempt.nil?
-          tetrahedron_edges.push(length_attempt)
+          te
+          tetrahedron_vertices.push(VertexPlusEdgeLength(vertices[name], length_attempt))
         else
           if !vertices.has_key?(name)
             error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
@@ -168,9 +170,9 @@ class WelcomeController < ApplicationController
           return render :error
         end
       end
-      ad = tetrahedron_edges[0]
-      bd = tetrahedron_edges[1]
-      cd = tetrahedron_edges[2]
+      ad = tetrahedron.vertices[0].edge_length
+      bd = tetrahedron.vertices[1].edge_length
+      cd = tetrahedron.vertices[2].edge_length
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
