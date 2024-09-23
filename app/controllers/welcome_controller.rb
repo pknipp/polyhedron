@@ -173,7 +173,7 @@ class WelcomeController < ApplicationController
 
       for j in 0..2 do
         for k in 0..2 do
-          tetrahedron.vertices[j].coords[k] -= origin[k]
+          tetrahedron.vertices[j].vertex.coords[k] -= origin[k]
         end
         # also include this adjustment for tetrahedron.apex.coords[k]
       end
@@ -195,7 +195,7 @@ class WelcomeController < ApplicationController
 
       for j in 0..2 do
         for k in 0..2 do
-          tetrahedron.vertices[j].coords[k] += origin[k]
+          tetrahedron.vertices[j].vertex.coords[k] += origin[k]
         end
       end
 
