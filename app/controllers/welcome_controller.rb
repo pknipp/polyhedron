@@ -165,6 +165,7 @@ class WelcomeController < ApplicationController
           end
         end
         if !error.nil?
+          puts "INSIDE BRANCH ABOUT ERROR.NIL"
           @error = error
           return render :error
         end
