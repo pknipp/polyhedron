@@ -32,7 +32,7 @@ class WelcomeController < ApplicationController
         # @edge_length = edge_length
     # end
   # end
-# 
+#
   # class Tetrahedron
     # attr_accessor :vertices
     # attr_accessor :apex
@@ -168,6 +168,7 @@ class WelcomeController < ApplicationController
           return render :error
         end
       end
+      puts "DOES THIS CODE GET REACHED?"
       ad = tetrahedron_edges[0]
       bd = tetrahedron_edges[1]
       cd = tetrahedron_edges[2]
