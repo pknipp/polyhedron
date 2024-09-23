@@ -169,7 +169,7 @@ class WelcomeController < ApplicationController
           return render :error
         end
       end
-      origin = tetrahedron_vertices[0].vertex.coords
+      origin = tetrahedron_vertices[0].vertex.coords.dup
 
       for j in 0..2 do
         for k in 0..2 do
