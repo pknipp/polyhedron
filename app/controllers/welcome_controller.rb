@@ -33,7 +33,7 @@ class WelcomeController < ApplicationController
     end
   end
 
-  class tetrahedron
+  class Tetrahedron
     attr_accessor :vertices
     attr_accessor :apex
     def initialize(vertices, apex)
@@ -147,12 +147,12 @@ class WelcomeController < ApplicationController
         return render :error
       end
       base = base_names.join("-")
-      base_names.each_with_index |name, j|
+      base_names.each_with_index {|name, j|
         if !vertices.has_key?(name)
           @error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
           return render :error
         end
-      end
+      }
 
       triangle_length_strings = tetrahedron.last(3)
       lengths = edge_length_strings.map {|length|
