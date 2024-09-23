@@ -169,7 +169,8 @@ class WelcomeController < ApplicationController
           return render :error
         end
       end
-      origin = tetrahedron_vertices[0].vertex.coords.dup
+      tetrahedron.vertices = tetrahedron_vertices
+      origin = tetrahedron.vertices[0].vertex.coords.dup
 
       for j in 0..2 do
         for k in 0..2 do
@@ -178,7 +179,6 @@ class WelcomeController < ApplicationController
         # also include this adjustment for tetrahedron.apex.coords[k]
       end
 
-      tetrahedron.vertices = tetrahedron_vertices
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
       cd = tetrahedron.vertices[2].edge_length
