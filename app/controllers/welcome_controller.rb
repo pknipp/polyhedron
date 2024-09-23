@@ -156,7 +156,6 @@ class WelcomeController < ApplicationController
         length_attempt = Float(length_string.sub('*', '.')) rescue nil
         error = nil
         if vertices.has_key?(name) && !length_attempt.nil?
-          te
           tetrahedron_vertices.push(VertexPlusEdgeLength(vertices[name], length_attempt))
         else
           if !vertices.has_key?(name)
