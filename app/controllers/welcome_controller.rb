@@ -156,7 +156,7 @@ class WelcomeController < ApplicationController
         length_attempt = Float(length_string.sub('*', '.')) rescue nil
         error = nil
         if vertices.has_key?(name) && !length_attempt.nil?
-          tetrahedron_vertices.push(VertexPlusEdgeLength(vertices[name], length_attempt))
+          tetrahedron_vertices.push(VertexPlusEdgeLength.new(vertices[name], length_attempt))
         else
           if !vertices.has_key?(name)
             error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
