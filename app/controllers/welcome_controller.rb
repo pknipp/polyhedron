@@ -154,7 +154,7 @@ class WelcomeController < ApplicationController
         end
       }
 
-      triangle_length_strings = tetrahedron.last(3)
+      edge_length_strings = tetrahedron_array.last(3)
       lengths = edge_length_strings.map {|length|
         parse_attempt = Float(length.sub('*', '.')) rescue nil
         if parse_attempt.nil?
