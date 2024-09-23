@@ -24,23 +24,23 @@ class WelcomeController < ApplicationController
     end
   end
 
-  class VertexPlusEdgeLength
-    attr_accessor :vertex
-    attr_accessor :edge_length
-    def initialize(vertex, edge_length)
-        @vertex = vertex
-        @edge_length = edge_length
-    end
-  end
-
-  class Tetrahedron
-    attr_accessor :vertices
-    attr_accessor :apex
-    def initialize(vertices, apex)
-      @vertices = vertices
-      @apex = apex
-    end
-  end
+  # class VertexPlusEdgeLength
+    # attr_accessor :vertex
+    # attr_accessor :edge_length
+    # def initialize(vertex, edge_length)
+        # @vertex = vertex
+        # @edge_length = edge_length
+    # end
+  # end
+# 
+  # class Tetrahedron
+    # attr_accessor :vertices
+    # attr_accessor :apex
+    # def initialize(vertices, apex)
+      # @vertices = vertices
+      # @apex = apex
+    # end
+  # end
 
   def make_edge(zeroth_name, first_name, vertices, edges)
     if first_name < zeroth_name
