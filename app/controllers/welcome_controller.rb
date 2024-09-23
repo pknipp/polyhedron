@@ -147,25 +147,30 @@ class WelcomeController < ApplicationController
         return render :error
       end
       base = base_names.join("-")
-      base_names.each_with_index {|name, j|
-        if !vertices.has_key?(name)
-          @error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
-          return render :error
-        end
-      }
-
       edge_length_strings = tetrahedron_array.last(3)
-      lengths = edge_length_strings.map {|length|
-        parse_attempt = Float(length.sub('*', '.')) rescue nil
-        if parse_attempt.nil?
-          @error = "The path fragment " + length + " cannot be parsed as a number."
+      tetrahedron_edges = []
+      for j in 0..2 {
+        name = base_names[j]
+        length_string = edge_length_strings[j]
+        length_attempt = Float(length_string.sub('*', '.')) rescue nil
+        error = nil
+        if vertices.has_key?(name) && !length_attempt.nil?
+          tetrahedron_edges.push(length_attempt)
+        else
+          if !vertices.has_key?(name)
+            error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
+          else
+            @error = "The path fragment " + length_string + " cannot be parsed as a number."
+          end
+        end
+        if !error.nil?
+          @error = error
           return render :error
         end
-        parse_attempt
       }
-      ad = lengths[0]
-      bd = lengths[1]
-      cd = lengths[2]
+      ad = tetrahedron_edges[0]
+      bd = tetrahedron_edges[1]
+      cd = tetrahedron_edges[2]
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
@@ -178,7 +183,6 @@ class WelcomeController < ApplicationController
       make_edge(base_names[0], new_name, vertices, edges)
       make_edge(base_names[1], new_name, vertices, edges)
       make_edge(base_names[2], new_name, vertices, edges)
-
     }
 
     # based on max/min values of cartesian components of vertices,
