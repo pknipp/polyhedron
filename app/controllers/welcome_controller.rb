@@ -161,7 +161,7 @@ class WelcomeController < ApplicationController
             error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
           else
             puts "INSIDE BRANCH ABOUT LENGTH_STRING NOT PARSING"
-            @error = "The path fragment " + length_string + " cannot be parsed as a number."
+            error = "The path fragment " + length_string + " cannot be parsed as a number."
           end
         end
         if !error.nil?
