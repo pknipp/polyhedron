@@ -169,10 +169,20 @@ class WelcomeController < ApplicationController
           return render :error
         end
       end
+      origin = tetrahedron_vertices[0].vertex.coords
+
+      for j in 0..2 do
+        for k in 0..2 do
+          tetrahedron.vertices[j].coords[k] -= origin[k]
+        end
+        # also include this adjustment for tetrahedron.apex.coords[k]
+      end
+
       tetrahedron.vertices = tetrahedron_vertices
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
       cd = tetrahedron.vertices[2].edge_length
+      x =
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
@@ -182,6 +192,13 @@ class WelcomeController < ApplicationController
         return render :error
       end
       vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
+
+      for j in 0..2 do
+        for k in 0..2 do
+          tetrahedron.vertices[j].coords[k] += origin[k]
+        end
+      end
+
       make_edge(base_names[0], new_name, vertices, edges)
       make_edge(base_names[1], new_name, vertices, edges)
       make_edge(base_names[2], new_name, vertices, edges)
