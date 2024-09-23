@@ -169,6 +169,7 @@ class WelcomeController < ApplicationController
           return render :error
         end
       end
+      tetrahedron.vertices = tetrahedron_vertices
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
       cd = tetrahedron.vertices[2].edge_length
