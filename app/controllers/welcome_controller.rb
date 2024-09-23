@@ -149,7 +149,7 @@ class WelcomeController < ApplicationController
       base = base_names.join("-")
       edge_length_strings = tetrahedron_array.last(3)
       tetrahedron_edges = []
-      for j in 0..2 {
+      for j in 0..2 do
         name = base_names[j]
         length_string = edge_length_strings[j]
         length_attempt = Float(length_string.sub('*', '.')) rescue nil
@@ -167,7 +167,7 @@ class WelcomeController < ApplicationController
           @error = error
           return render :error
         end
-      }
+      end
       ad = tetrahedron_edges[0]
       bd = tetrahedron_edges[1]
       cd = tetrahedron_edges[2]
