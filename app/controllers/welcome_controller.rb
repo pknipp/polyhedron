@@ -186,7 +186,7 @@ class WelcomeController < ApplicationController
       cz = Math.cos(theta_z)
       sz = Math.sin(theta_z)
       for j in 0..2 do
-        tetrahedron.vertices[j].coords = [
+        tetrahedron.vertices[j].vertex.coords = [
           cz * coords[j][0] + sz * coords[j][2],
           coords[j][1],
           -sz * coords[j][0] + cz * coords[j][2],
