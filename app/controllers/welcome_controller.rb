@@ -176,9 +176,11 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[2].vertex.coords.dup,
       ]
 
+      origin = coords[0].dup
+
       for j in 0..2 do
         for k in 0..2 do
-          tetrahedron.vertices[j].vertex.coords[k] -= coords[0][k]
+          tetrahedron.vertices[j].vertex.coords[k] -= origin[k]
         end
       end
 
@@ -210,13 +212,13 @@ class WelcomeController < ApplicationController
       puts theta_y
       cy = Math.cos(theta_y)
       sy = Math.sin(theta_y)
-      for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
-          cy * coords[j][0] + sy * coords[j][2],
-          coords[j][1],
-          -sy * coords[j][0] + cy * coords[j][2],
-        ]
-      end
+      # for j in 0..2 do
+        # tetrahedron.vertices[j].vertex.coords = [
+          # cy * coords[j][0] + sy * coords[j][2],
+          # coords[j][1],
+          # -sy * coords[j][0] + cy * coords[j][2],
+        # ]
+      # end
 
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
@@ -232,13 +234,25 @@ class WelcomeController < ApplicationController
       end
       vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
 
-      for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
-          cy * coords[j][0] - sy * coords[j][2],
-          coords[j][1],
-          sy * coords[j][0] + cy * coords[j][2],
-        ]
-      end
+      coords = [
+        tetrahedron.vertices[0].vertex.coords.dup,
+        tetrahedron.vertices[1].vertex.coords.dup,
+        tetrahedron.vertices[2].vertex.coords.dup,
+      ]
+
+      # for j in 0..2 do
+        # tetrahedron.vertices[j].vertex.coords = [
+          # cy * coords[j][0] - sy * coords[j][2],
+          # coords[j][1],
+          # sy * coords[j][0] + cy * coords[j][2],
+        # ]
+      # end
+
+      coords = [
+        tetrahedron.vertices[0].vertex.coords.dup,
+        tetrahedron.vertices[1].vertex.coords.dup,
+        tetrahedron.vertices[2].vertex.coords.dup,
+      ]
 
       for j in 0..2 do
         tetrahedron.vertices[j].vertex.coords = [
@@ -251,7 +265,7 @@ class WelcomeController < ApplicationController
 
       for k in 0..2 do
         for j in 0..2 do
-          tetrahedron.vertices[j].vertex.coords[k] += coords[0][k]
+          tetrahedron.vertices[j].vertex.coords[k] += origin[k]
         end
         # also include this adjustment for tetrahedron.apex.coords[k]
       end
