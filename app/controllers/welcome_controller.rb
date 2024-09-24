@@ -23,7 +23,7 @@ class WelcomeController < ApplicationController
       @ends = ends
     end
   end
-#
+
   class VertexPlusEdgeLength
     attr_accessor :vertex
     attr_accessor :edge_length
@@ -157,8 +157,6 @@ class WelcomeController < ApplicationController
         error = nil
         if vertices.has_key?(name) && !length_attempt.nil?
           tetrahedron_vertices.push(VertexPlusEdgeLength.new(vertices[name], length_attempt))
-          puts "ANOTHER SUCCESSFUL PUSH"
-          puts tetrahedron_vertices[-1].inspect
         else
           if !vertices.has_key?(name)
             error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
@@ -177,10 +175,6 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[1].vertex.coords.dup,
         tetrahedron.vertices[2].vertex.coords.dup,
       ]
-      puts tetrahedron.vertices[0].vertex.inspect
-      puts tetrahedron.vertices[0].edge_length
-      puts tetrahedron.vertices[1].edge_length
-      puts tetrahedron.vertices[2].edge_length
 
       # translation
       origin = coords[0].dup
@@ -216,13 +210,13 @@ class WelcomeController < ApplicationController
       theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
       cos_y = Math.cos(theta_y)
       sin_y = Math.sin(theta_y)
-      # for j in 0..2 do
-        # tetrahedron.vertices[j].vertex.coords = [
-          # cos_y * coords[j][0] + sin_y * coords[j][2],
-          # coords[j][1],
-          # -sin_y * coords[j][0] + cos_y * coords[j][2],
-        # ]
-      # end
+      for j in 0..2 do
+        tetrahedron.vertices[j].vertex.coords = [
+          cos_y * coords[j][0] + sin_y * coords[j][2],
+          coords[j][1],
+          -sin_y * coords[j][0] + cos_y * coords[j][2],
+        ]
+      end
 
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
@@ -232,22 +226,6 @@ class WelcomeController < ApplicationController
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
       dz_sq = ad * ad - dx * dx - dy * dy
-      puts ad
-      puts bd
-      puts cd
-      puts "ab and ac"
-      puts ab
-      puts ac
-      puts "s and dx and cx and cy"
-      puts s
-      puts dx
-      puts cx
-      puts cy
-      puts s
-      puts "dy"
-      puts dy
-      puts "dz_sq"
-      puts dz_sq
       if dz_sq < 0
         @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
         return render :error
@@ -260,13 +238,13 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[1].vertex.coords.dup,
         tetrahedron.vertices[2].vertex.coords.dup,
       ]
-      # for j in 0..2 do
-        # tetrahedron.vertices[j].vertex.coords = [
-          # cos_y * coords[j][0] - sin_y * coords[j][2],
-          # coords[j][1],
-          # sin_y * coords[j][0] + cos_y * coords[j][2],
-        # ]
-      # end
+      for j in 0..2 do
+        tetrahedron.vertices[j].vertex.coords = [
+          cos_y * coords[j][0] - sin_y * coords[j][2],
+          coords[j][1],
+          sin_y * coords[j][0] + cos_y * coords[j][2],
+        ]
+      end
 
       # back-rotation about z-axis
       coords = [
