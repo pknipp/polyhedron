@@ -182,6 +182,12 @@ class WelcomeController < ApplicationController
         end
       end
 
+      coords = [
+        tetrahedron.vertices[0].vertex.coords.dup,
+        tetrahedron.vertices[1].vertex.coords.dup,
+        tetrahedron.vertices[2].vertex.coords.dup,
+      ]
+
       theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
       puts theta_z
       cz = Math.cos(theta_z)
@@ -193,6 +199,12 @@ class WelcomeController < ApplicationController
           coords[j][2],
         ]
       end
+
+      coords = [
+        tetrahedron.vertices[0].vertex.coords.dup,
+        tetrahedron.vertices[1].vertex.coords.dup,
+        tetrahedron.vertices[2].vertex.coords.dup,
+      ]
 
       theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
       puts theta_y
