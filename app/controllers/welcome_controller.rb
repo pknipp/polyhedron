@@ -157,6 +157,8 @@ class WelcomeController < ApplicationController
         error = nil
         if vertices.has_key?(name) && !length_attempt.nil?
           tetrahedron_vertices.push(VertexPlusEdgeLength.new(vertices[name], length_attempt))
+          puts "ANOTHER SUCCESSFUL PUSH"
+          puts tetrahedron_vertices[-1]
         else
           if !vertices.has_key?(name)
             error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
