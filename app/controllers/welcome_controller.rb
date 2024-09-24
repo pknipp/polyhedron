@@ -175,6 +175,7 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[1].vertex.coords.dup,
         tetrahedron.vertices[2].vertex.coords.dup,
       ]
+      puts tetrahedron.vertices[0].vertex
       puts tetrahedron.vertices[0].vertex.edge_length
       puts tetrahedron.vertices[1].vertex.edge_length
       puts tetrahedron.vertices[2].vertex.edge_length
