@@ -235,9 +235,18 @@ class WelcomeController < ApplicationController
       puts ad
       puts bd
       puts cd
-      puts dx
+      puts "ab and ac"
+      puts ab
+      puts ac
+      puts "s and dx and cx and cy"
       puts s
+      puts dx
+      puts cx
+      puts cy
+      puts s
+      puts "dy"
       puts dy
+      puts "dz_sq"
       puts dz_sq
       if dz_sq < 0
         @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
