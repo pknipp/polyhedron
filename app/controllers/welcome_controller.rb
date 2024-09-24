@@ -208,7 +208,7 @@ class WelcomeController < ApplicationController
       vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
 
       for j in 0..2 do
-        tetrahedron.vertices[j].coords = [
+        tetrahedron.vertices[j].vertex.coords = [
           cz * coords[j][0] - sz * coords[j][2],
           coords[j][1],
           sz * coords[j][0] + cz * coords[j][2],
