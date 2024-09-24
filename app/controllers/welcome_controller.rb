@@ -218,6 +218,23 @@ class WelcomeController < ApplicationController
         ]
       end
 
+      # rotation about x-axis
+      coords = [
+        tetrahedron.vertices[0].vertex.coords.dup,
+        tetrahedron.vertices[1].vertex.coords.dup,
+        tetrahedron.vertices[2].vertex.coords.dup,
+      ]
+      theta_x = Math.atan2(coords[1][2] - coords[0][2], coords[1][1] - coords[0][1])
+      cos_x = Math.cos(theta_x)
+      sin_x = Math.sin(theta_x)
+      for j in 0..2 do
+        tetrahedron.vertices[j].vertex.coords = [
+          coords[j][0],
+          cos_x * coords[j][1] + sin_x * coords[j][2],
+          -sin_x * coords[j][1] + cos_x * coords[j][2],
+        ]
+      end
+
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
       cd = tetrahedron.vertices[2].edge_length
@@ -231,6 +248,22 @@ class WelcomeController < ApplicationController
         return render :error
       end
       vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
+
+      # back-rotation about x-axis
+      coords = [
+        tetrahedron.vertices[0].vertex.coords.dup,
+        tetrahedron.vertices[1].vertex.coords.dup,
+        tetrahedron.vertices[2].vertex.coords.dup,
+      ]
+      cos_x = Math.cos(theta_x)
+      sin_x = Math.sin(theta_x)
+      for j in 0..2 do
+        tetrahedron.vertices[j].vertex.coords = [
+          coords[j][0],
+          cos_x * coords[j][1] - sin_x * coords[j][2],
+          sin_x * coords[j][1] + cos_x * coords[j][2],
+        ]
+      end
 
       # back-rotation about y-axis
       coords = [
