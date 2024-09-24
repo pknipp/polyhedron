@@ -170,19 +170,33 @@ class WelcomeController < ApplicationController
         end
       end
       tetrahedron.vertices = tetrahedron_vertices
-      origin = tetrahedron.vertices[0].vertex.coords.dup
+      coords = [
+        tetrahedron.vertices[0].vertex.coords.dup,
+        tetrahedron.vertices[1].vertex.coords.dup,
+        tetrahedron.vertices[2].vertex.coords.dup,
+      ]
 
       for j in 0..2 do
         for k in 0..2 do
-          tetrahedron.vertices[j].vertex.coords[k] -= origin[k]
+          tetrahedron.vertices[j].vertex.coords[k] -= coords[0][k]
         end
-        # also include this adjustment for tetrahedron.apex.coords[k]
+      end
+
+      theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
+      cz = Math.cos(theta_z)
+      sz = Math.sin(theta_z)
+      for j in 0..2 do
+        tetrahedron.vertices[j].coords = [
+          cz * coords[j][0] + sz * coords[j][2],
+          coords[j][1],
+          -sz * coords[j][0] + cz * coords[j][2],
+        ]
       end
 
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
       cd = tetrahedron.vertices[2].edge_length
-      
+
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
@@ -194,9 +208,19 @@ class WelcomeController < ApplicationController
       vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
 
       for j in 0..2 do
-        for k in 0..2 do
-          tetrahedron.vertices[j].vertex.coords[k] += origin[k]
+        tetrahedron.vertices[j].coords = [
+          cz * coords[j][0] - sz * coords[j][2],
+          coords[j][1],
+          sz * coords[j][0] + cz * coords[j][2],
+        ]
+      end
+      # also rotate this back for tetrahedron.apex.coords
+
+      for k in 0..2 do
+        for j in 0..2 do
+          tetrahedron.vertices[j].vertex.coords[k] += coords[0][k]
         end
+        # also include this adjustment for tetrahedron.apex.coords[k]
       end
 
       make_edge(base_names[0], new_name, vertices, edges)
