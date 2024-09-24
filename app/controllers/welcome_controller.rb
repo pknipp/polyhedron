@@ -183,6 +183,7 @@ class WelcomeController < ApplicationController
       end
 
       theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
+      puts theta_z
       cz = Math.cos(theta_z)
       sz = Math.sin(theta_z)
       for j in 0..2 do
@@ -194,6 +195,7 @@ class WelcomeController < ApplicationController
       end
 
       theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
+      puts theta_y
       cy = Math.cos(theta_y)
       sy = Math.sin(theta_y)
       for j in 0..2 do
