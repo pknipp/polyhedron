@@ -182,7 +182,7 @@ class WelcomeController < ApplicationController
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
       cd = tetrahedron.vertices[2].edge_length
-      x =
+      
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
