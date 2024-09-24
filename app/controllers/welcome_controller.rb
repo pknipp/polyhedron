@@ -232,6 +232,13 @@ class WelcomeController < ApplicationController
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       dy = (s * ac - dx * cx) / cy
       dz_sq = ad * ad - dx * dx - dy * dy
+      puts ad
+      puts bd
+      puts cd
+      puts dx
+      puts s
+      puts dy
+      puts dz_sq
       if dz_sq < 0
         @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
         return render :error
