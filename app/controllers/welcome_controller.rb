@@ -155,7 +155,7 @@ class WelcomeController < ApplicationController
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
     tetrahedra.each_with_index {|tetrahedron_string, i|
-      tetrahedron = Tetrahedron.new([], nil)
+      tetrahedron = Tetrahedron.new([])
       tetrahedron_array = tetrahedron_string.split(",")
       if tetrahedron_array.length != 7
         @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
