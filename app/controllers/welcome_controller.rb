@@ -257,6 +257,9 @@ class WelcomeController < ApplicationController
         ]
       end
 
+      p edge_lengths
+      p tetrahedron.vertices
+
       ad = edge_lengths[0]
       bd = edge_lengths[1]
       cd = edge_lengths[2]
