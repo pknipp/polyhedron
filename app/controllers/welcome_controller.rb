@@ -33,7 +33,13 @@ class WelcomeController < ApplicationController
     attr_accessor :length
     def initialize(ends)
       @ends = ends
-      @length = distance(ends[1].coords, ends[0].coords)
+      length = 0
+      for i in 0..2
+        del = ends[1].coords1[i] - ends[0].coords0[i]
+        del *= del
+        length += del
+      end
+      @length = Math.sqrt(length)
     end
   end
 
