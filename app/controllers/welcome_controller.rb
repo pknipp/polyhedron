@@ -19,8 +19,10 @@ class WelcomeController < ApplicationController
 
   class Edge
     attr_accessor :ends
+    attr_accessor :length
     def initialize(ends)
       @ends = ends
+      @length = distance(ends[1].coords, ends[0].coords)
     end
   end
 
@@ -49,6 +51,17 @@ class WelcomeController < ApplicationController
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+  end
+
+  # Pythogorean theorem
+  def length(coords0, coords1)
+    length = 0
+    for i in 0..2
+      del = coords1[i] - coords0[i]
+      del *= del
+      length += del
+    end
+    Math.sqrt(length)
   end
 
   # GET /:shape
@@ -244,7 +257,7 @@ class WelcomeController < ApplicationController
       dy = (s * ac - dx * cx) / cy
       dz_sq = ad * ad - dx * dx - dy * dy
       if dz_sq < 0
-        @error = "The three edge lengths are not long enough form a tetrahedron with this triangle."
+        @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
         return render :error
       end
       vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
