@@ -44,10 +44,12 @@ class WelcomeController < ApplicationController
   end
 
   class VertexPlusEdgeLength
-    attr_accessor :vertex
+    attr_accessor :name
+    attr_accessor :coords
     attr_accessor :edge_length
     def initialize(vertex, edge_length)
-        @vertex = vertex
+        @name = vertex.name
+        @coords = vertex.coords
         @edge_length = edge_length
     end
   end
