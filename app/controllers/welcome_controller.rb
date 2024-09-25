@@ -22,7 +22,7 @@ class WelcomeController < ApplicationController
     attr_accessor :length
     def initialize(ends)
       @ends = ends
-      @length = distance(ends[1].coords, ends[0].coords)
+      @length = length(ends[1].coords, ends[0].coords)
     end
   end
 
