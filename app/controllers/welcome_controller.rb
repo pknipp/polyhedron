@@ -43,23 +43,21 @@ class WelcomeController < ApplicationController
     end
   end
 
-  class VertexPlusEdgeLength
-    attr_accessor :name
-    attr_accessor :coords
-    attr_accessor :edge_length
-    def initialize(vertex, edge_length)
-        @name = vertex.name
-        @coords = vertex.coords
-        @edge_length = edge_length
-    end
-  end
+  # class VertexPlusEdgeLength
+    # attr_accessor :name
+    # attr_accessor :coords
+    # attr_accessor :edge_length
+    # def initialize(vertex, edge_length)
+        # @name = vertex.name
+        # @coords = vertex.coords
+        # @edge_length = edge_length
+    # end
+  # end
 
   class Tetrahedron
     attr_accessor :vertices
-    attr_accessor :apex
-    def initialize(vertices, apex)
+    def initialize(vertices)
       @vertices = vertices
-      @apex = apex
     end
   end
 
@@ -172,13 +170,15 @@ class WelcomeController < ApplicationController
       base = base_names.join("-")
       edge_length_strings = tetrahedron_array.last(3)
       tetrahedron_vertices = []
+      edge_lengths = []
       for j in 0..2 do
         name = base_names[j]
         length_string = edge_length_strings[j]
         length_attempt = Float(length_string.sub('*', '.')) rescue nil
         error = nil
         if vertices.has_key?(name) && !length_attempt.nil?
-          tetrahedron_vertices.push(VertexPlusEdgeLength.new(vertices[name], length_attempt))
+          tetrahedron_vertices.push(Vertex.new(vertices[name])
+          edge_lengths.push(length_attempt)
         else
           if !vertices.has_key?(name)
             error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
@@ -257,9 +257,9 @@ class WelcomeController < ApplicationController
         ]
       end
 
-      ad = tetrahedron.vertices[0].edge_length
-      bd = tetrahedron.vertices[1].edge_length
-      cd = tetrahedron.vertices[2].edge_length
+      ad = edge_lengths[0]
+      bd = edge_lengths[1]
+      cd = edge_lengths[2]
 
       name0 = tetrahedron.vertices[0].name
       name1 = tetrahedron.vertices[1].name
@@ -317,21 +317,19 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[1].coords.dup,
         tetrahedron.vertices[2].coords.dup,
       ]
-      for j in 0..2 do
+      for j in 0..3 do
         tetrahedron.vertices[j].coords = [
           cos_z * coords[j][0] - sin_z * coords[j][1],
           sin_z * coords[j][0] + cos_z * coords[j][1],
           coords[j][2],
         ]
       end
-      # also rotate this back for tetrahedron.apex.coords
 
       # back-translation
       for k in 0..2 do
-        for j in 0..2 do
+        for j in 0..3 do
           tetrahedron.vertices[j].coords[k] += origin[k]
         end
-        # also include this adjustment for tetrahedron.apex.coords[k]
       end
 
       make_edge(base_names[0], new_name, vertices, edges)
