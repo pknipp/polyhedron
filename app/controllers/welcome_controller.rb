@@ -193,30 +193,30 @@ class WelcomeController < ApplicationController
       end
       tetrahedron.vertices = tetrahedron_vertices
       coords = [
-        tetrahedron.vertices[0].vertex.coords.dup,
-        tetrahedron.vertices[1].vertex.coords.dup,
-        tetrahedron.vertices[2].vertex.coords.dup,
+        tetrahedron.vertices[0].coords.dup,
+        tetrahedron.vertices[1].coords.dup,
+        tetrahedron.vertices[2].coords.dup,
       ]
 
       # translation
       origin = coords[0].dup
       for j in 0..2 do
         for k in 0..2 do
-          tetrahedron.vertices[j].vertex.coords[k] -= origin[k]
+          tetrahedron.vertices[j].coords[k] -= origin[k]
         end
       end
 
       # rotation about z-axis
       coords = [
-        tetrahedron.vertices[0].vertex.coords.dup,
-        tetrahedron.vertices[1].vertex.coords.dup,
-        tetrahedron.vertices[2].vertex.coords.dup,
+        tetrahedron.vertices[0].coords.dup,
+        tetrahedron.vertices[1].coords.dup,
+        tetrahedron.vertices[2].coords.dup,
       ]
       theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
       cos_z = Math.cos(theta_z)
       sin_z = Math.sin(theta_z)
       for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
+        tetrahedron.vertices[j].coords = [
           cos_z * coords[j][0] + sin_z * coords[j][1],
           -sin_z* coords[j][0] + cos_z * coords[j][1],
           coords[j][2],
@@ -225,15 +225,15 @@ class WelcomeController < ApplicationController
 
       # rotation about y-axis
       coords = [
-        tetrahedron.vertices[0].vertex.coords.dup,
-        tetrahedron.vertices[1].vertex.coords.dup,
-        tetrahedron.vertices[2].vertex.coords.dup,
+        tetrahedron.vertices[0].coords.dup,
+        tetrahedron.vertices[1].coords.dup,
+        tetrahedron.vertices[2].coords.dup,
       ]
       theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
       cos_y = Math.cos(theta_y)
       sin_y = Math.sin(theta_y)
       for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
+        tetrahedron.vertices[j].coords = [
           cos_y * coords[j][0] + sin_y * coords[j][2],
           coords[j][1],
           -sin_y * coords[j][0] + cos_y * coords[j][2],
@@ -242,15 +242,15 @@ class WelcomeController < ApplicationController
 
       # rotation about x-axis
       coords = [
-        tetrahedron.vertices[0].vertex.coords.dup,
-        tetrahedron.vertices[1].vertex.coords.dup,
-        tetrahedron.vertices[2].vertex.coords.dup,
+        tetrahedron.vertices[0].coords.dup,
+        tetrahedron.vertices[1].coords.dup,
+        tetrahedron.vertices[2].coords.dup,
       ]
       theta_x = Math.atan2(coords[1][2] - coords[0][2], coords[1][1] - coords[0][1])
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
       for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
+        tetrahedron.vertices[j].coords = [
           coords[j][0],
           cos_x * coords[j][1] + sin_x * coords[j][2],
           -sin_x * coords[j][1] + cos_x * coords[j][2],
@@ -283,14 +283,14 @@ class WelcomeController < ApplicationController
 
       # back-rotation about x-axis
       coords = [
-        tetrahedron.vertices[0].vertex.coords.dup,
-        tetrahedron.vertices[1].vertex.coords.dup,
-        tetrahedron.vertices[2].vertex.coords.dup,
+        tetrahedron.vertices[0].coords.dup,
+        tetrahedron.vertices[1].coords.dup,
+        tetrahedron.vertices[2].coords.dup,
       ]
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
       for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
+        tetrahedron.vertices[j].coords = [
           coords[j][0],
           cos_x * coords[j][1] - sin_x * coords[j][2],
           sin_x * coords[j][1] + cos_x * coords[j][2],
@@ -299,12 +299,12 @@ class WelcomeController < ApplicationController
 
       # back-rotation about y-axis
       coords = [
-        tetrahedron.vertices[0].vertex.coords.dup,
-        tetrahedron.vertices[1].vertex.coords.dup,
-        tetrahedron.vertices[2].vertex.coords.dup,
+        tetrahedron.vertices[0].coords.dup,
+        tetrahedron.vertices[1].coords.dup,
+        tetrahedron.vertices[2].coords.dup,
       ]
       for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
+        tetrahedron.vertices[j].coords = [
           cos_y * coords[j][0] - sin_y * coords[j][2],
           coords[j][1],
           sin_y * coords[j][0] + cos_y * coords[j][2],
@@ -313,12 +313,12 @@ class WelcomeController < ApplicationController
 
       # back-rotation about z-axis
       coords = [
-        tetrahedron.vertices[0].vertex.coords.dup,
-        tetrahedron.vertices[1].vertex.coords.dup,
-        tetrahedron.vertices[2].vertex.coords.dup,
+        tetrahedron.vertices[0].coords.dup,
+        tetrahedron.vertices[1].coords.dup,
+        tetrahedron.vertices[2].coords.dup,
       ]
       for j in 0..2 do
-        tetrahedron.vertices[j].vertex.coords = [
+        tetrahedron.vertices[j].coords = [
           cos_z * coords[j][0] - sin_z * coords[j][1],
           sin_z * coords[j][0] + cos_z * coords[j][1],
           coords[j][2],
@@ -329,7 +329,7 @@ class WelcomeController < ApplicationController
       # back-translation
       for k in 0..2 do
         for j in 0..2 do
-          tetrahedron.vertices[j].vertex.coords[k] += origin[k]
+          tetrahedron.vertices[j].coords[k] += origin[k]
         end
         # also include this adjustment for tetrahedron.apex.coords[k]
       end
