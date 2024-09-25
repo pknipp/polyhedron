@@ -22,7 +22,7 @@ class WelcomeController < ApplicationController
     attr_accessor :length
     def initialize(ends)
       @ends = ends
-      @length = length(ends[1].coords, ends[0].coords)
+      @length = distance(ends[1].coords, ends[0].coords)
     end
   end
 
@@ -54,7 +54,7 @@ class WelcomeController < ApplicationController
   end
 
   # Pythogorean theorem
-  def length(coords0, coords1)
+  def distance(coords0, coords1)
     length = 0
     for i in 0..2
       del = coords1[i] - coords0[i]
