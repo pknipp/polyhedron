@@ -274,10 +274,23 @@ class WelcomeController < ApplicationController
       edge = edges[[name0, name2]] || edges[[name2, name0]]
       ac = edge.length
 
+      puts "ab"
+      puts ab
+      puts "ac"
+      puts ac
+
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
+      puts "dx"
+      puts dx
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
+      puts "s"
+      puts s
       dy = (s * ac - dx * cx) / cy
+      puts "dy"
+      puts dy
       dz_sq = ad * ad - dx * dx - dy * dy
+      puts "dz_sq"
+      puts dz_sq
       if dz_sq < 0
         @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
         return render :error
