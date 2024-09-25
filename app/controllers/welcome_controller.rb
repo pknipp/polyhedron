@@ -285,7 +285,8 @@ class WelcomeController < ApplicationController
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
       puts "s"
       puts s
-      dy = (s * ac - dx * cx) / cy
+      # dy = (s * ac - dx * cx) / cy
+      dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
       puts "dy"
       puts dy
       dz_sq = ad * ad - dx * dx - dy * dy
