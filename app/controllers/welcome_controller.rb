@@ -115,13 +115,13 @@ class WelcomeController < ApplicationController
       return render :error
     end
     triangle_names = triangle.first(3)
-    edge_lengths = triangle.last(3)
+    edge_length_strings = triangle.last(3)
     zeroth_name, first_name = triangle_names.first(2)
     a = Vertex.new(zeroth_name, [0, 0, 0])
     vertices[zeroth_name] = a
-    ab = Float(edge_lengths[0].sub('*', '.')) rescue nil
+    ab = Float(edge_length_strings[0].sub('*', '.')) rescue nil
     if ab.nil?
-      @error = "The path fragment " + edge_lengths[0] + " cannot be parsed as a number."
+      @error = "The path fragment " + edge_length_strings[0] + " cannot be parsed as a number."
       return render :error
     end
     if vertices.has_key?(first_name)
@@ -136,14 +136,14 @@ class WelcomeController < ApplicationController
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
       return render :error
     end
-    bc = Float(edge_lengths[1].sub('*', '.')) rescue nil
+    bc = Float(edge_length_strings[1].sub('*', '.')) rescue nil
     if bc.nil?
-      @error = "The path fragment " + edge_lengths[1] + " cannot be parsed as a number."
+      @error = "The path fragment " + edge_length_strings[1] + " cannot be parsed as a number."
       return render :error
     end
-    ac = Float(edge_lengths[2].sub('*', '.')) rescue nil
+    ac = Float(edge_length_strings[2].sub('*', '.')) rescue nil
     if ac.nil?
-      @error = "The path fragment " + edge_lengths[2] + " cannot be parsed as a number."
+      @error = "The path fragment " + edge_length_strings[2] + " cannot be parsed as a number."
       return render :error
     end
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
