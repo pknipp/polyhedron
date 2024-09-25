@@ -280,12 +280,14 @@ class WelcomeController < ApplicationController
         return render :error
       end
       vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
+      tetrahedron.vertices.push(vertices[new_name])
 
       # back-rotation about x-axis
       coords = [
         tetrahedron.vertices[0].coords.dup,
         tetrahedron.vertices[1].coords.dup,
         tetrahedron.vertices[2].coords.dup,
+        tetrahedron.vertices[3].coords.dup,
       ]
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
@@ -302,6 +304,7 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[0].coords.dup,
         tetrahedron.vertices[1].coords.dup,
         tetrahedron.vertices[2].coords.dup,
+        tetrahedron.vertices[3].coords.dup,
       ]
       for j in 0..2 do
         tetrahedron.vertices[j].coords = [
@@ -316,6 +319,7 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[0].coords.dup,
         tetrahedron.vertices[1].coords.dup,
         tetrahedron.vertices[2].coords.dup,
+        tetrahedron.vertices[3].coords.dup,
       ]
       for j in 0..3 do
         tetrahedron.vertices[j].coords = [
