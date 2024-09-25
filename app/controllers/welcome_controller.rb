@@ -257,9 +257,6 @@ class WelcomeController < ApplicationController
         ]
       end
 
-      p edge_lengths
-      p tetrahedron.vertices
-
       ad = edge_lengths[0]
       bd = edge_lengths[1]
       cd = edge_lengths[2]
@@ -274,24 +271,10 @@ class WelcomeController < ApplicationController
       edge = edges[[name0, name2]] || edges[[name2, name0]]
       ac = edge.length
 
-      puts "ab"
-      puts ab
-      puts "ac"
-      puts ac
-
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
-      puts "dx"
-      puts dx
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
-      puts "s"
-      puts s
-      # dy = (s * ac - dx * cx) / cy
       dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
-      puts "dy"
-      puts dy
       dz_sq = ad * ad - dx * dx - dy * dy
-      puts "dz_sq"
-      puts dz_sq
       if dz_sq < 0
         @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
         return render :error
@@ -306,6 +289,8 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[2].coords.dup,
         tetrahedron.vertices[3].coords.dup,
       ]
+      p tetrahedron.vertices
+      
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
       for j in 0..2 do
