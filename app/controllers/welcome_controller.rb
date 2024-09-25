@@ -67,7 +67,7 @@ class WelcomeController < ApplicationController
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[[zeroth_name, first_name]] = Edge.new([vertices[zeroth_name], vertices[first_name]])
   end
 
   # GET /:shape
