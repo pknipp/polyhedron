@@ -17,6 +17,17 @@ class WelcomeController < ApplicationController
     end
   end
 
+  # Pythogorean theorem
+  def distance(coords0, coords1)
+    length = 0
+    for i in 0..2
+      del = coords1[i] - coords0[i]
+      del *= del
+      length += del
+    end
+    Math.sqrt(length)
+  end
+
   class Edge
     attr_accessor :ends
     attr_accessor :length
@@ -51,17 +62,6 @@ class WelcomeController < ApplicationController
       zeroth_name = swap
     end
     edges[zeroth_name + "," + first_name] = Edge.new([vertices[zeroth_name], vertices[first_name]])
-  end
-
-  # Pythogorean theorem
-  def distance(coords0, coords1)
-    length = 0
-    for i in 0..2
-      del = coords1[i] - coords0[i]
-      del *= del
-      length += del
-    end
-    Math.sqrt(length)
   end
 
   # GET /:shape
