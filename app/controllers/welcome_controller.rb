@@ -62,6 +62,7 @@ class WelcomeController < ApplicationController
   end
 
   def make_edge(zeroth_name, first_name, vertices, edges)
+    # Ensure that two strings in tuple are sorted.
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
@@ -257,6 +258,16 @@ class WelcomeController < ApplicationController
       ad = tetrahedron.vertices[0].edge_length
       bd = tetrahedron.vertices[1].edge_length
       cd = tetrahedron.vertices[2].edge_length
+
+      name0 = tetrahedron.vertices[0].name
+      name1 = tetrahedron.vertices[1].name
+      edge = edges[[name0, name1]] || edges[[name1, name0]]
+      ab = edge.length
+
+      name0 = tetrahedron.vertices[0].name
+      name2 = tetrahedron.vertices[2].name
+      edge = edges[[name0, name2]] || edges[[name2, name0]]
+      ac = edge.length
 
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
       s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
