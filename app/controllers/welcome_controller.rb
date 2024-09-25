@@ -35,7 +35,7 @@ class WelcomeController < ApplicationController
       @ends = ends
       length = 0
       for i in 0..2
-        del = ends[1].coords1[i] - ends[0].coords0[i]
+        del = ends[1].coords[i] - ends[0].coords[i]
         del *= del
         length += del
       end
