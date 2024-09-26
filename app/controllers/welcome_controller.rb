@@ -19,9 +19,11 @@ class WelcomeController < ApplicationController
 
   class Edge
     attr_accessor :ends
+    attr_accessor :visible
     attr_accessor :length
-    def initialize(ends)
+    def initialize(ends, visible)
       @ends = ends
+      @visible = visible
       # Pythogorean theorem
       length = 0
       for i in 0..2
@@ -52,14 +54,14 @@ class WelcomeController < ApplicationController
     cloned_vertices
   end
 
-  def make_edge(zeroth_name, first_name, vertices, edges)
+  def make_edge(zeroth_name, first_name, vertices, edges, visible)
     # Ensure that two strings in tuple are sorted.
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[[zeroth_name, first_name]] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[[zeroth_name, first_name]] = Edge.new([vertices[zeroth_name], vertices[first_name]], visible)
   end
 
   def rescale(vertices, svg_size)
@@ -158,7 +160,7 @@ class WelcomeController < ApplicationController
     else
       vertices[first_name] = Vertex.new(first_name, [ab, 0, 0])
     end
-    make_edge(zeroth_name, first_name, vertices, edges)
+    make_edge(zeroth_name, first_name, vertices, edges, true)
     first_name = triangle_names[2]
     if vertices.has_key?(first_name)
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
