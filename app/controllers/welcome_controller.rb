@@ -250,7 +250,7 @@ class WelcomeController < ApplicationController
       puts i
       p coords
 
-      theta_x = Math.atan2(coords[1][2] - coords[0][2], coords[1][1] - coords[0][1])
+      theta_x = Math.atan2(coords[2][2] - coords[0][2], coords[2][1] - coords[0][1])
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
       for j in 0..2 do
