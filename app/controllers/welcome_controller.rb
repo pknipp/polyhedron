@@ -198,7 +198,7 @@ class WelcomeController < ApplicationController
       tetrahedron.vertices = tetrahedron_vertices
 
       # translation
-      origin = coords[0].dup
+      origin = tetrahedron.vertices[0].coords.dup
       for j in 0..2 do
         for k in 0..2 do
           tetrahedron.vertices[j].coords[k] -= origin[k]
