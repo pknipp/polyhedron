@@ -18,15 +18,15 @@ class WelcomeController < ApplicationController
   end
 
   # Pythogorean theorem
-  def distance(coords0, coords1)
-    length = 0
-    for i in 0..2
-      del = coords1[i] - coords0[i]
-      del *= del
-      length += del
-    end
-    Math.sqrt(length)
-  end
+  # def distance(coords0, coords1)
+    # length = 0
+    # for i in 0..2
+      # del = coords1[i] - coords0[i]
+      # del *= del
+      # length += del
+    # end
+    # Math.sqrt(length)
+  # end
 
   def rescale(vertices, svg_size)
     # based on max/min values of cartesian components of vertices,
@@ -59,6 +59,7 @@ class WelcomeController < ApplicationController
     attr_accessor :length
     def initialize(ends)
       @ends = ends
+      # Pythogorean theorem
       length = 0
       for i in 0..2
         del = ends[1].coords[i] - ends[0].coords[i]
@@ -349,30 +350,6 @@ class WelcomeController < ApplicationController
       make_edge(base_names[2], new_name, vertices, edges)
     }
 
-    # based on max/min values of cartesian components of vertices,
-    # determine the svg's origin and size
-    # mins = Array.new(3, Float::INFINITY)
-    # maxs = Array.new(3, -Float::INFINITY)
-    # vertices.each_value {|vertex|
-      # (0..2).each{|i|
-        # mins[i] = [mins[i], vertex.coords[i]].min
-        # maxs[i] = [maxs[i], vertex.coords[i]].max
-      # }
-    # }
-    # origin = []
-    # size = 0
-    # (0..2).each{|i|
-      # origin.push((maxs[i] + mins[i]) / 2)
-      # size = [size, maxs[i] - mins[i]].max
-    # }
-    # Following value attempts to prevent object from rotating out of svg cube.
-    # ratio = 0.6
-    # vertices.each_value {|vertex|
-      # (0..2).each{|i|
-        # vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
-      # }
-    # }
-    #
     rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
