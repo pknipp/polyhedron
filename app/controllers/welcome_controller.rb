@@ -90,6 +90,11 @@ class WelcomeController < ApplicationController
 
   # GET /points/:shape
   def points
+    vertices = {}
+    edges = {}
+    @vertices = vertices
+    @edges = edges
+    render 'show'
   end
 
   # GET /:shape
