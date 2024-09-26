@@ -264,6 +264,8 @@ class WelcomeController < ApplicationController
       puts "after all forward rotations"
       puts i
       p tetrahedron.vertices
+      puts "theta_x"
+      puts theta_x
 
       ad = edge_lengths[0]
       bd = edge_lengths[1]
