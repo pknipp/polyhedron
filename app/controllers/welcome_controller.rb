@@ -19,11 +19,9 @@ class WelcomeController < ApplicationController
 
   class Edge
     attr_accessor :ends
-    attr_accessor :visible
     attr_accessor :length
-    def initialize(ends, visible)
+    def initialize(ends)
       @ends = ends
-      @visible = visible
       # Pythogorean theorem
       length = 0
       for i in 0..2
@@ -54,14 +52,14 @@ class WelcomeController < ApplicationController
     cloned_vertices
   end
 
-  def make_edge(zeroth_name, first_name, vertices, edges, visible)
+  def make_edge(zeroth_name, first_name, vertices, edges)
     # Ensure that two strings in tuple are sorted.
     if first_name < zeroth_name
       swap = first_name
       first_name = zeroth_name
       zeroth_name = swap
     end
-    edges[[zeroth_name, first_name]] = Edge.new([vertices[zeroth_name], vertices[first_name]], visible)
+    edges[[zeroth_name, first_name]] = Edge.new([vertices[zeroth_name], vertices[first_name]])
   end
 
   def rescale(vertices, svg_size)
@@ -160,7 +158,7 @@ class WelcomeController < ApplicationController
     else
       vertices[first_name] = Vertex.new(first_name, [ab, 0, 0])
     end
-    make_edge(zeroth_name, first_name, vertices, edges, true)
+    make_edge(zeroth_name, first_name, vertices, edges)
     first_name = triangle_names[2]
     if vertices.has_key?(first_name)
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
@@ -179,8 +177,8 @@ class WelcomeController < ApplicationController
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new(first_name, [cx, cy, 0])
-    make_edge(triangle_names[1], first_name, vertices, edges,true)
-    make_edge(triangle_names[0], first_name, vertices, edges,true)
+    make_edge(triangle_names[1], first_name, vertices, edges)
+    make_edge(triangle_names[0], first_name, vertices, edges)
 
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
@@ -347,9 +345,9 @@ class WelcomeController < ApplicationController
       # Insert tetrahedral apex to vertices hashmap.
       vertices[new_name] = tetrahedron.vertices[3]
       # Insert three more edges to other hashmap.
-      make_edge(base_names[0], new_name, vertices, edges, true)
-      make_edge(base_names[1], new_name, vertices, edges, true)
-      make_edge(base_names[2], new_name, vertices, edges, true)
+      make_edge(base_names[0], new_name, vertices, edges)
+      make_edge(base_names[1], new_name, vertices, edges)
+      make_edge(base_names[2], new_name, vertices, edges)
     }
 
     rescale(vertices, svg_size)
