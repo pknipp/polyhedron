@@ -263,7 +263,7 @@ class WelcomeController < ApplicationController
 
       puts "after all forward rotations"
       puts i
-      p tetrahedron.coords
+      p tetrahedron.vertices
 
       ad = edge_lengths[0]
       bd = edge_lengths[1]
