@@ -28,7 +28,7 @@ class WelcomeController < ApplicationController
     Math.sqrt(length)
   end
 
-  def rescale(vertices)
+  def rescale(vertices, svg_size)
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
     mins = Array.new(3, Float::INFINITY)
@@ -373,7 +373,7 @@ class WelcomeController < ApplicationController
       # }
     # }
     #
-    rescale(vertices)
+    rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
     render 'show'
