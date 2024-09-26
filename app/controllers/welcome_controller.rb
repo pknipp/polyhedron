@@ -289,8 +289,7 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[2].coords.dup,
         tetrahedron.vertices[3].coords.dup,
       ]
-      p tetrahedron.vertices
-      
+
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
       for j in 0..2 do
@@ -308,6 +307,10 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[2].coords.dup,
         tetrahedron.vertices[3].coords.dup,
       ]
+
+      puts "after x back-rotation"
+      p coords
+
       for j in 0..2 do
         tetrahedron.vertices[j].coords = [
           cos_y * coords[j][0] - sin_y * coords[j][2],
@@ -323,6 +326,10 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[2].coords.dup,
         tetrahedron.vertices[3].coords.dup,
       ]
+
+      puts "after y back-rotation"
+      p coords
+
       for j in 0..3 do
         tetrahedron.vertices[j].coords = [
           cos_z * coords[j][0] - sin_z * coords[j][1],
@@ -331,12 +338,18 @@ class WelcomeController < ApplicationController
         ]
       end
 
+      puts "after z back-rotation"
+      p tetrahedron.vertices
+
       # back-translation
       for k in 0..2 do
         for j in 0..3 do
           tetrahedron.vertices[j].coords[k] += origin[k]
         end
       end
+
+      puts "after back translation"
+      p tetrahedron.vertices
 
       make_edge(base_names[0], new_name, vertices, edges)
       make_edge(base_names[1], new_name, vertices, edges)
