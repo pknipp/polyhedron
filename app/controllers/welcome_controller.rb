@@ -197,11 +197,6 @@ class WelcomeController < ApplicationController
       end
       tetrahedron.vertices = tetrahedron_vertices
       coords = dup(tetrahedron.vertices)
-      # coords = [
-      #   tetrahedron.vertices[0].coords.dup,
-      #   tetrahedron.vertices[1].coords.dup,
-      #   tetrahedron.vertices[2].coords.dup,
-      # ]
 
       # translation
       origin = coords[0].dup
@@ -212,11 +207,7 @@ class WelcomeController < ApplicationController
       end
 
       # rotation about z-axis
-      coords = [
-        tetrahedron.vertices[0].coords.dup,
-        tetrahedron.vertices[1].coords.dup,
-        tetrahedron.vertices[2].coords.dup,
-      ]
+      coords = dup(tetrahedron.vertices)
       theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
       cos_z = Math.cos(theta_z)
       sin_z = Math.sin(theta_z)
@@ -229,11 +220,7 @@ class WelcomeController < ApplicationController
       end
 
       # rotation about y-axis
-      coords = [
-        tetrahedron.vertices[0].coords.dup,
-        tetrahedron.vertices[1].coords.dup,
-        tetrahedron.vertices[2].coords.dup,
-      ]
+      coords = (tetrahedron.vertices)
       theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
       cos_y = Math.cos(theta_y)
       sin_y = Math.sin(theta_y)
@@ -246,11 +233,7 @@ class WelcomeController < ApplicationController
       end
 
       # rotation about x-axis
-      coords = [
-        tetrahedron.vertices[0].coords.dup,
-        tetrahedron.vertices[1].coords.dup,
-        tetrahedron.vertices[2].coords.dup,
-      ]
+      coords = dup(tetrahedron.vertices)
       theta_x = Math.atan2(coords[1][2] - coords[0][2], coords[1][1] - coords[0][1])
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
@@ -292,12 +275,6 @@ class WelcomeController < ApplicationController
 
       # back-rotation about x-axis
       coords = dup(tetrahedron.vertices)
-      # coords = [
-        # tetrahedron.vertices[0].coords.dup,
-        # tetrahedron.vertices[1].coords.dup,
-        # tetrahedron.vertices[2].coords.dup,
-        # tetrahedron.vertices[3].coords.dup,
-      # ]
 
       puts "before all back-transformations"
       puts i
@@ -314,12 +291,7 @@ class WelcomeController < ApplicationController
       end
 
       # back-rotation about y-axis
-      coords = [
-        tetrahedron.vertices[0].coords.dup,
-        tetrahedron.vertices[1].coords.dup,
-        tetrahedron.vertices[2].coords.dup,
-        tetrahedron.vertices[3].coords.dup,
-      ]
+      coords = dup(tetrahedron.vertices)
 
       puts "after x back-rotation"
       puts i
@@ -334,12 +306,7 @@ class WelcomeController < ApplicationController
       end
 
       # back-rotation about z-axis
-      coords = [
-        tetrahedron.vertices[0].coords.dup,
-        tetrahedron.vertices[1].coords.dup,
-        tetrahedron.vertices[2].coords.dup,
-        tetrahedron.vertices[3].coords.dup,
-      ]
+      coords = dup(tetrahedron.vertices)
 
       puts "after y back-rotation"
       puts i
