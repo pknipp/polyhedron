@@ -221,6 +221,10 @@ class WelcomeController < ApplicationController
 
       # rotation about y-axis
       coords = (tetrahedron.vertices)
+
+      puts "after rotation about y-axis comment"
+      p coords
+
       theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
       cos_y = Math.cos(theta_y)
       sin_y = Math.sin(theta_y)
