@@ -279,8 +279,7 @@ class WelcomeController < ApplicationController
         @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
         return render :error
       end
-      vertices[new_name] = Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)])
-      tetrahedron.vertices.push(vertices[new_name])
+      tetrahedron.vertices.push(Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq)]))
 
       # back-rotation about x-axis
       coords = [
@@ -350,6 +349,8 @@ class WelcomeController < ApplicationController
 
       puts "after back translation"
       p tetrahedron.vertices
+
+      vertices[new_name] = tetrahedron.vertices[3]
 
       make_edge(base_names[0], new_name, vertices, edges)
       make_edge(base_names[1], new_name, vertices, edges)
