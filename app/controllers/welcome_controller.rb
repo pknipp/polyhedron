@@ -89,7 +89,7 @@ class WelcomeController < ApplicationController
   end
 
   # GET /:shape
-  def show
+  def edges
     svg_size = 900
     @size = svg_size
     vertices = {}
