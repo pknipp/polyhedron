@@ -28,6 +28,32 @@ class WelcomeController < ApplicationController
     Math.sqrt(length)
   end
 
+  def rescale(vertices)
+    # based on max/min values of cartesian components of vertices,
+    # determine the svg's origin and size
+    mins = Array.new(3, Float::INFINITY)
+    maxs = Array.new(3, -Float::INFINITY)
+    vertices.each_value {|vertex|
+      (0..2).each{|i|
+        mins[i] = [mins[i], vertex.coords[i]].min
+        maxs[i] = [maxs[i], vertex.coords[i]].max
+      }
+    }
+    origin = []
+    size = 0
+    (0..2).each{|i|
+      origin.push((maxs[i] + mins[i]) / 2)
+      size = [size, maxs[i] - mins[i]].max
+    }
+    # Following value attempts to prevent object from rotating out of svg cube.
+    ratio = 0.6
+    vertices.each_value {|vertex|
+      (0..2).each{|i|
+        vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
+      }
+    }
+  end
+
   class Edge
     attr_accessor :ends
     attr_accessor :length
@@ -325,27 +351,29 @@ class WelcomeController < ApplicationController
 
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
-    mins = Array.new(3, Float::INFINITY)
-    maxs = Array.new(3, -Float::INFINITY)
-    vertices.each_value {|vertex|
-      (0..2).each{|i|
-        mins[i] = [mins[i], vertex.coords[i]].min
-        maxs[i] = [maxs[i], vertex.coords[i]].max
-      }
-    }
-    origin = []
-    size = 0
-    (0..2).each{|i|
-      origin.push((maxs[i] + mins[i]) / 2)
-      size = [size, maxs[i] - mins[i]].max
-    }
+    # mins = Array.new(3, Float::INFINITY)
+    # maxs = Array.new(3, -Float::INFINITY)
+    # vertices.each_value {|vertex|
+      # (0..2).each{|i|
+        # mins[i] = [mins[i], vertex.coords[i]].min
+        # maxs[i] = [maxs[i], vertex.coords[i]].max
+      # }
+    # }
+    # origin = []
+    # size = 0
+    # (0..2).each{|i|
+      # origin.push((maxs[i] + mins[i]) / 2)
+      # size = [size, maxs[i] - mins[i]].max
+    # }
     # Following value attempts to prevent object from rotating out of svg cube.
-    ratio = 0.6
-    vertices.each_value {|vertex|
-      (0..2).each{|i|
-        vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
-      }
-    }
+    # ratio = 0.6
+    # vertices.each_value {|vertex|
+      # (0..2).each{|i|
+        # vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
+      # }
+    # }
+    #
+    rescale(vertices)
     @vertices = vertices
     @edges = edges
     render 'show'
