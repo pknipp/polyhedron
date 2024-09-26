@@ -220,7 +220,7 @@ class WelcomeController < ApplicationController
       end
 
       # rotation about y-axis
-      coords = (tetrahedron.vertices)
+      coords = dup(tetrahedron.vertices)
 
       puts "after rotation about y-axis comment"
       p coords
