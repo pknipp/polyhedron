@@ -296,6 +296,10 @@ class WelcomeController < ApplicationController
         tetrahedron.vertices[3].coords.dup,
       ]
 
+      puts "before all back-transformations"
+      puts i
+      p coords
+
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
       for j in 0..2 do
