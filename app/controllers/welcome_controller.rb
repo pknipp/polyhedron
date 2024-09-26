@@ -153,9 +153,6 @@ class WelcomeController < ApplicationController
     make_edge(triangle_names[1], first_name, vertices, edges)
     make_edge(triangle_names[0], first_name, vertices, edges)
 
-    puts "before tetrahedron"
-    p vertices
-
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
     tetrahedra.each_with_index {|tetrahedron_string, i|
@@ -205,13 +202,8 @@ class WelcomeController < ApplicationController
         end
       end
 
-      coords = dup(tetrahedron.vertices)
-
-      puts "before all forward-rotations"
-      puts i
-      p coords
-
       # rotation about z-axis
+      coords = dup(tetrahedron.vertices)
       theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
       cos_z = Math.cos(theta_z)
       sin_z = Math.sin(theta_z)
@@ -225,13 +217,6 @@ class WelcomeController < ApplicationController
 
       # rotation about y-axis
       coords = dup(tetrahedron.vertices)
-
-      puts "after forward z-rotation"
-      puts i
-      p coords
-      puts "theta_z"
-      puts theta_z
-
       theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
       cos_y = Math.cos(theta_y)
       sin_y = Math.sin(theta_y)
@@ -245,11 +230,6 @@ class WelcomeController < ApplicationController
 
       # rotation about x-axis
       coords = dup(tetrahedron.vertices)
-
-      puts "after forward y-rotation"
-      puts i
-      p coords
-
       theta_x = Math.atan2(coords[2][2] - coords[0][2], coords[2][1] - coords[0][1])
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
@@ -261,12 +241,7 @@ class WelcomeController < ApplicationController
         ]
       end
 
-      puts "after all forward rotations"
-      puts i
-      p tetrahedron.vertices
-      puts "theta_x"
-      puts theta_x
-
+      # Calculate location of apex of tetrahedron
       ad = edge_lengths[0]
       bd = edge_lengths[1]
       cd = edge_lengths[2]
@@ -289,6 +264,8 @@ class WelcomeController < ApplicationController
         @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
         return render :error
       end
+
+      # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
       coords0 = tetrahedron.vertices[0].coords
       coords1 = tetrahedron.vertices[1].coords
       coords2 = tetrahedron.vertices[2].coords
@@ -297,11 +274,6 @@ class WelcomeController < ApplicationController
 
       # back-rotation about x-axis
       coords = dup(tetrahedron.vertices)
-
-      puts "before all back-transformations"
-      puts i
-      p coords
-
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
       for j in 0..3 do
@@ -314,11 +286,6 @@ class WelcomeController < ApplicationController
 
       # back-rotation about y-axis
       coords = dup(tetrahedron.vertices)
-
-      puts "after x back-rotation"
-      puts i
-      p coords
-
       for j in 0..3 do
         tetrahedron.vertices[j].coords = [
           cos_y * coords[j][0] - sin_y * coords[j][2],
@@ -329,11 +296,6 @@ class WelcomeController < ApplicationController
 
       # back-rotation about z-axis
       coords = dup(tetrahedron.vertices)
-
-      puts "after y back-rotation"
-      puts i
-      p coords
-
       for j in 0..3 do
         tetrahedron.vertices[j].coords = [
           cos_z * coords[j][0] - sin_z * coords[j][1],
@@ -342,10 +304,6 @@ class WelcomeController < ApplicationController
         ]
       end
 
-      puts "after z back-rotation"
-      puts i
-      p tetrahedron.vertices
-
       # back-translation
       for k in 0..2 do
         for j in 0..3 do
@@ -353,20 +311,13 @@ class WelcomeController < ApplicationController
         end
       end
 
-      puts "after back translation"
-      puts i
-      p tetrahedron.vertices
-
       for j in 0..2 do
         tetrahedron_vertex = tetrahedron.vertices[j]
         vertices[tetrahedron_vertex.name].coords = tetrahedron_vertex.coords
       end
+      # Insert tetrahedral apex to vertices hashmap.
       vertices[new_name] = tetrahedron.vertices[3]
-
-      puts "vertices"
-      puts i
-      p vertices
-
+      # Insert three more edges to other hashmap.
       make_edge(base_names[0], new_name, vertices, edges)
       make_edge(base_names[1], new_name, vertices, edges)
       make_edge(base_names[2], new_name, vertices, edges)
