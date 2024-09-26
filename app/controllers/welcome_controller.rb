@@ -351,6 +351,8 @@ class WelcomeController < ApplicationController
       p tetrahedron.vertices
 
       vertices[new_name] = tetrahedron.vertices[3]
+      puts "vertices"
+      p vertices
 
       make_edge(base_names[0], new_name, vertices, edges)
       make_edge(base_names[1], new_name, vertices, edges)
