@@ -315,6 +315,7 @@ class WelcomeController < ApplicationController
       ]
 
       puts "after x back-rotation"
+      puts i
       p coords
 
       for j in 0..2 do
@@ -334,6 +335,7 @@ class WelcomeController < ApplicationController
       ]
 
       puts "after y back-rotation"
+      puts i
       p coords
 
       for j in 0..3 do
@@ -345,6 +347,7 @@ class WelcomeController < ApplicationController
       end
 
       puts "after z back-rotation"
+      puts i
       p tetrahedron.vertices
 
       # back-translation
@@ -355,6 +358,7 @@ class WelcomeController < ApplicationController
       end
 
       puts "after back translation"
+      puts i
       p tetrahedron.vertices
 
       for j in 0..2 do
@@ -364,6 +368,7 @@ class WelcomeController < ApplicationController
       vertices[new_name] = tetrahedron.vertices[3]
 
       puts "vertices"
+      puts i
       p vertices
 
       make_edge(base_names[0], new_name, vertices, edges)
