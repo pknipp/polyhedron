@@ -88,6 +88,10 @@ class WelcomeController < ApplicationController
     }
   end
 
+  # GET /points/:shape
+  def points
+  end
+
   # GET /:shape
   def edges
     svg_size = 900
