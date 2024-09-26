@@ -353,11 +353,12 @@ class WelcomeController < ApplicationController
       puts "after back translation"
       p tetrahedron.vertices
 
-      for j in 0..3 do
+      for j in 0..2 do
         tetrahedron_vertex = tetrahedron.vertices[j]
         vertices[tetrahedron_vertex.name].coords = tetrahedron_vertex.coords
       end
-      # vertices[new_name] = tetrahedron.vertices[3]
+      vertices[new_name] = tetrahedron.vertices[3]
+
       puts "vertices"
       p vertices
 
