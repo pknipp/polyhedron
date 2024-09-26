@@ -179,8 +179,8 @@ class WelcomeController < ApplicationController
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_name] = Vertex.new(first_name, [cx, cy, 0])
-    make_edge(triangle_names[1], first_name, vertices, edges)
-    make_edge(triangle_names[0], first_name, vertices, edges)
+    make_edge(triangle_names[1], first_name, vertices, edges,true)
+    make_edge(triangle_names[0], first_name, vertices, edges,true)
 
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
@@ -347,9 +347,9 @@ class WelcomeController < ApplicationController
       # Insert tetrahedral apex to vertices hashmap.
       vertices[new_name] = tetrahedron.vertices[3]
       # Insert three more edges to other hashmap.
-      make_edge(base_names[0], new_name, vertices, edges)
-      make_edge(base_names[1], new_name, vertices, edges)
-      make_edge(base_names[2], new_name, vertices, edges)
+      make_edge(base_names[0], new_name, vertices, edges, true)
+      make_edge(base_names[1], new_name, vertices, edges, true)
+      make_edge(base_names[2], new_name, vertices, edges, true)
     }
 
     rescale(vertices, svg_size)
