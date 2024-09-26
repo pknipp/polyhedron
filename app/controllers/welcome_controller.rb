@@ -302,7 +302,7 @@ class WelcomeController < ApplicationController
 
       cos_x = Math.cos(theta_x)
       sin_x = Math.sin(theta_x)
-      for j in 0..2 do
+      for j in 0..3 do
         tetrahedron.vertices[j].coords = [
           coords[j][0],
           cos_x * coords[j][1] - sin_x * coords[j][2],
@@ -322,7 +322,7 @@ class WelcomeController < ApplicationController
       puts i
       p coords
 
-      for j in 0..2 do
+      for j in 0..3 do
         tetrahedron.vertices[j].coords = [
           cos_y * coords[j][0] - sin_y * coords[j][2],
           coords[j][1],
