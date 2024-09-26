@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   get '/', to: 'welcome#index'
-  get '/:shape', to: 'welcome#edges'
   get '/points/:shape', to: 'welcome#points'
+  get '/:shape', to: 'welcome#edges'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
