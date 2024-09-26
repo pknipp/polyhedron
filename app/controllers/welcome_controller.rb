@@ -193,11 +193,12 @@ class WelcomeController < ApplicationController
         end
       end
       tetrahedron.vertices = tetrahedron_vertices
-      coords = [
-        tetrahedron.vertices[0].coords.dup,
-        tetrahedron.vertices[1].coords.dup,
-        tetrahedron.vertices[2].coords.dup,
-      ]
+      coords = dup(tetrahedron.vertices)
+      # coords = [
+      #   tetrahedron.vertices[0].coords.dup,
+      #   tetrahedron.vertices[1].coords.dup,
+      #   tetrahedron.vertices[2].coords.dup,
+      # ]
 
       # translation
       origin = coords[0].dup
