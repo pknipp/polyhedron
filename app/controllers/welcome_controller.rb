@@ -286,7 +286,7 @@ class WelcomeController < ApplicationController
       coords1 = tetrahedron.vertices[1].coords
       coords2 = tetrahedron.vertices[2].coords
       cw = (coords1[0] - coords0[0]) * (coords2[1] - coords0[1]) > (coords1[1] - coords0[1]) * (coords2[0] - coords0[0])
-      tetrahedron.vertices.push(Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq) * (CW ? 1 : -1)]))
+      tetrahedron.vertices.push(Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
 
       # back-rotation about x-axis
       coords = [
