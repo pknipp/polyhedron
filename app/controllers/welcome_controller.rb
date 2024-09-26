@@ -51,12 +51,15 @@ class WelcomeController < ApplicationController
   end
 
   def dup(tetrahedron_vertices)
-    [
+    cloned_vertices = [
       tetrahedron_vertices[0].coords.dup,
       tetrahedron_vertices[1].coords.dup,
       tetrahedron_vertices[2].coords.dup,
-      tetrahedron_vertices[3].coords.dup,
     ]
+    if tetrahedron_vertices.length > 3
+      cloned_vertices.push(tetrahedron_vertices[3].coords.dup)
+    end
+    cloned_vertices
   end
 
   def make_edge(zeroth_name, first_name, vertices, edges)
