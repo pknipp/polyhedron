@@ -152,6 +152,9 @@ class WelcomeController < ApplicationController
     make_edge(triangle_names[1], first_name, vertices, edges)
     make_edge(triangle_names[0], first_name, vertices, edges)
 
+    puts "before tetrahedron"
+    p vertices
+
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
     tetrahedra.each_with_index {|tetrahedron_string, i|
