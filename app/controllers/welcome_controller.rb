@@ -43,22 +43,20 @@ class WelcomeController < ApplicationController
     end
   end
 
-  # class VertexPlusEdgeLength
-    # attr_accessor :name
-    # attr_accessor :coords
-    # attr_accessor :edge_length
-    # def initialize(vertex, edge_length)
-        # @name = vertex.name
-        # @coords = vertex.coords
-        # @edge_length = edge_length
-    # end
-  # end
-
   class Tetrahedron
     attr_accessor :vertices
     def initialize(vertices)
       @vertices = vertices
     end
+  end
+
+  def dup(tetrahedron_vertices)
+    [
+      tetrahedron_vertices[0].coords.dup,
+      tetrahedron_vertices[1].coords.dup,
+      tetrahedron_vertices[2].coords.dup,
+      tetrahedron_vertices[3].coords.dup,
+    ]
   end
 
   def make_edge(zeroth_name, first_name, vertices, edges)
@@ -289,12 +287,13 @@ class WelcomeController < ApplicationController
       tetrahedron.vertices.push(Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
 
       # back-rotation about x-axis
-      coords = [
-        tetrahedron.vertices[0].coords.dup,
-        tetrahedron.vertices[1].coords.dup,
-        tetrahedron.vertices[2].coords.dup,
-        tetrahedron.vertices[3].coords.dup,
-      ]
+      coords = dup(tetrahedron.vertices)
+      # coords = [
+        # tetrahedron.vertices[0].coords.dup,
+        # tetrahedron.vertices[1].coords.dup,
+        # tetrahedron.vertices[2].coords.dup,
+        # tetrahedron.vertices[3].coords.dup,
+      # ]
 
       puts "before all back-transformations"
       puts i
