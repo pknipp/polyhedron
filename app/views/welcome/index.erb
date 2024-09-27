@@ -2,33 +2,46 @@
   <body>
     <div style="padding:20px">
       <div style="text-align:center">
-        <h3>Polyhedron generation and rendering (WIP)</h3>
+        <h3>Three-dimensional shape generation and rendering (WIP)</h3>
       </div>
       <div>
-        <b>Overview:</b> This endpoint enables the user to generate and render any <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose faces are triangular.  The user may also rotate this in order to view from any perspective.
+        <b>Overview:</b> This endpoint enables the user to generate and render a 3-dimensional structure that consists of vertices and edges. The user may also rotate this structure in order to view from any perspective.
       </div>
       <br/>
       <div>
-        <b>Instructions:</b> After <tt>...herokuapp.com</tt> above the user should type something that resembles an array of arrays, as follows:
-        <ul>
+        <b>Instructions:</b> There are two different ways that the user can create a 3-dimensional structure for rendering.
+        <ol>
           <li>
-            <b>First element:</b> This is a six-element array that characterizes the first triangular face of the polyhedron.  The first three elements are vertex names, and the last three are (unnormalized) lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
+            <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose faces are triangular:<br/>
+            After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/</tt> followed something that resembles an array of tuples, as follows.
+            <ul>
+              <li>
+                <b>First element:</b> This is a six-element tuple that characterizes the first triangular face of the polyhedron.  The first three elements are vertex names, and the last three are (unnormalized) lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
+              </li>
+              <li>
+                <b>Subsequent elements (optional):</b>  Each of these is a seven-element tuple that characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the first three is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three elements are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
+              </li>
+            </ul>
           </li>
           <li>
-            <b>Subsequent elements (optional):</b>  Each of these is a seven-element array that characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the first three is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three elements are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
+            (WIP) Collection of vertices and edges:<br/>
+            After <tt>...herokuapp.com</tt> above the user should type <tt>/points/</tt> followed something that resembles a 2-element array of arrays of tuples, as follows.
+            <ul>
+            <ul>
           </li>
-        </ul>
+        </ol>
         Notes:
         <br/> This will only return html (not json), even for the case of errors.
-        <br/> Guidelines for urls:<ul>
-        <li> The use of whitespace is allowed but discouraged.</li>
-        <li> Commas are prohibited except for separating elements in arrays.</li>
-        <li> Numbers may be represented in many different ways except that any decimal point should be represented by an asterisk rather than by a period owing to the fact that the latter has a special meaning in a url.</li>
+        <br/> Guidelines for urls:
+        <ul>
+          <li> The use of whitespace is allowed but discouraged.</li>
+          <li> Commas are prohibited except for separating elements in arrays.</li>
+          <li> Numbers may be represented in many different ways except that any decimal point should be represented by an asterisk rather than by a period owing to the fact that the latter has a special meaning in a url.</li>
         </ul>
       </div>
       <br/>
       <div>
-        <b>Example:</b> <tt>...heroku.com/[(A,B,C,12,5,13),(A,B,C,D,12*37,3,4)]</tt> generates the asymmetric tetrahedron indicated below
+        <b>Example:</b> <tt>...heroku.com/edges/[(A,B,C,12,5,13),(A,B,C,D,12*37,3,4)]</tt> generates the asymmetric tetrahedron indicated below
       </div>
     </div>
     <div style="text-align:center">
