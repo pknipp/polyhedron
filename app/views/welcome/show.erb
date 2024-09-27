@@ -4,13 +4,20 @@
       <li>MVP:
         <ul>
           <li> DRY code w/helpers.
+          <li> Modify instructions for <tt>/edges</tt> route to contain two subsequent fragments (<tt>/:triangle/:tetrahedra</tt>), where the first is a comma-separated string containing six items, and the (optional) 2nd is an array of comma-separated tuples, each consisting of seven items.
+          <li> Change example of this to consist of something that resembles a Nautilus shell consisting of a 17-element spiral of Theodorus.
           <li> Optimize appropriate use of array methods.
           <li> Bifurcation of endpoints, as follows:</li>
           <ul>
-            <li> Existing endpoints starts with <tt>edges</tt>.
-            <li> New set starts with <tt>coordinates</tt>.
-            <li> First part of path is array of vertices, each of which includes name and 3 coordinates.
-            <li> Second part of path is array of pairs of vertices which should be connected by an edge.
+            <li>
+              Existing endpoints starts with <tt>edges</tt>.
+            </li>
+            <li>
+              New set starts with <tt>vertices</tt> and is followed by two fragments (<tt>/:vertices/:edges</tt>).  The 2nd is optional.
+            </li>
+            <li> <tt>/:vertices</tt> is an array of tuples, each of which contains either two or three elements and which characters a particular vertex of the shape.  The first element is a short string that uniquely specifies the vertex, the second element is a 3-element array that specifies the vertex's coordinates, and the third (if present) is a string used to label the vertex in the rendering.
+            <li> <tt>/:edges</tt> is an array of two-element tuples, each specifying a particular edge to be rendered.  The first and second elements of each tuple are the short identifiers of the pair of vertices to be connected by the edge.
+            <li> Let the Big Dipper be the example for this.
           </ul>
         </ul>
       </li>
