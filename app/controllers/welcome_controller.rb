@@ -138,6 +138,8 @@ class WelcomeController < ApplicationController
         vertices[name] = Vertex.new(name, coords)
       end
     }
+    puts "vertices"
+    p vertices.inspect
 
     rescale(vertices, svg_size)
     @vertices = vertices
