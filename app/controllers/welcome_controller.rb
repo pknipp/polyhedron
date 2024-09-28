@@ -112,18 +112,6 @@ class WelcomeController < ApplicationController
     vertices_string = vertices_string[0..-2]
     vertex_string_array = vertices_string.split("),(")
     vertex_string_array.each_with_index {|vertex_string, i|
-      first_char = vertex_string[0]
-      if first_char != "("
-        @error = "The first point's first character should be '(' not '" + first_char + "'."
-        return render :error
-      end
-      vertex_string = vertex_string[1..-1]
-      last_char = vertex_string[-1]
-      if last_char != ")"
-        @error = "The last point's last character should be ')' not '" + last_char + "'."
-        return render :error
-      end
-      vertex_string = vertex_string[0..-2]
       vertex_tuple = vertex_string.split(",")
       if vertex_tuple.length != 4
         @error = "The tuple (" + vertex_string + ") should have 4 elements not " + vertex_tuple.length.to_s + "."
