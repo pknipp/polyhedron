@@ -88,12 +88,58 @@ class WelcomeController < ApplicationController
     }
   end
 
-  # GET /points/:shape
+  # GET /points/:vertices
   def points
     svg_size = 900
     @size = svg_size
     vertices = {}
     edges = {}
+    @vertices = vertices
+    @edges = edges
+
+    vertices_string = params[:vertices].gsub(/\s+/, "")
+    first_char = vertices_string[0]
+    if first_char != "("
+      @error = "The first path-fragments's first character should be '(' not '" + first_char + "'."
+      return render :error
+    end
+    vertices_string = vertices_string[1..-1]
+    last_char = vertices_string[-1]
+    if last_char != ")"
+      @error = "The first path-fragment's last character should be ')' not '" + last_char + "'."
+      return render :error
+    end
+    vertices_string = vertices_string[0..-2]
+    vertex_string_array = vertices_string.split("),(")
+    vertex_string_array.each_with_index {|vertex_string, i|
+      vertex_tuple = vertex_string.split(",")
+      if vertex_tuple.length != 2
+        @error = "The tuple (" + vertex_string + ") should have either 2 elements not " + vertex_tuple.length.to_s + "."
+        return render :error
+      end
+      name = vertex_tuple[0]
+      # long_name = vertex_tuple.length == 2 ? short_name : vertex_tuple[2]
+      coords_string = vertex_tuple[1]
+      coord_string_array = coords_string.split(",")
+      coords = []
+      coord_string_array.each {|cord_string|
+        coord = Float(coord_string.sub('*', '.')) rescue nil
+        if coord.nil?
+          @error = "The path fragment " + coord_string + " cannot be parsed as a number."
+          return render :error
+        end
+        coords.push(coord)
+      }
+
+      if vertices.has_key?(name)
+        @error = "The label " + name + " is used to label more than one vertex in this structure."
+        return render :error
+      else
+        vertices[name] = Vertex.new(name, coords)
+      end
+    }
+
+    rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
     render 'show'
