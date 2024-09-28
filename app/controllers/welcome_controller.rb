@@ -122,7 +122,7 @@ class WelcomeController < ApplicationController
       coords_string = vertex_tuple[1]
       coord_string_array = coords_string.split(",")
       coords = []
-      coord_string_array.each {|cord_string|
+      coord_string_array.each {|coord_string|
         coord = Float(coord_string.sub('*', '.')) rescue nil
         if coord.nil?
           @error = "The path fragment " + coord_string + " cannot be parsed as a number."
