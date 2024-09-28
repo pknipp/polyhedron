@@ -112,15 +112,26 @@ class WelcomeController < ApplicationController
     vertices_string = vertices_string[0..-2]
     vertex_string_array = vertices_string.split("),(")
     vertex_string_array.each_with_index {|vertex_string, i|
+      first_char = vertex_string[0]
+      if first_char != "("
+        @error = "The first point's first character should be '(' not '" + first_char + "'."
+        return render :error
+      end
+      vertex_string = vertex_string[1..-1]
+      last_char = vertex_string[-1]
+      if last_char != ")"
+        @error = "The last point's last character should be ')' not '" + last_char + "'."
+        return render :error
+      end
+      vertex_string = vertex_string[0..-2]
       vertex_tuple = vertex_string.split(",")
-      if vertex_tuple.length != 2
-        @error = "The tuple (" + vertex_string + ") should have either 2 elements not " + vertex_tuple.length.to_s + "."
+      if vertex_tuple.length != 4
+        @error = "The tuple (" + vertex_string + ") should have 4 elements not " + vertex_tuple.length.to_s + "."
         return render :error
       end
       name = vertex_tuple[0]
       # long_name = vertex_tuple.length == 2 ? short_name : vertex_tuple[2]
-      coords_string = vertex_tuple[1]
-      coord_string_array = coords_string.split(",")
+      coord_string_array = vertex_tuple[1..-1]
       coords = []
       coord_string_array.each {|coord_string|
         coord = Float(coord_string.sub('*', '.')) rescue nil
@@ -130,7 +141,6 @@ class WelcomeController < ApplicationController
         end
         coords.push(coord)
       }
-
       if vertices.has_key?(name)
         @error = "The label " + name + " is used to label more than one vertex in this structure."
         return render :error
