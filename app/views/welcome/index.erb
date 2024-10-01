@@ -16,7 +16,7 @@
             After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/&lt;triangle&gt;/&lt;tetrahedra&gt;</tt>, where the <tt>&lt;triangle&gt;</tt> path fragment describes the first triangle, and the <tt>&lt;tetrahedra&gt;</tt> path fragment describes the <a href="https://en.wikipedia.org/wiki/Tetrahedron">tetrahedra</a> that are built atop that triangle, as follows
             <ul>
               <li>
-                <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the polyhedron.  The first three items are vertex names, and the last three are lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
+                <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>.  The first three items are vertex names, and the last three are lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
               </li>
               <li>
                 <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the tuple's first three items specifies the name an existing vertex of the polyhedron, and the fourth names the vertex added here. The last three items are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
@@ -24,12 +24,12 @@
             </ul>
           </li>
           <li>
-            Collection of vertices and edges(aka "stick figure"):<br/>
+            collection of vertices and edges (aka "stick figure"):<br/>
             After <tt>...herokuapp.com</tt> above the user should type <tt>/points/&lt;vertices&gt;/&lt;edges&gt;</tt>, where the <tt>&lt;vertices&gt;</tt> path fragment describes the vertices of the shape, and the <tt>&lt;edges&gt;</tt> path fragment specifies which pairs of vertices should be connected by a line segment, as follows
             <ul>
               <li>
                 <b>First fragment:</b> This is a comma-separated list of five-item tuples,
-                each describing a vertex.  For each tuple the first item is the vertex's key, the second (optional) item provides a human-readable label to use when rendering, and the last three are the vertex's Cartesian coordinates.
+                each describing a vertex.  For each tuple the first item is the vertex's key, the second (optional) item provides a human-readable label to use when rendering, and the last three are the vertex's <a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian</a> coordinates.
               </li>
               <li>
                 <b>Second fragment:</b> This is a comma-separated list of two-item tuples.  Each tuple contains the keys for each pair of vertices that should be connected by line segments.
@@ -51,10 +51,10 @@
         <b>Examples:</b>
         <ol>
           <li>
-            Polyhedron: Type <tt>...heroku.com/edges/A,B,C,1,1,1*414/(A,B,C,D,1*414,1,1*414),(A,D,C,E,1*732,1,1*732),(A,E,C,F,2,1,2),(A,F,C,G,2*24,1,2*24),(A,G,C,H,2*45,1,2*45),(A,H,C,I,2*65,1,2*65),(A,I,C,J,2*83,1,2*83),(A,J,C,K,3,1,3),(A,K,C,L,3*16,1,3*16),(A,L,C,M,3*32,1,3*32),(A,M,C,N,3*46,1,3*46),(A,N,C,O,3*61,1,3*61),(A,O,C,P,3*74,1,3*74),(A,P,C,Q,3*87,1,3*87),(A,Q,C,R,4,1,4),(A,R,C,S,4*12,1,4*12),(A,S,C,T,4*24,1,4*24)</tt> generates the shell of a 16-chambered nautilus whose outline coincides with the spiral of Theodorus.  (The nature of this shape will become more apparent when you drag it in order to gain a sideways perspective.)  Note that the non-1 numbers in this url are the square roots of the integers from 2 to 17, inclusive.
+            <b>polyhedron:</b> Type <tt>...heroku.com/edges/A,C,B,1,1,1*414/(A,C,B,D,1*414,1,1*414),(A,D,B,E,1*732,1,1*732),(A,E,B,F,2,1,2),(A,F,B,G,2*24,1,2*24),(A,G,B,H,2*45,1,2*45),(A,H,B,I,2*65,1,2*65),(A,I,B,J,2*83,1,2*83),(A,J,B,K,3,1,3),(A,K,B,L,3*16,1,3*16),(A,L,B,M,3*32,1,3*32),(A,M,B,N,3*46,1,3*46),(A,N,B,O,3*61,1,3*61),(A,O,B,P,3*74,1,3*74),(A,P,B,Q,3*87,1,3*87),(A,Q,B,R,4,1,4),(A,R,B,S,4*12,1,4*12),(A,S,B,T,4*24,1,4*24)</tt> generates the shell of a 16-chambered <a href="https://earthsky.org/human-world/nautilus-shell-fibonacci-logarithmic-spiral-golden-spiral/">Nautilus</a> whose outline coincides with the <a href="https://en.wikipedia.org/wiki/Spiral_of_Theodorus">spiral of Theodorus</a>.  (The nature of this shape will become more apparent when you drag it in order to gain a sideways perspective.)  Note that the non-1 numbers in this url are the square roots of the integers from 2 to 17, inclusive.
           </li>
           <li>
-            Stick figure: Type <tt>...heroku.com/points/(C,0,0,0),(H1,H,1,1,1),(H2,H,-1,-1,1),(H3,H,-1,1,-1),(H4,H,1,-1,-1)/(C,H1),(C,H2),(C,H3),(C,H4))</tt> in order to get a molecular model for methane (CH<sub>4</sub>).
+            <b>stick figure:</b> Type <tt>...heroku.com/points/(C,0,0,0),(H1,H,1,1,1),(H2,H,-1,-1,1),(H3,H,-1,1,-1),(H4,H,1,-1,-1)/(C,H1),(C,H2),(C,H3),(C,H4)</tt> in order to get a molecular model for <a href="https://en.wikipedia.org/wiki/Methane">methane</a> (CH<sub>4</sub>).
           </li>
       </div>
     </div>
