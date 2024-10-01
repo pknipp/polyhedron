@@ -9,10 +9,12 @@ class WelcomeController < ApplicationController
   end
 
   class Vertex
-    attr_accessor :name
+    attr_accessor :key
+    attr_accessor :label
     attr_accessor :coords
-    def initialize(name, coords)
-      @name = name
+    def initialize(key, label, coords)
+      @key = key
+      @label = label
       @coords = coords
     end
   end
@@ -52,14 +54,14 @@ class WelcomeController < ApplicationController
     cloned_vertices
   end
 
-  def make_edge(zeroth_name, first_name, vertices, edges)
+  def make_edge(zeroth_key, first_key, vertices, edges)
     # Ensure that two strings in tuple are sorted.
-    if first_name < zeroth_name
-      swap = first_name
-      first_name = zeroth_name
-      zeroth_name = swap
+    if first_key < zeroth_key
+      swap = first_key
+      first_key = zeroth_key
+      zeroth_key = swap
     end
-    edges[[zeroth_name, first_name]] = Edge.new([vertices[zeroth_name], vertices[first_name]])
+    edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
   end
 
   def rescale(vertices, svg_size)
@@ -114,13 +116,14 @@ class WelcomeController < ApplicationController
     vertex_string_array = vertices_string.split("),(")
     vertex_string_array.each_with_index {|vertex_string, i|
       vertex_tuple = vertex_string.split(",")
-      if vertex_tuple.length != 4
+      has_label = vertex_tuple.length == 5
+      if !(vertex_tuple.length == 4 || has_label)
         @error = "The tuple (" + vertex_string + ") should have 4 elements not " + vertex_tuple.length.to_s + "."
         return render :error
       end
-      name = vertex_tuple[0]
-      # long_name = vertex_tuple.length == 2 ? short_name : vertex_tuple[2]
-      coord_string_array = vertex_tuple[1..-1]
+      key = vertex_tuple.shift
+      label = has_label ? vertex_tuple.shift : key
+      coord_string_array = vertex_tuple
       coords = []
       coord_string_array.each {|coord_string|
         coord = Float(coord_string.sub('*', '.')) rescue nil
@@ -130,11 +133,11 @@ class WelcomeController < ApplicationController
         end
         coords.push(coord)
       }
-      if vertices.has_key?(name)
-        @error = "The label " + name + " is used to label more than one vertex in this structure."
+      if vertices.has_key?(key)
+        @error = "The key " + key + " is used to designate more than one vertex in this structure."
         return render :error
       else
-        vertices[name] = Vertex.new(name, coords)
+        vertices[key] = Vertex.new(key, label, coords)
       end
     }
 
