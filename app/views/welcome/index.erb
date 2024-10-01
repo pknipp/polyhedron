@@ -13,26 +13,26 @@
         <ol>
           <li>
             <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose faces are triangular:<br/>
-            After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/&lt;triangle&gt;/&lt;tetrahedra&gt;</tt>, where the <tt>&lt;triangle>&gt;/tt> path fragment describes the first triangle, and the <tt>&lt;tetrahedra&gt;</tt> path fragment describes the tetrahedra that are built atop that triangle, as follows
+            After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/&lt;triangle&gt;/&lt;tetrahedra&gt;</tt>, where the <tt>&lt;triangle&gt;/tt> path fragment describes the first triangle, and the <tt>&lt;tetrahedra&gt;</tt> path fragment describes the tetrahedra that are built atop that triangle, as follows
             <ul>
               <li>
                 <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the polyhedron.  The first three items are vertex names, and the last three are (unnormalized) lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
               </li>
               <li>
-                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the first three elements is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three elements are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
+                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the tuple's first three elements is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three elements are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
               </li>
             </ul>
           </li>
           <li>
             (WIP) Collection of vertices and edges:<br/>
-            After <tt>...herokuapp.com</tt> above the user should type <tt>/points/&lt;vertices&gt;/&lt;edges&gt;</tt>, where the <tt>&lt;vertices>&gt;/tt> path fragment describes the vertices of the shape, and the <tt>&lt;edges&gt;</tt> path fragment specifies which pairs of vertices should be connected by a line segment, as follows
+            After <tt>...herokuapp.com</tt> above the user should type <tt>/points/&lt;vertices&gt;/&lt;edges&gt;</tt>, where the <tt>&lt;vertices&gt;/tt> path fragment describes the vertices of the shape, and the <tt>&lt;edges&gt;</tt> path fragment specifies which pairs of vertices should be connected by a line segment, as follows
             <ul>
               <li>
                 <b>First fragment:</b> This is a comma-separated list of five-item tuples,
-                each described a vertex.  The first item is the vertex's key, the second (optional) provides a human-readable lab to use when rendering, and the last three are the vertex's coordinates.
+                each describing a vertex.  The first item is the vertex's key, the second (optional) provides a human-readable label to use when rendering, and the last three are the vertex's Cartesian coordinates.
               </li>
               <li>
-                <b>Second fragment</b> This is a comma-separated list of two-item tuples.  Each of these tuples specifies the keys for each pair of vertices that should be connected by line segments.
+                <b>Second fragment</b> This is a comma-separated list of two-item tuples.  Each tuple contains the keys for each pair of vertices that should be connected by line segments.
               </li>
             </ul>
           </li>
