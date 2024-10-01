@@ -5,11 +5,11 @@
         <h3>Three-dimensional shape generation and rendering</h3>
       </div>
       <div>
-        <b>Overview:</b> This endpoint enables the user to generate and render a 3-dimensional structure that consists of <h href="https://en.wikipedia.org/wiki/Vertex_(geometry)">vertices</a> and <a href="https://en.wikipedia.org/wiki/Edge_(geometry)">edges</a>. The user may also rotate this structure in order to view from any perspective.
+        <b>Overview:</b> This endpoint enables the user to generate and render a 3-dimensional structure that consists of <a href="https://en.wikipedia.org/wiki/Vertex_(geometry)">vertices</a> and <a href="https://en.wikipedia.org/wiki/Edge_(geometry)">edges</a>. The user may also rotate this structure in order to view from any perspective.
       </div>
       <br/>
       <div>
-        <b>Instructions:</b> There are two different ways that the user can create a 3-dimensional structure for rendering.  An example for each may be provided below.
+        <b>Instructions:</b> There are two different ways that the user can create a structure for rendering.  A example for each may be copy-and-pasted from below.
         <ol>
           <li>
             <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose <a href="https://en.wikipedia.org/wiki/Face_(geometry)">faces</a> are triangular:<br/>
@@ -19,12 +19,12 @@
                 <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the polyhedron.  The first three items are vertex names, and the last three are lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
               </li>
               <li>
-                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the tuple's first three items is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three items are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
+                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the tuple's first three items specifies the name an existing vertex of the polyhedron, and the fourth names the vertex added here. The last three items are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
               </li>
             </ul>
           </li>
           <li>
-            Collection of vertices and edges:<br/> (aka "stick figure")
+            Collection of vertices and edges(aka "stick figure"):<br/>
             After <tt>...herokuapp.com</tt> above the user should type <tt>/points/&lt;vertices&gt;/&lt;edges&gt;</tt>, where the <tt>&lt;vertices&gt;</tt> path fragment describes the vertices of the shape, and the <tt>&lt;edges&gt;</tt> path fragment specifies which pairs of vertices should be connected by a line segment, as follows
             <ul>
               <li>
