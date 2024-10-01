@@ -217,7 +217,7 @@ class WelcomeController < ApplicationController
     triangle_names = triangle.first(3)
     edge_length_strings = triangle.last(3)
     zeroth_name, first_name = triangle_names.first(2)
-    a = Vertex.new(zeroth_name, [0, 0, 0])
+    a = Vertex.new(zeroth_name, zeroth_name, [0, 0, 0])
     vertices[zeroth_name] = a
     ab = Float(edge_length_strings[0].sub('*', '.')) rescue nil
     if ab.nil?
@@ -228,7 +228,7 @@ class WelcomeController < ApplicationController
       @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
       return render :error
     else
-      vertices[first_name] = Vertex.new(first_name, [ab, 0, 0])
+      vertices[first_name] = Vertex.new(first_name, first_name, [ab, 0, 0])
     end
     make_edge(zeroth_name, first_name, vertices, edges)
     first_name = triangle_names[2]
@@ -248,7 +248,7 @@ class WelcomeController < ApplicationController
     end
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
-    vertices[first_name] = Vertex.new(first_name, [cx, cy, 0])
+    vertices[first_name] = Vertex.new(first_name, first_name, [cx, cy, 0])
     make_edge(triangle_names[1], first_name, vertices, edges)
     make_edge(triangle_names[0], first_name, vertices, edges)
 
@@ -277,7 +277,7 @@ class WelcomeController < ApplicationController
         length_attempt = Float(length_string.sub('*', '.')) rescue nil
         error = nil
         if vertices.has_key?(name) && !length_attempt.nil?
-          tetrahedron_vertices.push(Vertex.new(name, vertices[name].coords))
+          tetrahedron_vertices.push(Vertex.new(name, name, vertices[name].coords))
           edge_lengths.push(length_attempt)
         else
           if !vertices.has_key?(name)
@@ -369,7 +369,7 @@ class WelcomeController < ApplicationController
       coords1 = tetrahedron.vertices[1].coords
       coords2 = tetrahedron.vertices[2].coords
       cw = (coords1[0] - coords0[0]) * (coords2[1] - coords0[1]) > (coords1[1] - coords0[1]) * (coords2[0] - coords0[0])
-      tetrahedron.vertices.push(Vertex.new(new_name, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
+      tetrahedron.vertices.push(Vertex.new(new_name, new_name, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
 
       # back-rotation about x-axis
       coords = dup(tetrahedron.vertices)
