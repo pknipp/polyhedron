@@ -1,7 +1,7 @@
 ## TO DO:
 ### MVP:
 1. DRY code w/helpers.
-2. Allow size of label font to be subjected to perspective.
+2. Allow dx to be subjected to perspective.
 3. For polyhedron bifurcate each vertex string from name to key/label
 4. Optimize appropriate use of array methods.
 
