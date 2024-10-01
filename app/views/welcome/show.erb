@@ -56,7 +56,7 @@
     }
     ["x", "y", "z"].forEach((dir,k) => text.setAttribute(dir, point[k] + origin));
     text.setAttribute("font-size", `${12 * (1 + point[2] / perspective)}px`)
-    text.setAttribute("dx", `${-4 * text.getAttribute("textContent").length * (1 + point[2] / perspective)}px`)
+    # text.setAttribute("dx", `${-4 * text.getAttribute("textContent").length * (1 + point[2] / perspective)}px`)
   };
   const stopMoving = svg => svg.setAttribute("is-dragging", "F");
   const changePerspective = (svg, lines, texts, checked, perspective) => {
@@ -76,11 +76,11 @@
         setLineAttributes(line, pair, perspective);
       });
       texts.forEach(text => {
-        let point = ["x", "y", "z"].map(dir => (Number(text.getAttribute(dir)) - origin));
+        const point = ["x", "y", "z"].map(dir => (Number(text.getAttribute(dir)) - origin));
         [0, 1].forEach(k => {
           point[k] /= (1 + point[2]  / oldPerspective);
         });
-        setTextAttributes(text, point, perspective);
+        setTextAttributes(text, point, perspective, text.getAttribute("textContent").length);
       });
     }
   };
@@ -141,7 +141,7 @@
                     return val + element * point[i];
                   }, 0));
                 }
-                setTextAttributes(text, pointNew, perspective);
+                setTextAttributes(text, pointNew, perspective, text.getAttribute("textContent").length);
               });
             }
             // Set a timer that will reset the flag after the interval
