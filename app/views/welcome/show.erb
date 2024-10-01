@@ -55,6 +55,7 @@
       point[k] = point[k] * (1 + point[2] / perspective);
     }
     ["x", "y", "z"].forEach((dir,k) => text.setAttribute(dir, point[k] + origin));
+    text.setAttribute("font-size", `${12 * (1 + point[2]) / perspective}px`)
   };
   const stopMoving = svg => svg.setAttribute("is-dragging", "F");
   const changePerspective = (svg, lines, texts, checked, perspective) => {
