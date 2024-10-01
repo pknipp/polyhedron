@@ -1,3 +1,17 @@
+## TO DO:
+### MVP:
+1. DRY code w/helpers.
+2. Allow size of label font to be subjected to perspective.
+3. For polyhedron bifurcate each vertex string from name to key/label
+4. Optimize appropriate use of array methods.
+
+### Stretch:
+1. Subsume Float invocations (and following 3-line if-blocks) into a helper.
+1. Create three buttons to provide user with coarse control over drag-sensitivity.
+1. Replace each 3-button array with a slider that utilizes throttling.
+1. Improve handling of perspective (and change example to an asterism).</li>
+1. Enable the creation of non-triangular faces.
+
 # ruby-getting-started
 
 A barebones Rails app, which can easily be deployed to Heroku.
