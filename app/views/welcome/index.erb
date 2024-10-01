@@ -16,10 +16,10 @@
             After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/&lt;triangle&gt;/&lt;tetrahedra&gt;</tt>, where the <tt>&lt;triangle&gt;</tt> path fragment describes the first triangle, and the <tt>&lt;tetrahedra&gt;</tt> path fragment describes the tetrahedra that are built atop that triangle, as follows
             <ul>
               <li>
-                <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the polyhedron.  The first three items are vertex names, and the last three are (unnormalized) lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
+                <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the polyhedron.  The first three items are vertex names, and the last three are lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
               </li>
               <li>
-                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the tuple's first three elements is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three items are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
+                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the tuple's first three items is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three items are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
               </li>
             </ul>
           </li>
@@ -29,10 +29,10 @@
             <ul>
               <li>
                 <b>First fragment:</b> This is a comma-separated list of five-item tuples,
-                each describing a vertex.  The first item is the vertex's key, the second (optional) provides a human-readable label to use when rendering, and the last three are the vertex's Cartesian coordinates.
+                each describing a vertex.  For each tuple the first item is the vertex's key, the second (optional) item provides a human-readable label to use when rendering, and the last three are the vertex's Cartesian coordinates.
               </li>
               <li>
-                <b>Second fragment</b> This is a comma-separated list of two-item tuples.  Each tuple contains the keys for each pair of vertices that should be connected by line segments.
+                <b>Second fragment:</b> This is a comma-separated list of two-item tuples.  Each tuple contains the keys for each pair of vertices that should be connected by line segments.
               </li>
             </ul>
           </li>
@@ -51,6 +51,10 @@
         <b>Example:</b> <tt>...heroku.com/edges/A,B,C,12,5,13/(A,B,C,D,12*37,3,4)</tt> generates the asymmetric tetrahedron indicated below
       </div>
     </div>
+
+
+
+
     <div style="text-align:center">
       <h4>Click and drag in order to rotate polyhedron</h4>
       <div>
@@ -95,6 +99,10 @@
         <!-- <line x1="600" y1="750" z1="600" x2="600" y2="450" z2="600"  stroke="rgb(50% 50% 50%)" stroke-width="1" pointer-events="visiblePainted"/> -->
       </svg>
     </div>
+
+
+
+    
   </body>
   <script>
     let svg = document.getElementById("svg");

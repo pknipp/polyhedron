@@ -227,7 +227,7 @@ class WelcomeController < ApplicationController
     tetrahedra_string = params[:tetrahedra]
     if tetrahedra_string
       # parse the tetrahedra
-      tetrahedra_string = tetrahedron_string.gsub(/\s+/, "")
+      tetrahedra_string = tetrahedra_string.gsub(/\s+/, "")
       first_char = tetrahedra_string[0]
       if first_char != "("
         @error = "The second path fragment (" + tetrahedra_string + ") should start with an open paren, not with " + first_char
