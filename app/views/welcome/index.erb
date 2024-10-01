@@ -9,7 +9,7 @@
       </div>
       <br/>
       <div>
-        <b>Instructions:</b> There are two different ways that the user can create a 3-dimensional structure for rendering.
+        <b>Instructions:</b> There are two different ways that the user can create a 3-dimensional structure for rendering.  An example for each may be provided below.
         <ol>
           <li>
             <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose faces are triangular:<br/>
@@ -24,7 +24,7 @@
             </ul>
           </li>
           <li>
-            (WIP) Collection of vertices and edges:<br/>
+            (WIP) Collection of vertices and edges:<br/> (aka "stick figure")
             After <tt>...herokuapp.com</tt> above the user should type <tt>/points/&lt;vertices&gt;/&lt;edges&gt;</tt>, where the <tt>&lt;vertices&gt;</tt> path fragment describes the vertices of the shape, and the <tt>&lt;edges&gt;</tt> path fragment specifies which pairs of vertices should be connected by a line segment, as follows
             <ul>
               <li>
@@ -48,7 +48,14 @@
       </div>
       <br/>
       <div>
-        <b>Example:</b> <tt>...heroku.com/edges/A,B,C,1,1,1*414/(A,B,C,D,1*414,1,1*414),(A,D,C,E,1*732,1,1*732),(A,E,C,F,2,1,2),(A,F,C,G,2*24,1,2*24),(A,G,C,H,2*45,1,2*45),(A,H,C,I,2*65,1,2*65),(A,I,C,J,2*83,1,2*83),(A,J,C,K,3,1,3),(A,K,C,L,3*16,1,3*16),(A,L,C,M,3*32,1,3*32),(A,M,C,N,3*46,1,3*46),(A,N,C,O,3*61,1,3*61),(A,O,C,P,3*74,1,3*74),(A,P,C,Q,3*87,1,3*87),(A,Q,C,R,4,1,4),(A,R,C,S,4*12,1,4*12),(A,S,C,T,4*24,1,4*24)</tt> generates the shell of a 16-chambered nautilus whose outline coincides with the spiral of Theodorus.  (The nature of this shape will become more apparent when you drag it in order to gain a sideways perspective.)
+        <b>Examples:</b>
+        <ol>
+          <li>
+            Polyhedron: Type <tt>...heroku.com/edges/A,B,C,1,1,1*414/(A,B,C,D,1*414,1,1*414),(A,D,C,E,1*732,1,1*732),(A,E,C,F,2,1,2),(A,F,C,G,2*24,1,2*24),(A,G,C,H,2*45,1,2*45),(A,H,C,I,2*65,1,2*65),(A,I,C,J,2*83,1,2*83),(A,J,C,K,3,1,3),(A,K,C,L,3*16,1,3*16),(A,L,C,M,3*32,1,3*32),(A,M,C,N,3*46,1,3*46),(A,N,C,O,3*61,1,3*61),(A,O,C,P,3*74,1,3*74),(A,P,C,Q,3*87,1,3*87),(A,Q,C,R,4,1,4),(A,R,C,S,4*12,1,4*12),(A,S,C,T,4*24,1,4*24)</tt> generates the shell of a 16-chambered nautilus whose outline coincides with the spiral of Theodorus.  (The nature of this shape will become more apparent when you drag it in order to gain a sideways perspective.)
+          </li>
+          <li>
+            Stick figure: Type <tt>...heroku.com/points/(C,0,0,0),(H1,H,1,1,1),(H2,H,-1,-1,1),(H3,H,-1,1,-1),(H4,H,1,-1,-1)/(C,H1),(C,H2),(C,H3),(C,H4))</tt> in order to get a model for methane (CH<sub>4</sub>).
+          </li>
       </div>
     </div>
 
