@@ -232,8 +232,8 @@ class WelcomeController < ApplicationController
       return render :error
     end
     last_char = tetrahedra_string[-1]
-    if last_char != "("
-      @error = "The second path fragment (" + tetrahedra_string + ") should end with a close paren, not with " + last_char
+    if last_char != ")"
+      @error = "The second path fragment [" + tetrahedra_string + "] should end with a close paren, not with " + last_char + "."
       return render :error
     end
     tetrahedra_array = tetrahedra_string[1..-2].split("),(")
