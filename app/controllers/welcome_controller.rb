@@ -224,187 +224,188 @@ class WelcomeController < ApplicationController
     make_edge(triangle_keys[1], first_key, vertices, edges)
     make_edge(triangle_keys[0], first_key, vertices, edges)
 
-    # parse the tetrahedra
     tetrahedra_string = params[:tetrahedra].gsub(/\s+/, "")
-    first_char = tetrahedra_string[0]
-    if first_char != "("
-      @error = "The second path fragment (" + tetrahedra_string + ") should start with an open paren, not with " + first_char
-      return render :error
-    end
-    last_char = tetrahedra_string[-1]
-    if last_char != ")"
-      @error = "The second path fragment [" + tetrahedra_string + "] should end with a close paren, not with " + last_char + "."
-      return render :error
-    end
-    tetrahedra_array = tetrahedra_string[1..-2].split("),(")
-    tetrahedra_array.each_with_index {|tetrahedron_string, i|
-      tetrahedron = Tetrahedron.new([])
-      tetrahedron_array = tetrahedron_string.split(",")
-      if tetrahedron_array.length != 7
-        @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
+    if tetraheda_string
+      # parse the tetrahedra
+      first_char = tetrahedra_string[0]
+      if first_char != "("
+        @error = "The second path fragment (" + tetrahedra_string + ") should start with an open paren, not with " + first_char
         return render :error
       end
-      base_keys = tetrahedron_array.first(4)
-      new_key = base_keys.pop
-      if vertices.has_key?(new_key)
-        @error = "The label " + new_key + " is used to specify more than one vertex in this polyhedron."
+      last_char = tetrahedra_string[-1]
+      if last_char != ")"
+        @error = "The second path fragment [" + tetrahedra_string + "] should end with a close paren, not with " + last_char + "."
         return render :error
       end
-      base = base_keys.join("-")
-      edge_length_strings = tetrahedron_array.last(3)
-      tetrahedron_vertices = []
-      edge_lengths = []
-      for j in 0..2 do
-        key = base_keys[j]
-        length_string = edge_length_strings[j]
-        length_attempt = Float(length_string.sub('*', '.')) rescue nil
-        error = nil
-        if vertices.has_key?(key) && !length_attempt.nil?
-          tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
-          edge_lengths.push(length_attempt)
-        else
-          if !vertices.has_key?(key)
-            error = "A vertex ('" + key + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
-          else
-            error = "The path fragment " + length_string + " cannot be parsed as a number."
-          end
-        end
-        if !error.nil?
-          @error = error
+      tetrahedra_array = tetrahedra_string[1..-2].split("),(")
+      tetrahedra_array.each_with_index {|tetrahedron_string, i|
+        tetrahedron = Tetrahedron.new([])
+        tetrahedron_array = tetrahedron_string.split(",")
+        if tetrahedron_array.length != 7
+          @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
           return render :error
         end
-      end
-      tetrahedron.vertices = tetrahedron_vertices
-
-      # translation
-      origin = tetrahedron.vertices[0].coords.dup
-      for j in 0..2 do
-        for k in 0..2 do
-          tetrahedron.vertices[j].coords[k] -= origin[k]
+        base_keys = tetrahedron_array.first(4)
+        new_key = base_keys.pop
+        if vertices.has_key?(new_key)
+          @error = "The label " + new_key + " is used to specify more than one vertex in this polyhedron."
+          return render :error
         end
-      end
+        base = base_keys.join("-")
+        edge_length_strings = tetrahedron_array.last(3)
+        tetrahedron_vertices = []
+        edge_lengths = []
+        for j in 0..2 do
+          key = base_keys[j]
+          length_string = edge_length_strings[j]
+          length_attempt = Float(length_string.sub('*', '.')) rescue nil
+          error = nil
+          if vertices.has_key?(key) && !length_attempt.nil?
+            tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
+            edge_lengths.push(length_attempt)
+          else
+            if !vertices.has_key?(key)
+              error = "A vertex ('" + key + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
+            else
+              error = "The path fragment " + length_string + " cannot be parsed as a number."
+            end
+          end
+          if !error.nil?
+            @error = error
+            return render :error
+          end
+        end
+        tetrahedron.vertices = tetrahedron_vertices
 
-      # rotation about z-axis
-      coords = dup(tetrahedron.vertices)
-      theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
-      cos_z = Math.cos(theta_z)
-      sin_z = Math.sin(theta_z)
-      for j in 0..2 do
-        tetrahedron.vertices[j].coords = [
-          cos_z * coords[j][0] + sin_z * coords[j][1],
-          -sin_z* coords[j][0] + cos_z * coords[j][1],
-          coords[j][2],
-        ]
-      end
+        # translation
+        origin = tetrahedron.vertices[0].coords.dup
+        for j in 0..2 do
+          for k in 0..2 do
+            tetrahedron.vertices[j].coords[k] -= origin[k]
+          end
+        end
 
-      # rotation about y-axis
-      coords = dup(tetrahedron.vertices)
-      theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
-      cos_y = Math.cos(theta_y)
-      sin_y = Math.sin(theta_y)
-      for j in 0..2 do
-        tetrahedron.vertices[j].coords = [
-          cos_y * coords[j][0] + sin_y * coords[j][2],
-          coords[j][1],
-          -sin_y * coords[j][0] + cos_y * coords[j][2],
-        ]
-      end
+        # rotation about z-axis
+        coords = dup(tetrahedron.vertices)
+        theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
+        cos_z = Math.cos(theta_z)
+        sin_z = Math.sin(theta_z)
+        for j in 0..2 do
+          tetrahedron.vertices[j].coords = [
+            cos_z * coords[j][0] + sin_z * coords[j][1],
+            -sin_z* coords[j][0] + cos_z * coords[j][1],
+            coords[j][2],
+          ]
+        end
 
-      # rotation about x-axis
-      coords = dup(tetrahedron.vertices)
-      theta_x = Math.atan2(coords[2][2] - coords[0][2], coords[2][1] - coords[0][1])
-      cos_x = Math.cos(theta_x)
-      sin_x = Math.sin(theta_x)
-      for j in 0..2 do
-        tetrahedron.vertices[j].coords = [
-          coords[j][0],
-          cos_x * coords[j][1] + sin_x * coords[j][2],
-          -sin_x * coords[j][1] + cos_x * coords[j][2],
-        ]
-      end
+        # rotation about y-axis
+        coords = dup(tetrahedron.vertices)
+        theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
+        cos_y = Math.cos(theta_y)
+        sin_y = Math.sin(theta_y)
+        for j in 0..2 do
+          tetrahedron.vertices[j].coords = [
+            cos_y * coords[j][0] + sin_y * coords[j][2],
+            coords[j][1],
+            -sin_y * coords[j][0] + cos_y * coords[j][2],
+          ]
+        end
 
-      # Calculate location of apex of tetrahedron
-      ad = edge_lengths[0]
-      bd = edge_lengths[1]
-      cd = edge_lengths[2]
+        # rotation about x-axis
+        coords = dup(tetrahedron.vertices)
+        theta_x = Math.atan2(coords[2][2] - coords[0][2], coords[2][1] - coords[0][1])
+        cos_x = Math.cos(theta_x)
+        sin_x = Math.sin(theta_x)
+        for j in 0..2 do
+          tetrahedron.vertices[j].coords = [
+            coords[j][0],
+            cos_x * coords[j][1] + sin_x * coords[j][2],
+            -sin_x * coords[j][1] + cos_x * coords[j][2],
+          ]
+        end
 
-      key0 = tetrahedron.vertices[0].key
-      key1 = tetrahedron.vertices[1].key
-      edge = edges[[key0, key1]] || edges[[key1, key0]]
-      ab = edge.length
+        # Calculate location of apex of tetrahedron
+        ad = edge_lengths[0]
+        bd = edge_lengths[1]
+        cd = edge_lengths[2]
 
-      key0 = tetrahedron.vertices[0].key
-      key2 = tetrahedron.vertices[2].key
-      edge = edges[[key0, key2]] || edges[[key2, key0]]
-      ac = edge.length
+        key0 = tetrahedron.vertices[0].key
+        key1 = tetrahedron.vertices[1].key
+        edge = edges[[key0, key1]] || edges[[key1, key0]]
+        ab = edge.length
 
-      dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
-      s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
-      dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
-      dz_sq = ad * ad - dx * dx - dy * dy
-      if dz_sq < 0
-        @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
-        return render :error
-      end
+        key0 = tetrahedron.vertices[0].key
+        key2 = tetrahedron.vertices[2].key
+        edge = edges[[key0, key2]] || edges[[key2, key0]]
+        ac = edge.length
 
-      # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
-      coords0 = tetrahedron.vertices[0].coords
-      coords1 = tetrahedron.vertices[1].coords
-      coords2 = tetrahedron.vertices[2].coords
-      cw = (coords1[0] - coords0[0]) * (coords2[1] - coords0[1]) > (coords1[1] - coords0[1]) * (coords2[0] - coords0[0])
-      tetrahedron.vertices.push(Vertex.new(new_key, new_key, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
+        dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
+        s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
+        dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
+        dz_sq = ad * ad - dx * dx - dy * dy
+        if dz_sq < 0
+          @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
+          return render :error
+        end
 
-      # back-rotation about x-axis
-      coords = dup(tetrahedron.vertices)
-      cos_x = Math.cos(theta_x)
-      sin_x = Math.sin(theta_x)
-      for j in 0..3 do
-        tetrahedron.vertices[j].coords = [
-          coords[j][0],
-          cos_x * coords[j][1] - sin_x * coords[j][2],
-          sin_x * coords[j][1] + cos_x * coords[j][2],
-        ]
-      end
+        # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
+        coords0 = tetrahedron.vertices[0].coords
+        coords1 = tetrahedron.vertices[1].coords
+        coords2 = tetrahedron.vertices[2].coords
+        cw = (coords1[0] - coords0[0]) * (coords2[1] - coords0[1]) > (coords1[1] - coords0[1]) * (coords2[0] - coords0[0])
+        tetrahedron.vertices.push(Vertex.new(new_key, new_key, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
 
-      # back-rotation about y-axis
-      coords = dup(tetrahedron.vertices)
-      for j in 0..3 do
-        tetrahedron.vertices[j].coords = [
-          cos_y * coords[j][0] - sin_y * coords[j][2],
-          coords[j][1],
-          sin_y * coords[j][0] + cos_y * coords[j][2],
-        ]
-      end
-
-      # back-rotation about z-axis
-      coords = dup(tetrahedron.vertices)
-      for j in 0..3 do
-        tetrahedron.vertices[j].coords = [
-          cos_z * coords[j][0] - sin_z * coords[j][1],
-          sin_z * coords[j][0] + cos_z * coords[j][1],
-          coords[j][2],
-        ]
-      end
-
-      # back-translation
-      for k in 0..2 do
+        # back-rotation about x-axis
+        coords = dup(tetrahedron.vertices)
+        cos_x = Math.cos(theta_x)
+        sin_x = Math.sin(theta_x)
         for j in 0..3 do
-          tetrahedron.vertices[j].coords[k] += origin[k]
+          tetrahedron.vertices[j].coords = [
+            coords[j][0],
+            cos_x * coords[j][1] - sin_x * coords[j][2],
+            sin_x * coords[j][1] + cos_x * coords[j][2],
+          ]
         end
-      end
 
-      for j in 0..2 do
-        tetrahedron_vertex = tetrahedron.vertices[j]
-        vertices[tetrahedron_vertex.key].coords = tetrahedron_vertex.coords
-      end
-      # Insert tetrahedral apex to vertices hashmap.
-      vertices[new_key] = tetrahedron.vertices[3]
-      # Insert three more edges to other hashmap.
-      make_edge(base_keys[0], new_key, vertices, edges)
-      make_edge(base_keys[1], new_key, vertices, edges)
-      make_edge(base_keys[2], new_key, vertices, edges)
-    }
+        # back-rotation about y-axis
+        coords = dup(tetrahedron.vertices)
+        for j in 0..3 do
+          tetrahedron.vertices[j].coords = [
+            cos_y * coords[j][0] - sin_y * coords[j][2],
+            coords[j][1],
+            sin_y * coords[j][0] + cos_y * coords[j][2],
+          ]
+        end
 
+        # back-rotation about z-axis
+        coords = dup(tetrahedron.vertices)
+        for j in 0..3 do
+          tetrahedron.vertices[j].coords = [
+            cos_z * coords[j][0] - sin_z * coords[j][1],
+            sin_z * coords[j][0] + cos_z * coords[j][1],
+            coords[j][2],
+          ]
+        end
+
+        # back-translation
+        for k in 0..2 do
+          for j in 0..3 do
+            tetrahedron.vertices[j].coords[k] += origin[k]
+          end
+        end
+
+        for j in 0..2 do
+          tetrahedron_vertex = tetrahedron.vertices[j]
+          vertices[tetrahedron_vertex.key].coords = tetrahedron_vertex.coords
+        end
+        # Insert tetrahedral apex to vertices hashmap.
+        vertices[new_key] = tetrahedron.vertices[3]
+        # Insert three more edges to other hashmap.
+        make_edge(base_keys[0], new_key, vertices, edges)
+        make_edge(base_keys[1], new_key, vertices, edges)
+        make_edge(base_keys[2], new_key, vertices, edges)
+      }
+    end
     rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
