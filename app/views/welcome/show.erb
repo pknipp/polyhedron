@@ -53,9 +53,9 @@
   </div>
   <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" <%= "width=#{@size}" %> <%= "height=#{@size}" %> xmlns="http://www.w3.org/2000/svg">
     <g class="vertices">
-      <% @vertices.each do |name, vertex| %>
-        <text <%= "x=#{vertex.coords[0] + @size / 2} y=#{vertex.coords[1] + @size / 2} z=#{vertex.coords[2] + @size / 2} dx=#{-4 * name.length} dy=.3em" %>>
-          <%= name %>
+      <% @vertices.each do |key, vertex| %>
+        <text <%= "x=#{vertex.coords[0] + @size / 2} y=#{vertex.coords[1] + @size / 2} z=#{vertex.coords[2] + @size / 2} dx=#{-4 * vertex.label.length} dy=.3em" %>>
+          <%= vertex.label %>
         </text>
       <%end %>
     </g>
