@@ -50,13 +50,13 @@
     let darkness = `rgb(${(Math.round(100 * (1 - (1 + zAvg / perspective) / 2)) + "% ").repeat(3)})`;
     line.setAttribute("stroke", darkness);
   };
-  const setTextAttributes = (text, point, perspective) => {
+  const setTextAttributes = (text, point, perspective, textLength) => {
     for (k = 0; k < 2; k++) {
       point[k] = point[k] * (1 + point[2] / perspective);
     }
     ["x", "y", "z"].forEach((dir,k) => text.setAttribute(dir, point[k] + origin));
     text.setAttribute("font-size", `${12 * (1 + point[2] / perspective)}px`)
-    # text.setAttribute("dx", `${-4 * text.getAttribute("textContent").length * (1 + point[2] / perspective)}px`)
+    text.setAttribute("dx", -4 * textLength * (1 + point[2] / perspective))
   };
   const stopMoving = svg => svg.setAttribute("is-dragging", "F");
   const changePerspective = (svg, lines, texts, checked, perspective) => {
