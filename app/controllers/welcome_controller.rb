@@ -231,7 +231,7 @@ class WelcomeController < ApplicationController
       @error = "The second path fragment (" + tetrahedra_string + ") should start with an open paren, not with " + first_char
       return render :error
     end
-    last_char - tetrahedra_string[-1]
+    last_char = tetrahedra_string[-1]
     if last_char != "("
       @error = "The second path fragment (" + tetrahedra_string + ") should end with a close paren, not with " + last_char
       return render :error
