@@ -225,7 +225,7 @@ class WelcomeController < ApplicationController
     make_edge(triangle_keys[0], first_key, vertices, edges)
 
     tetrahedra_string = params[:tetrahedra].gsub(/\s+/, "")
-    if tetraheda_string
+    if tetrahedra_string
       # parse the tetrahedra
       first_char = tetrahedra_string[0]
       if first_char != "("
