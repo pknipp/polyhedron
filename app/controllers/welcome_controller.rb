@@ -214,26 +214,26 @@ class WelcomeController < ApplicationController
       @error = "The first element of the path's array should have 6 elements, not " + triangle.length.to_s + "."
       return render :error
     end
-    triangle_names = triangle.first(3)
+    triangle_keys = triangle.first(3)
     edge_length_strings = triangle.last(3)
-    zeroth_name, first_name = triangle_names.first(2)
-    a = Vertex.new(zeroth_name, zeroth_name, [0, 0, 0])
-    vertices[zeroth_name] = a
+    zeroth_key, first_key = triangle_keys.first(2)
+    a = Vertex.new(zeroth_key, zeroth_key, [0, 0, 0])
+    vertices[zeroth_key] = a
     ab = Float(edge_length_strings[0].sub('*', '.')) rescue nil
     if ab.nil?
       @error = "The path fragment " + edge_length_strings[0] + " cannot be parsed as a number."
       return render :error
     end
-    if vertices.has_key?(first_name)
-      @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
+    if vertices.has_key?(first_key)
+      @error = "The label " + first_key + " is used to label more than one vertex in this polyhedron."
       return render :error
     else
-      vertices[first_name] = Vertex.new(first_name, first_name, [ab, 0, 0])
+      vertices[first_key] = Vertex.new(first_key, first_key, [ab, 0, 0])
     end
-    make_edge(zeroth_name, first_name, vertices, edges)
-    first_name = triangle_names[2]
-    if vertices.has_key?(first_name)
-      @error = "The label " + first_name + " is used to label more than one vertex in this polyhedron."
+    make_edge(zeroth_key, first_key, vertices, edges)
+    first_key = triangle_keys[2]
+    if vertices.has_key?(first_key)
+      @error = "The label " + first_key + " is used to label more than one vertex in this polyhedron."
       return render :error
     end
     bc = Float(edge_length_strings[1].sub('*', '.')) rescue nil
@@ -248,9 +248,9 @@ class WelcomeController < ApplicationController
     end
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
-    vertices[first_name] = Vertex.new(first_name, first_name, [cx, cy, 0])
-    make_edge(triangle_names[1], first_name, vertices, edges)
-    make_edge(triangle_names[0], first_name, vertices, edges)
+    vertices[first_key] = Vertex.new(first_key, first_key, [cx, cy, 0])
+    make_edge(triangle_keys[1], first_key, vertices, edges)
+    make_edge(triangle_keys[0], first_key, vertices, edges)
 
     # parse the tetrahedra
     tetrahedra = shape_arr.drop(1)
@@ -261,27 +261,27 @@ class WelcomeController < ApplicationController
         @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
         return render :error
       end
-      base_names = tetrahedron_array.first(4)
-      new_name = base_names.pop
-      if vertices.has_key?(new_name)
-        @error = "The label " + new_name + " is used to label more than one vertex in this polyhedron."
+      base_keys = tetrahedron_array.first(4)
+      new_key = base_keys.pop
+      if vertices.has_key?(new_key)
+        @error = "The label " + new_key + " is used to specify more than one vertex in this polyhedron."
         return render :error
       end
-      base = base_names.join("-")
+      base = base_keys.join("-")
       edge_length_strings = tetrahedron_array.last(3)
       tetrahedron_vertices = []
       edge_lengths = []
       for j in 0..2 do
-        name = base_names[j]
+        key = base_keys[j]
         length_string = edge_length_strings[j]
         length_attempt = Float(length_string.sub('*', '.')) rescue nil
         error = nil
-        if vertices.has_key?(name) && !length_attempt.nil?
-          tetrahedron_vertices.push(Vertex.new(name, name, vertices[name].coords))
+        if vertices.has_key?(key) && !length_attempt.nil?
+          tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
           edge_lengths.push(length_attempt)
         else
-          if !vertices.has_key?(name)
-            error = "A vertex ('" + name + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
+          if !vertices.has_key?(key)
+            error = "A vertex ('" + key + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
           else
             error = "The path fragment " + length_string + " cannot be parsed as a number."
           end
@@ -345,14 +345,14 @@ class WelcomeController < ApplicationController
       bd = edge_lengths[1]
       cd = edge_lengths[2]
 
-      name0 = tetrahedron.vertices[0].name
-      name1 = tetrahedron.vertices[1].name
-      edge = edges[[name0, name1]] || edges[[name1, name0]]
+      key0 = tetrahedron.vertices[0].key
+      key1 = tetrahedron.vertices[1].key
+      edge = edges[[key0, key1]] || edges[[key1, key0]]
       ab = edge.length
 
-      name0 = tetrahedron.vertices[0].name
-      name2 = tetrahedron.vertices[2].name
-      edge = edges[[name0, name2]] || edges[[name2, name0]]
+      key0 = tetrahedron.vertices[0].key
+      key2 = tetrahedron.vertices[2].key
+      edge = edges[[key0, key2]] || edges[[key2, key0]]
       ac = edge.length
 
       dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
@@ -369,7 +369,7 @@ class WelcomeController < ApplicationController
       coords1 = tetrahedron.vertices[1].coords
       coords2 = tetrahedron.vertices[2].coords
       cw = (coords1[0] - coords0[0]) * (coords2[1] - coords0[1]) > (coords1[1] - coords0[1]) * (coords2[0] - coords0[0])
-      tetrahedron.vertices.push(Vertex.new(new_name, new_name, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
+      tetrahedron.vertices.push(Vertex.new(new_key, new_key, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
 
       # back-rotation about x-axis
       coords = dup(tetrahedron.vertices)
@@ -412,14 +412,14 @@ class WelcomeController < ApplicationController
 
       for j in 0..2 do
         tetrahedron_vertex = tetrahedron.vertices[j]
-        vertices[tetrahedron_vertex.name].coords = tetrahedron_vertex.coords
+        vertices[tetrahedron_vertex.key].coords = tetrahedron_vertex.coords
       end
       # Insert tetrahedral apex to vertices hashmap.
-      vertices[new_name] = tetrahedron.vertices[3]
+      vertices[new_key] = tetrahedron.vertices[3]
       # Insert three more edges to other hashmap.
-      make_edge(base_names[0], new_name, vertices, edges)
-      make_edge(base_names[1], new_name, vertices, edges)
-      make_edge(base_names[2], new_name, vertices, edges)
+      make_edge(base_keys[0], new_key, vertices, edges)
+      make_edge(base_keys[1], new_key, vertices, edges)
+      make_edge(base_keys[2], new_key, vertices, edges)
     }
 
     rescale(vertices, svg_size)
