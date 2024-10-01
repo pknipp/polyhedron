@@ -106,13 +106,12 @@ class WelcomeController < ApplicationController
       @error = "The first path-fragments's first character should be '(' not '" + first_char + "'."
       return render :error
     end
-    vertices_string = vertices_string[1..-1]
     last_char = vertices_string[-1]
     if last_char != ")"
       @error = "The first path-fragment's last character should be ')' not '" + last_char + "'."
       return render :error
     end
-    vertices_string = vertices_string[0..-2]
+    vertices_string = vertices_string[1..-2]
     vertex_string_array = vertices_string.split("),(")
     vertex_string_array.each_with_index {|vertex_string, i|
       vertex_tuple = vertex_string.split(",")
@@ -140,34 +139,35 @@ class WelcomeController < ApplicationController
         vertices[key] = Vertex.new(key, label, coords)
       end
     }
-
-    # parse the edges
-    edges_string = params[:edges]
-    first_char = edges_string[0]
-    if first_char != "("
-      @error = "The second path-fragments's first character should be '(' not '" + first_char + "'."
-      return render :error
-    end
-    edges_string = edges_string[1..-1]
-    last_char = edges_string[-1]
-    if last_char != ")"
-      @error = "The second path-fragment's last character should be ')' not '" + last_char + "'."
-      return render :error
-    end
-    edges_string = edges_string[0..-2]
-    edge_string_array = edges_string.split("),(")
-    edge_string_array.each_with_index {|edge_string, i|
-      edge_tuple = edge_string.split(",")
-      if edge_tuple.length != 2
-        @error = "The tuple (" + edge_string + ") should have 2 elements not " + edge_tuple.length.to_s + "."
-        return render :error
-      end
-      make_edge(edge_tuple[0], edge_tuple[1], vertices, edges)
-    }
-
     rescale(vertices, svg_size)
     @vertices = vertices
-    @edges = edges
+
+    edges_string = params[:edges]
+    if edges_string
+      # parse the edges
+      first_char = edges_string[0]
+      if first_char != "("
+        @error = "The second path-fragments's first character should be '(' not '" + first_char + "'."
+        return render :error
+      end
+      edges_string = edges_string[1..-1]
+      last_char = edges_string[-1]
+      if last_char != ")"
+        @error = "The second path-fragment's last character should be ')' not '" + last_char + "'."
+        return render :error
+      end
+      edges_string = edges_string[0..-2]
+      edge_string_array = edges_string.split("),(")
+      edge_string_array.each_with_index {|edge_string, i|
+        edge_tuple = edge_string.split(",")
+        if edge_tuple.length != 2
+          @error = "The tuple (" + edge_string + ") should have 2 elements not " + edge_tuple.length.to_s + "."
+          return render :error
+        end
+        make_edge(edge_tuple[0], edge_tuple[1], vertices, edges)
+      }
+      @edges = edges
+    end
     render 'show'
   end
 
