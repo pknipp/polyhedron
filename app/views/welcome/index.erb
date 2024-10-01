@@ -13,13 +13,13 @@
         <ol>
           <li>
             <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose faces are triangular:<br/>
-            After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/</tt> followed something that resembles an array of tuples, as follows.
+            After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/<triangle>/<tetrahedra></tt>, where the <tt><triangle></tt> path fragment describes the first triangle, and the <tt><tetrahedra></tt> path fragment describes the tetrahedra that are built atop that triangle, as follows
             <ul>
               <li>
-                <b>First element:</b> This is a six-element tuple that characterizes the first triangular face of the polyhedron.  The first three elements are vertex names, and the last three are (unnormalized) lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
+                <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the polyhedron.  The first three items are vertex names, and the last three are (unnormalized) lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
               </li>
               <li>
-                <b>Subsequent elements (optional):</b>  Each of these is a seven-element tuple that characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the first three is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three elements are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
+                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the first three elements is the name of an existing vertex of the polyhedron, and the fourth is the name of the vertex added here. The last three elements are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
               </li>
             </ul>
           </li>
