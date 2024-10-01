@@ -6,6 +6,10 @@
           <li> DRY code w/helpers.
           <li> Modify instructions for <tt>/edges</tt> route to contain two subsequent fragments (<tt>/:triangle/:tetrahedra</tt>), where the first is a comma-separated string containing six items, and the (optional) 2nd is an array of comma-separated tuples, each consisting of seven items.
           <li> Change example of this to consist of something that resembles a Nautilus shell consisting of a 17-element spiral of Theodorus.
+          <li> Rotate Ursa Major so that it appears in the standard way prior to any user rotation.
+          <li> Allow size of label font to be subjected to perspective.
+          <li> Allow two strings for each vertex: one as a key and the other as a label
+          <li> Figure out route when 2nd (optional) path frament is not there.
           <li> Optimize appropriate use of array methods.
           <li> Bifurcation of endpoints, as follows:</li>
           <ul>
@@ -17,7 +21,7 @@
             </li>
             <li> <tt>/:vertices</tt> is a comma-separated list of tuples, each of which contains either two or three elements and which characters a particular vertex of the shape.  The first element is a short string that uniquely specifies the vertex, the second element is a 3-element array that specifies the vertex's coordinates, and the third (if present) is a string used to label the vertex in the rendering.
             <li> <tt>/:edges</tt> is an array of two-element tuples, each specifying a particular edge to be rendered.  The first and second elements of each tuple are the short identifiers of the pair of vertices to be connected by the edge.
-            <li> Let the Big Dipper be the example for this (units are tens of ly): (Dubhe,121,925,-482),(Merak,111,666,-429),(Phecda,14,725,-533),(Megrez,-24,545,-353),(Alioth,-91,580,-381),(Mizar,-181,720,-472),(Alkaid,-618,1592,-1222)
+            <li> Let the Big Dipper be the example for this (units are ly): /points/(Dubhe,-56*47052195,14*14949378,108*3506898),(Merak,-42*71203061,11*07922694,66*3703485),(Phecda,-49*24384132,1*325331743,67*04869565),(Megrez,-43*70585439,-2*9476363,67*53783926),(Alkaid,-60*41454257,-30*62795296,78*78592224),(Alioth,-44*95834629,-10*80046004,68*4460164),(Mizar,-44*47887584,-17*05899754,67*84563513)/(Dubhe,Merak),(Merak,Phecda),(Phecda,Megrez),(Megrez,Alioth),(Alioth,Mizar),(Mizar,Alkaid),(Alkaid,Dubhe)
           </ul>
         </ul>
       </li>
