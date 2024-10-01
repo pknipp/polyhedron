@@ -171,7 +171,7 @@ class WelcomeController < ApplicationController
     render 'show'
   end
 
-  # GET /:shape
+  # GET /:triangle/:tetrahedra
   def edges
     svg_size = 900
     @size = svg_size
@@ -180,42 +180,14 @@ class WelcomeController < ApplicationController
     edges = {}
     @edges = edges
 
-    # parse the entire url
-    shape = params[:shape].gsub(/\s+/, "")
-    first_char = shape[0]
-    if first_char != "["
-      @error = "The path's first character should be '[' not '" + first_char + "'."
-      return render :error
-    end
-    shape = shape[1..-1]
-    second_char = shape[0]
-    if second_char != "("
-      @error = "The path's second character should be '(' not '" + second_char + "'."
-      return render :error
-    end
-    shape = shape[1..-1]
-    last_char = shape[-1]
-    if last_char != "]"
-      @error = "The path's last character should be ']' not '" + last_char + "'."
-      return render :error
-    end
-    shape = shape[0..-2]
-    second_to_last_char = shape[-1]
-    if second_to_last_char != ")"
-      @error = "The path's second to last character should be ')' not '" + second_to_last_char + "'."
-      return render :error
-    end
-    shape = shape[0..-2]
-    shape_arr = shape.split("),(")
-
     # parse the first triangle
-    triangle = shape_arr[0].split(",")
-    if triangle.length != 6
-      @error = "The first element of the path's array should have 6 elements, not " + triangle.length.to_s + "."
+    triangle_array = params[:triangle].gsub(/\s+/, "").split(",")
+    if triangle_array.length != 6
+      @error = "The first element of the path's array should have 6 elements, not " + triangle_array.length.to_s + "."
       return render :error
     end
-    triangle_keys = triangle.first(3)
-    edge_length_strings = triangle.last(3)
+    triangle_keys = triangle_array.first(3)
+    edge_length_strings = triangle_array.last(3)
     zeroth_key, first_key = triangle_keys.first(2)
     a = Vertex.new(zeroth_key, zeroth_key, [0, 0, 0])
     vertices[zeroth_key] = a
@@ -253,8 +225,19 @@ class WelcomeController < ApplicationController
     make_edge(triangle_keys[0], first_key, vertices, edges)
 
     # parse the tetrahedra
-    tetrahedra = shape_arr.drop(1)
-    tetrahedra.each_with_index {|tetrahedron_string, i|
+    tetrahedra_string = params[:tetrahedra].gsub(/\s+/, "")
+    first_char = tetrahedra_string[0]
+    if first_char != "("
+      @error = "The second path fragment (" + tetrahedra_string + ") should start with an open paren, not with " + first_char
+      return render :error
+    end
+    last_char - tetrahedra_string[-1]
+    if last_char != "("
+      @error = "The second path fragment (" + tetrahedra_string + ") should end with a close paren, not with " + last_char
+      return render :error
+    end
+    tetrahedra_array = tetrahedra_string[1..-2].split("),(")
+    tetrahedra_array.each_with_index {|tetrahedron_string, i|
       tetrahedron = Tetrahedron.new([])
       tetrahedron_array = tetrahedron_string.split(",")
       if tetrahedron_array.length != 7
