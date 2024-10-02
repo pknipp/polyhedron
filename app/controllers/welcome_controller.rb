@@ -256,7 +256,7 @@ class WelcomeController < ApplicationController
         edge_length_strings = tetrahedron_array.last(3)
         tetrahedron_vertices = []
         edge_lengths = []
-        for j in 0..2 do
+        for j in 0..2
           key = base_keys[j]
           length_string = edge_length_strings[j]
           length_attempt = Float(length_string.sub('*', '.')) rescue nil
@@ -280,8 +280,8 @@ class WelcomeController < ApplicationController
 
         # translation
         origin = tetrahedron.vertices[0].coords.dup
-        for j in 0..2 do
-          for k in 0..2 do
+        for j in 0..2
+          for k in 0..2
             tetrahedron.vertices[j].coords[k] -= origin[k]
           end
         end
@@ -291,7 +291,7 @@ class WelcomeController < ApplicationController
         theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
         cos_z = Math.cos(theta_z)
         sin_z = Math.sin(theta_z)
-        for j in 0..2 do
+        for j in 0..2
           tetrahedron.vertices[j].coords = [
             cos_z * coords[j][0] + sin_z * coords[j][1],
             -sin_z* coords[j][0] + cos_z * coords[j][1],
@@ -304,7 +304,7 @@ class WelcomeController < ApplicationController
         theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
         cos_y = Math.cos(theta_y)
         sin_y = Math.sin(theta_y)
-        for j in 0..2 do
+        for j in 0..2
           tetrahedron.vertices[j].coords = [
             cos_y * coords[j][0] + sin_y * coords[j][2],
             coords[j][1],
@@ -317,7 +317,7 @@ class WelcomeController < ApplicationController
         theta_x = Math.atan2(coords[2][2] - coords[0][2], coords[2][1] - coords[0][1])
         cos_x = Math.cos(theta_x)
         sin_x = Math.sin(theta_x)
-        for j in 0..2 do
+        for j in 0..2
           tetrahedron.vertices[j].coords = [
             coords[j][0],
             cos_x * coords[j][1] + sin_x * coords[j][2],
@@ -360,7 +360,7 @@ class WelcomeController < ApplicationController
         coords = dup(tetrahedron.vertices)
         cos_x = Math.cos(theta_x)
         sin_x = Math.sin(theta_x)
-        for j in 0..3 do
+        for j in 0..3
           tetrahedron.vertices[j].coords = [
             coords[j][0],
             cos_x * coords[j][1] - sin_x * coords[j][2],
@@ -370,7 +370,7 @@ class WelcomeController < ApplicationController
 
         # back-rotation about y-axis
         coords = dup(tetrahedron.vertices)
-        for j in 0..3 do
+        for j in 0..3
           tetrahedron.vertices[j].coords = [
             cos_y * coords[j][0] - sin_y * coords[j][2],
             coords[j][1],
@@ -380,7 +380,7 @@ class WelcomeController < ApplicationController
 
         # back-rotation about z-axis
         coords = dup(tetrahedron.vertices)
-        for j in 0..3 do
+        for j in 0..3
           tetrahedron.vertices[j].coords = [
             cos_z * coords[j][0] - sin_z * coords[j][1],
             sin_z * coords[j][0] + cos_z * coords[j][1],
@@ -389,13 +389,13 @@ class WelcomeController < ApplicationController
         end
 
         # back-translation
-        for k in 0..2 do
-          for j in 0..3 do
+        for k in 0..2
+          for j in 0..3
             tetrahedron.vertices[j].coords[k] += origin[k]
           end
         end
 
-        for j in 0..2 do
+        for j in 0..2
           tetrahedron_vertex = tetrahedron.vertices[j]
           vertices[tetrahedron_vertex.key].coords = tetrahedron_vertex.coords
         end
