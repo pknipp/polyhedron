@@ -69,25 +69,25 @@ class WelcomeController < ApplicationController
     # determine the svg's origin and size
     mins = Array.new(3, Float::INFINITY)
     maxs = Array.new(3, -Float::INFINITY)
-    vertices.each_value {|vertex|
-      (0..2).each{|i|
+    vertices.each_value |vertex|
+      (0..2).each |i|
         mins[i] = [mins[i], vertex.coords[i]].min
         maxs[i] = [maxs[i], vertex.coords[i]].max
-      }
-    }
+      end
+    end
     origin = []
     size = 0
-    (0..2).each{|i|
+    (0..2).each |i|
       origin.push((maxs[i] + mins[i]) / 2)
       size = [size, maxs[i] - mins[i]].max
-    }
+    end
     # Following value attempts to prevent object from rotating out of svg cube.
     ratio = 0.6
-    vertices.each_value {|vertex|
-      (0..2).each{|i|
+    vertices.each_value |vertex|
+      (0..2).each |i|
         vertex.coords[i] = ratio * (vertex.coords[i] - origin[i]) * svg_size / size
-      }
-    }
+      end
+    end
   end
 
   # GET /points/:vertices/:edges
@@ -113,7 +113,7 @@ class WelcomeController < ApplicationController
     end
     vertices_string = vertices_string[1..-2]
     vertex_string_array = vertices_string.split("),(")
-    vertex_string_array.each_with_index {|vertex_string, i|
+    vertex_string_array.each_with_index |vertex_string, i|
       vertex_tuple = vertex_string.split(",")
       has_label = vertex_tuple.length == 5
       if !(vertex_tuple.length == 4 || has_label)
@@ -124,21 +124,21 @@ class WelcomeController < ApplicationController
       label = has_label ? vertex_tuple.shift : key
       coord_string_array = vertex_tuple
       coords = []
-      coord_string_array.each {|coord_string|
+      coord_string_array.each |coord_string|
         coord = Float(coord_string.sub('*', '.')) rescue nil
         if coord.nil?
           @error = "The path fragment " + coord_string + " cannot be parsed as a number."
           return render :error
         end
         coords.push(coord)
-      }
+      end
       if vertices.has_key?(key)
         @error = "The key " + key + " is used to designate more than one vertex in this structure."
         return render :error
       else
         vertices[key] = Vertex.new(key, label, coords)
       end
-    }
+    end
     rescale(vertices, svg_size)
     @vertices = vertices
 
@@ -158,14 +158,14 @@ class WelcomeController < ApplicationController
       end
       edges_string = edges_string[0..-2]
       edge_string_array = edges_string.split("),(")
-      edge_string_array.each_with_index {|edge_string, i|
+      edge_string_array.each_with_index |edge_string, i|
         edge_tuple = edge_string.split(",")
         if edge_tuple.length != 2
           @error = "The tuple (" + edge_string + ") should have 2 elements not " + edge_tuple.length.to_s + "."
           return render :error
         end
         make_edge(edge_tuple[0], edge_tuple[1], vertices, edges)
-      }
+      end
       @edges = edges
     end
     render 'show'
@@ -239,7 +239,7 @@ class WelcomeController < ApplicationController
         return render :error
       end
       tetrahedra_array = tetrahedra_string[1..-2].split("),(")
-      tetrahedra_array.each_with_index {|tetrahedron_string, i|
+      tetrahedra_array.each_with_index |tetrahedron_string, i|
         tetrahedron = Tetrahedron.new([])
         tetrahedron_array = tetrahedron_string.split(",")
         if tetrahedron_array.length != 7
@@ -405,7 +405,7 @@ class WelcomeController < ApplicationController
         make_edge(base_keys[0], new_key, vertices, edges)
         make_edge(base_keys[1], new_key, vertices, edges)
         make_edge(base_keys[2], new_key, vertices, edges)
-      }
+      end
     end
     rescale(vertices, svg_size)
     @vertices = vertices
