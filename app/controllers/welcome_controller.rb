@@ -281,9 +281,7 @@ class WelcomeController < ApplicationController
         # translation
         origin = tetrahedron.vertices[0].coords.dup
         for j in 0..2
-          for k in 0..2
-            tetrahedron.vertices[j].coords[k] -= origin[k]
-          end
+          (0..2).each {|k| tetrahedron.vertices[j].coords[k] -= origin[k]}
         end
 
         # rotation about z-axis
@@ -389,11 +387,7 @@ class WelcomeController < ApplicationController
         end
 
         # back-translation
-        for k in 0..2
-          for j in 0..3
-            tetrahedron.vertices[j].coords[k] += origin[k]
-          end
-        end
+        (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
 
         for j in 0..2
           tetrahedron_vertex = tetrahedron.vertices[j]
