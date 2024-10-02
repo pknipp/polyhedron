@@ -391,7 +391,7 @@ class WelcomeController < ApplicationController
 
         # Insert tetrahedral apex to vertices hashmap.
         vertices[new_key] = tetrahedron.vertices[3]
-        tetrahedron.vertices.each {|vertex| vertices[vertex_key] = vertex.coords}
+        tetrahedron.vertices.each {|vertex| vertices[vertex.key] = vertex.coords}
         # for j in 0..2
           # tetrahedron_vertex = tetrahedron.vertices[j]
           # vertices[tetrahedron_vertex.key].coords = tetrahedron_vertex.coords
