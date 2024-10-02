@@ -113,7 +113,7 @@ class WelcomeController < ApplicationController
     end
     vertices_string = vertices_string[1..-2]
     vertex_string_array = vertices_string.split("),(")
-    vertex_string_array.each_with_index do |vertex_string, i|
+    vertex_string_array.each do vertex_string
       vertex_tuple = vertex_string.split(",")
       has_label = vertex_tuple.length == 5
       if !(vertex_tuple.length == 4 || has_label)
@@ -158,7 +158,7 @@ class WelcomeController < ApplicationController
       end
       edges_string = edges_string[0..-2]
       edge_string_array = edges_string.split("),(")
-      edge_string_array.each_with_index do |edge_string, i|
+      edge_string_array.each do edge_string
         edge_tuple = edge_string.split(",")
         if edge_tuple.length != 2
           @error = "The tuple (" + edge_string + ") should have 2 elements not " + edge_tuple.length.to_s + "."
