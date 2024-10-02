@@ -2,6 +2,7 @@
 ### MVP:
 1. Allow dx to be subjected to perspective.
 1. For polyhedron bifurcate each vertex string from name to key/label
+1. Allow user to fix one vertex.
 
 ### Stretch:
 1. Subsume Float invocations (and following 3-line if-blocks) into a helper.
