@@ -396,9 +396,7 @@ class WelcomeController < ApplicationController
         # Insert tetrahedral apex to vertices hashmap.
         vertices[new_key] = tetrahedron.vertices[3]
         # Insert three more edges to other hashmap.
-        make_edge(base_keys[0], new_key, vertices, edges)
-        make_edge(base_keys[1], new_key, vertices, edges)
-        make_edge(base_keys[2], new_key, vertices, edges)
+        base_keys.each {|base_key| make_edge(base_key, new_key, vertices, edges)}
       end
     end
     rescale(vertices, svg_size)
