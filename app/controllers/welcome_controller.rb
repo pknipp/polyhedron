@@ -43,11 +43,7 @@ class WelcomeController < ApplicationController
   end
 
   def dup(tetrahedron_vertices)
-    cloned_vertices = [
-      tetrahedron_vertices[0].coords.dup,
-      tetrahedron_vertices[1].coords.dup,
-      tetrahedron_vertices[2].coords.dup,
-    ]
+    cloned_vertices = tetrahedron_vertices.map {|vertex| vertex.coords.dup}
     if tetrahedron_vertices.length > 3
       cloned_vertices.push(tetrahedron_vertices[3].coords.dup)
     end
