@@ -12,6 +12,19 @@
       <input type="radio" name="optradio" value="1">Lots
     </label>
   </div>
+  <br/>
+  <p align=center>
+      creator:&nbsp;
+      <a href='https://pknipp.github.io/' target='_blank' rel='noopener noreferrer'>
+          Peter Knipp
+      </a>
+      <br/>
+      repo:&nbsp;
+      <a href='https://github.com/pknipp/polyhedron'
+      target='_blank' rel='noopener noreferrer'>
+          https://github.com/pknipp/polyhedron
+      </a>
+  </p>
   <svg id="svg" perspective="Infinity" is-dragging="F" mouse="0,0" <%= "width=#{@size}" %> <%= "height=#{@size}" %> xmlns="http://www.w3.org/2000/svg">
     <g class="vertices">
       <% @vertices.each do |key, vertex| %>
