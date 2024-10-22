@@ -156,7 +156,7 @@ class WelcomeController < ApplicationController
       end
       edges_string = edges_string[0..-2]
       edge_string_array = edges_string.split("),(")
-      edge_string_array.each do edge_string
+      edge_string_array.each do |edge_string|
         edge_tuple = edge_string.split(",")
         if edge_tuple.length != 2
           @error = "The tuple (" + edge_string + ") should have 2 elements not " + edge_tuple.length.to_s + "."
