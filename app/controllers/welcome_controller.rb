@@ -138,7 +138,7 @@ class WelcomeController < ApplicationController
     rescale(vertices, svg_size)
     @vertices = vertices
 
-    edges_string = params[:edges]
+    edges_string = params[:edges].gsub(/\s+/, "")
     if edges_string
       # parse the edges
       first_char = edges_string[0]
