@@ -108,7 +108,7 @@ class WelcomeController < ApplicationController
       return render :error
     end
     vertices_string = vertices_string[1..-2]
-    puts vertex_string_array
+    puts vertex_string
     vertex_string_array = vertices_string.split("),(")
     vertex_string_array.each do vertex_string
       vertex_tuple = vertex_string.split(",")
