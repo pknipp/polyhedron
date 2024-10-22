@@ -110,7 +110,7 @@ class WelcomeController < ApplicationController
     vertices_string = vertices_string[1..-2]
     puts vertices_string
     vertex_string_array = vertices_string.split("),(")
-    
+    puts vertex_string_array
     vertex_string_array.each do |vertex_string|
       vertex_tuple = vertex_string.split(",")
       has_label = vertex_tuple.length == 5
