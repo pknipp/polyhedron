@@ -21,17 +21,8 @@ class WelcomeController < ApplicationController
 
   class Edge
     attr_accessor :ends
-    attr_accessor :length
     def initialize(ends)
       @ends = ends
-      # Pythogorean theorem
-      length = 0
-      for i in 0..2
-        del = ends[1].coords[i] - ends[0].coords[i]
-        del *= del
-        length += del
-      end
-      @length = Math.sqrt(length)
     end
   end
 
