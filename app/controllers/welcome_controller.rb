@@ -248,10 +248,9 @@ class WelcomeController < ApplicationController
       tetrahedra_array.each_with_index do |tetrahedron_string, i|
         tetrahedron = Tetrahedron.new([])
         tetrahedron_array = tetrahedron_string.split(",")
-        # Adjust this check to be 7 OR 6.
-        # If it equals 6, set is_flat flag as true.
-        if tetrahedron_array.length != 7
-          @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
+        is_flat = tetrahedron_array.length == 6
+        if (!(is_flat || (!is_flat && tetrahedron_array.length == 7)))
+          @error = "The " + i.to_s + "-th element of the path's array should have " + (is_flat ? 6 : 7).to_s + " elements, not " + tetrahedron_array.length.to_s + "."
           return render :error
         end
         base_keys = tetrahedron_array.first(4)
@@ -261,12 +260,10 @@ class WelcomeController < ApplicationController
           return render :error
         end
         base = base_keys.join("-")
-        # Change this 3 to a 2 if is_flat.
-        edge_length_strings = tetrahedron_array.last(3)
+        edge_length_strings = tetrahedron_array.last(is_flat ? 2 : 3)
         tetrahedron_vertices = []
         edge_lengths = []
-        # Change this from 2 to 1 if is_flat.
-        for j in 0..2
+        for j in 0..(is_flat ? 1 : 2)
           key = base_keys[j]
           length_string = edge_length_strings[j]
           length_attempt = Float(length_string.sub('*', '.')) rescue nil
@@ -285,6 +282,9 @@ class WelcomeController < ApplicationController
             @error = error
             return render :error
           end
+        end
+        if is_flat
+          base_keys.pop
         end
         tetrahedron.vertices = tetrahedron_vertices
 
@@ -334,12 +334,14 @@ class WelcomeController < ApplicationController
         # Calculate location of apex of tetrahedron
         ad = edge_lengths[0]
         bd = edge_lengths[1]
-        # Only do this if !is_flat
-        cd = edge_lengths[2]
+        cd = is_flat ? nil : edge_lengths[2]
 
         key0 = tetrahedron.vertices[0].key
         key1 = tetrahedron.vertices[1].key
         edge = edges[[key0, key1]] || edges[[key1, key0]]
+        if is_flat
+          delete_edge(key0, key1, edges)
+        end
         ab = edge.length
 
         key0 = tetrahedron.vertices[0].key
@@ -348,20 +350,28 @@ class WelcomeController < ApplicationController
         ac = edge.length
 
         # Make this the arm if !is_flat
-        dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
-        s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
-        dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
-        dz_sq = ad * ad - dx * dx - dy * dy
-        if dz_sq < 0
-          @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
-          return render :error
+        if !is_flat
+          dx = nil
+          dy = nil
+          dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
+          s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
+          dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
+          dz_sq = ad * ad - dx * dx - dy * dy
+          if dz_sq < 0
+            @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
+            return render :error
+          end
+          # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
+          coords = tetrahedron.vertices.map {|vertex| vertex.coords}
+          cw = (coords[1][0] - coords[0][0]) * (coords[2][1] - coords[0][1]) > (coords[1][1] - coords[0][1]) * (coords[2][0] - coords[0][0])
+          tetrahedron.vertices.push(Vertex.new(new_key, new_key, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
+        else
+          dx = (ad * ad + ab * ab - bd * bd) / 2 / ab
+          dy = -Math.sqrt(ad * ad - dx * dx)
+          vertices[new_key] = Vertex.new(new_key, new_key, [dx, dy, 0])
+          make_edge(triangle_keys[1], new_key, vertices, edges)
+          make_edge(triangle_keys[0], new_key, vertices, edges)
         end
-        # Below should go an arm if is_flat, for which dz = 0
-
-        # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
-        coords = tetrahedron.vertices.map {|vertex| vertex.coords}
-        cw = (coords[1][0] - coords[0][0]) * (coords[2][1] - coords[0][1]) > (coords[1][1] - coords[0][1]) * (coords[2][0] - coords[0][0])
-        tetrahedron.vertices.push(Vertex.new(new_key, new_key, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
 
         # back-rotation about x-axis
         coords = dup(tetrahedron.vertices)
