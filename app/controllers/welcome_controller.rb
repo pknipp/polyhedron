@@ -42,6 +42,16 @@ class WelcomeController < ApplicationController
     end
   end
 
+  def distance(vertex0, vertex1)
+    total_dist = 0
+    for i in 0..2 do
+      dist = vertex1.coords[i] - vertex0.coords[i]
+      dist *= dist
+      total_dist += dist
+    end
+    Math.sqrt(total_dist)
+  end
+
   def dup(tetrahedron_vertices)
     cloned_vertices = tetrahedron_vertices.map {|vertex| vertex.coords.dup}
     if tetrahedron_vertices.length > 3
@@ -342,14 +352,13 @@ class WelcomeController < ApplicationController
         if is_flat
           delete_edge(key0, key1, edges)
         end
-        ab = edge.length
+        ab = distance(vertices[key0], vertices[key1])
 
         key0 = tetrahedron.vertices[0].key
         key2 = tetrahedron.vertices[2].key
         edge = edges[[key0, key2]] || edges[[key2, key0]]
-        ac = edge.length
+        ac = distance(vertices[key0], vertices[key2])
 
-        # Make this the arm if !is_flat
         if !is_flat
           dx = nil
           dy = nil
@@ -370,8 +379,6 @@ class WelcomeController < ApplicationController
           dy = -Math.sqrt(ad * ad - dx * dx)
           vertices[new_key] = Vertex.new(new_key, new_key, [dx, dy, 0])
           tetrahedron.vertices.push(vertices[new_key])
-          # make_edge(triangle_keys[1], new_key, vertices, edges)
-          # make_edge(triangle_keys[0], new_key, vertices, edges)
         end
 
         # back-rotation about x-axis
