@@ -270,11 +270,11 @@ class WelcomeController < ApplicationController
             @error = error
             return render :error
           end
+          tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
           if !is_flat || j < 2
             length_string = edge_length_strings[j]
             length_attempt = Float(length_string.sub('*', '.')) rescue nil
             if !length_attempt.nil?
-              tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
               edge_lengths.push(length_attempt)
             else
               error = "The path fragment " + length_string + " cannot be parsed as a number."
