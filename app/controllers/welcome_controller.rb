@@ -60,6 +60,16 @@ class WelcomeController < ApplicationController
     edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
   end
 
+  def delete_edge(zeroth_key, first_key, edges)
+    # Ensure that two strings in tuple are sorted.
+    if first_key < zeroth_key
+      swap = first_key
+      first_key = zeroth_key
+      zeroth_key = swap
+    end
+    delete edges[[zeroth_key, first_key]]
+  end
+
   def rescale(vertices, svg_size)
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
@@ -238,6 +248,8 @@ class WelcomeController < ApplicationController
       tetrahedra_array.each_with_index do |tetrahedron_string, i|
         tetrahedron = Tetrahedron.new([])
         tetrahedron_array = tetrahedron_string.split(",")
+        # Adjust this check to be 7 OR 6.
+        # If it equals 6, set is_flat flag as true.
         if tetrahedron_array.length != 7
           @error = "The " + i.to_s + "-th element of the path's array should have 7 elements, not " + tetrahedron_array.length.to_s + "."
           return render :error
@@ -249,9 +261,11 @@ class WelcomeController < ApplicationController
           return render :error
         end
         base = base_keys.join("-")
+        # Change this 3 to a 2 if is_flat.
         edge_length_strings = tetrahedron_array.last(3)
         tetrahedron_vertices = []
         edge_lengths = []
+        # Change this from 2 to 1 if is_flat.
         for j in 0..2
           key = base_keys[j]
           length_string = edge_length_strings[j]
@@ -320,6 +334,7 @@ class WelcomeController < ApplicationController
         # Calculate location of apex of tetrahedron
         ad = edge_lengths[0]
         bd = edge_lengths[1]
+        # Only do this if !is_flat
         cd = edge_lengths[2]
 
         key0 = tetrahedron.vertices[0].key
@@ -332,6 +347,7 @@ class WelcomeController < ApplicationController
         edge = edges[[key0, key2]] || edges[[key2, key0]]
         ac = edge.length
 
+        # Make this the arm if !is_flat
         dx = (ab * ab + ad * ad - bd * bd) / 2 / ab
         s =  (ac * ac + ad * ad - cd * cd) / 2 / ac
         dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
@@ -340,6 +356,7 @@ class WelcomeController < ApplicationController
           @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
           return render :error
         end
+        # Below should go an arm if is_flat, for which dz = 0
 
         # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
         coords = tetrahedron.vertices.map {|vertex| vertex.coords}
