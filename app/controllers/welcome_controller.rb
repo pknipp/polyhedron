@@ -67,7 +67,7 @@ class WelcomeController < ApplicationController
       first_key = zeroth_key
       zeroth_key = swap
     end
-    delete edges[[zeroth_key, first_key]]
+    edges.delete([zeroth_key, first_key])
   end
 
   def rescale(vertices, svg_size)
