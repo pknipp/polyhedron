@@ -263,24 +263,24 @@ class WelcomeController < ApplicationController
         edge_length_strings = tetrahedron_array.last(is_flat ? 2 : 3)
         tetrahedron_vertices = []
         edge_lengths = []
-        for j in 0..(is_flat ? 1 : 2)
+        for j in 0..2
           key = base_keys[j]
-          length_string = edge_length_strings[j]
-          length_attempt = Float(length_string.sub('*', '.')) rescue nil
-          error = nil
-          if vertices.has_key?(key) && !length_attempt.nil?
-            tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
-            edge_lengths.push(length_attempt)
-          else
-            if !vertices.has_key?(key)
-              error = "A vertex ('" + key + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
-            else
-              error = "The path fragment " + length_string + " cannot be parsed as a number."
-            end
-          end
-          if !error.nil?
+          if !vertices.has_key?(key)
+            error = "A vertex ('" + key + "') named as part of the base (" + base + ") of the " + i.to_s + "-th tetrahedron does not seem to match one of the existing ones ([" + vertices.keys.join(", ") + "])."
             @error = error
             return render :error
+          end
+          if !is_flat || j < 2
+            length_string = edge_length_strings[j]
+            length_attempt = Float(length_string.sub('*', '.')) rescue nil
+            if !length_attempt.nil?
+              tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
+              edge_lengths.push(length_attempt)
+            else
+              error = "The path fragment " + length_string + " cannot be parsed as a number."
+              @error = error
+              return render :error
+            end
           end
         end
         if is_flat
