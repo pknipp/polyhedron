@@ -369,6 +369,7 @@ class WelcomeController < ApplicationController
           dx = (ad * ad + ab * ab - bd * bd) / 2 / ab
           dy = -Math.sqrt(ad * ad - dx * dx)
           vertices[new_key] = Vertex.new(new_key, new_key, [dx, dy, 0])
+          tetrahedron.vertices.push(vertices[new_key])
           make_edge(triangle_keys[1], new_key, vertices, edges)
           make_edge(triangle_keys[0], new_key, vertices, edges)
         end
