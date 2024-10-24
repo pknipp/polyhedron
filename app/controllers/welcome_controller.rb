@@ -267,7 +267,18 @@ class WelcomeController < ApplicationController
           end
         }
         if is_edge
-          vertices[base_keys[0]].make_edge_with(base_keys[1], vertices, edges)
+          zeroth_key = base_keys[0]
+          first_key = base_keys[1]
+          if first_key < zeroth_key
+            swap = first_key
+            first_key = zeroth_key
+            zeroth_key = swap
+          end
+          if edges.key?([zeroth_key, first_key])
+            vertices[base_keys[0]].delete_edge_with(base_keys[1], edges)
+          else
+            vertices[base_keys[0]].make_edge_with(base_keys[1], vertices, edges)
+          end
         else
           if vertices.has_key?(new_key)
             @error = "The label " + new_key + " is used to specify more than one vertex in this polyhedron."
