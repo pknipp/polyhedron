@@ -72,16 +72,6 @@ class WelcomeController < ApplicationController
     cloned_vertices
   end
 
-  def delete_edge(zeroth_key, first_key, edges)
-    # Ensure that two strings in tuple are sorted.
-    if first_key < zeroth_key
-      swap = first_key
-      first_key = zeroth_key
-      zeroth_key = swap
-    end
-    edges.delete([zeroth_key, first_key])
-  end
-
   def rescale(vertices, svg_size)
     # based on max/min values of cartesian components of vertices,
     # determine the svg's origin and size
