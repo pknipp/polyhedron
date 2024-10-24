@@ -266,7 +266,7 @@ class WelcomeController < ApplicationController
           end
         }
         if is_edge
-          make_edge(base_keys[0], base_keys[1], edges)
+          make_edge(base_keys[0], base_keys[1], vertices, edges)
         else
           if vertices.has_key?(new_key)
             @error = "The label " + new_key + " is used to specify more than one vertex in this polyhedron."
