@@ -26,6 +26,17 @@ class WelcomeController < ApplicationController
       }
       Math.sqrt(total_distance)
     end
+    def make_edge_with(other_key, vertices, edges)
+      # Ensure that two strings in tuple are sorted.
+      zeroth_key = key
+      first_key = other_key
+      if zeroth_key > first_key
+        swap = first_key
+        first_key = zeroth_key
+        zeroth_key = swap
+      end
+      edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
+    end
   end
 
   class Edge
@@ -40,16 +51,6 @@ class WelcomeController < ApplicationController
     def initialize(vertices)
       @vertices = vertices
     end
-  end
-
-  def distance(vertex0, vertex1)
-    total_dist = 0
-    for i in 0..2 do
-      dist = vertex1.coords[i] - vertex0.coords[i]
-      dist *= dist
-      total_dist += dist
-    end
-    Math.sqrt(total_dist)
   end
 
   def dup(tetrahedron_vertices)
@@ -362,7 +363,7 @@ class WelcomeController < ApplicationController
           key0 = tetrahedron.vertices[0].key
           key2 = tetrahedron.vertices[2].key
           edge = edges[[key0, key2]] || edges[[key2, key0]]
-          ac = distance(vertices[key0], vertices[key2])
+          ac = vertices[key0].distance_to(vertices[key2])
 
           if !is_flat
             dx = nil
