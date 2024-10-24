@@ -414,7 +414,7 @@ class WelcomeController < ApplicationController
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
-          base_keys.each {|base_key| vertices[base_key].make_edge_with(base_key, new_key, vertices, edges)}
+          base_keys.each {|base_key| vertices[base_key].make_edge_with(new_key, vertices, edges)}
         end
       end
     end
