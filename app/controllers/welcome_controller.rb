@@ -61,16 +61,6 @@ class WelcomeController < ApplicationController
     cloned_vertices
   end
 
-  def make_edge(zeroth_key, first_key, vertices, edges)
-    # Ensure that two strings in tuple are sorted.
-    if first_key < zeroth_key
-      swap = first_key
-      first_key = zeroth_key
-      zeroth_key = swap
-    end
-    edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
-  end
-
   def delete_edge(zeroth_key, first_key, edges)
     # Ensure that two strings in tuple are sorted.
     if first_key < zeroth_key
@@ -219,7 +209,7 @@ class WelcomeController < ApplicationController
     else
       vertices[first_key] = Vertex.new(first_key, first_key, [ab, 0, 0])
     end
-    make_edge(zeroth_key, first_key, vertices, edges)
+    vertices[zeroth_key].make_edge_with(first_key, vertices, edges)
     first_key = triangle_keys[2]
     if vertices.has_key?(first_key)
       @error = "The label " + first_key + " is used to label more than one vertex in this polyhedron."
@@ -238,8 +228,8 @@ class WelcomeController < ApplicationController
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_key] = Vertex.new(first_key, first_key, [cx, cy, 0])
-    make_edge(triangle_keys[1], first_key, vertices, edges)
-    make_edge(triangle_keys[0], first_key, vertices, edges)
+    vertices[triangle_keys[1]].make_edge_with(first_key, vertices, edges)
+    vertices[triangle_keys[0]].make_edge_with(first_key, vertices, edges)
 
     tetrahedra_string = params[:tetrahedra]
     if tetrahedra_string
@@ -276,7 +266,7 @@ class WelcomeController < ApplicationController
           end
         }
         if is_edge
-          make_edge(base_keys[0], base_keys[1], vertices, edges)
+          vertices[base_keys[0]].make_edge_with(base_keys[1], vertices, edges)
         else
           if vertices.has_key?(new_key)
             @error = "The label " + new_key + " is used to specify more than one vertex in this polyhedron."
@@ -424,7 +414,7 @@ class WelcomeController < ApplicationController
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
-          base_keys.each {|base_key| make_edge(base_key, new_key, vertices, edges)}
+          base_keys.each {|base_key| vertices[base_key].make_edge_with(base_key, new_key, vertices, edges)}
         end
       end
     end
