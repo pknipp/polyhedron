@@ -357,7 +357,7 @@ class WelcomeController < ApplicationController
           key1 = tetrahedron.vertices[1].key
           edge = edges[[key0, key1]] || edges[[key1, key0]]
           if is_flat
-            delete_edge(key0, key1, edges)
+            vertices[key0].delete_edge_with(key1, edges)
           end
           ab = vertices[key0].distance_to(vertices[key1])
 
