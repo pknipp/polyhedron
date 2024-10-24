@@ -17,6 +17,15 @@ class WelcomeController < ApplicationController
       @label = label
       @coords = coords
     end
+    def distance_to(other_vertex)
+      total_distance = 0
+      coords.each_with_index {|coord, i|
+        distance = coord - other_vertex.coords[i]
+        distance *= distance
+        total_distance += distance
+      }
+      Math.sqrt(total_distance)
+    end
   end
 
   class Edge
