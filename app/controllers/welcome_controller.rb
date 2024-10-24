@@ -181,7 +181,7 @@ class WelcomeController < ApplicationController
           @error = "The tuple (" + edge_string + ") should have 2 elements not " + edge_tuple.length.to_s + "."
           return render :error
         end
-        make_edge(edge_tuple[0], edge_tuple[1], vertices, edges)
+        vertices[edge_tuple[0]].make_edge_with(edge_tuple[1], vertices, edges)
       end
       @edges = edges
     end
