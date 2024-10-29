@@ -28,14 +28,16 @@ class WelcomeController < ApplicationController
     end
     def make_edge_with(other_key, vertices, edges)
       # Ensure that two strings in tuple are sorted.
-      zeroth_key = key
-      first_key = other_key
-      if zeroth_key > first_key
-        swap = first_key
-        first_key = zeroth_key
-        zeroth_key = swap
-      end
-      edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
+      tuple_key = [key, other_key].sort
+      # zeroth_key = key
+      # first_key = other_key
+      # if zeroth_key > first_key
+        # swap = first_key
+        # first_key = zeroth_key
+        # zeroth_key = swap
+      # end
+      # edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
+      edges[tuple_key] = Edge.new(tuple_key)
     end
     def delete_edge_with(other_key, edges)
       # Ensure that two strings in tuple are sorted.
