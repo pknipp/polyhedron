@@ -17,15 +17,6 @@ class WelcomeController < ApplicationController
       @label = label
       @coords = coords
     end
-    def distance_to(other_vertex)
-      total_distance = 0
-      coords.each_with_index {|coord, i|
-        distance = coord - other_vertex.coords[i]
-        distance *= distance
-        total_distance += distance
-      }
-      Math.sqrt(total_distance)
-    end
     def make_edge_with(other_vertex, edges, render)
       sorted_keys = [key, other_vertex.key].sort
       edges[sorted_keys] = Edge.new(self, other_vertex, render)
@@ -362,13 +353,11 @@ class WelcomeController < ApplicationController
           if is_flat
             vertices[key0].delete_edge_with(key1, edges)
           end
-          # ab = vertices[key0].distance_to(vertices[key1])
           ab = edge.length
 
           key0 = tetrahedron.vertices[0].key
           key2 = tetrahedron.vertices[2].key
           edge = edges[[key0, key2]] || edges[[key2, key0]]
-          # ac = vertices[key0].distance_to(vertices[key2])
           ac = edge.length
 
           if !is_flat
