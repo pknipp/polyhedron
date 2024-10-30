@@ -368,7 +368,8 @@ class WelcomeController < ApplicationController
           key0 = tetrahedron.vertices[0].key
           key2 = tetrahedron.vertices[2].key
           edge = edges[[key0, key2]] || edges[[key2, key0]]
-          ac = vertices[key0].distance_to(vertices[key2])
+          # ac = vertices[key0].distance_to(vertices[key2])
+          ac = edge.length
 
           if !is_flat
             dx = nil
