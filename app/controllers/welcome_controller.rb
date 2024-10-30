@@ -55,7 +55,14 @@ class WelcomeController < ApplicationController
   class Edge
     attr_accessor :ends
     def initialize(ends)
-      @ends = ends
+      end0 = ends[0]
+      end1 = ends[1]
+      if end0.key > end1.key
+        swap = end0
+        end0 = end1
+        end1 = swap
+      end
+      @ends = [end0, end1]
     end
   end
 
