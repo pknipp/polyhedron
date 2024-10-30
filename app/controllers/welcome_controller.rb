@@ -37,7 +37,7 @@ class WelcomeController < ApplicationController
         # zeroth_key = swap
       # end
       # edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
-      edges[tuple_key] = Edge.new(tuple_key)
+      edges[tuple_key] = Edge.new(self, vertices[other_key], true)
     end
     def delete_edge_with(other_key, edges)
       # Ensure that two strings in tuple are sorted.
