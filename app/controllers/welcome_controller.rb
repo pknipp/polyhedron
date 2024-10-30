@@ -38,6 +38,7 @@ class WelcomeController < ApplicationController
   class Edge
     attr_accessor :ends
     attr_accessor :render
+    attr_accessor :length
     def initialize(end0, end1, render)
       zeroth_end = end0
       first_end = end1
@@ -48,6 +49,13 @@ class WelcomeController < ApplicationController
       end
       @ends = [zeroth_end, first_end]
       @render = render
+      total_distance = 0
+      for i in 0..2 do
+        distance = end0.coords[i] - end1.coords[i]
+        distance *= distance
+        total_distance += distance
+      end
+      @length = Math.sqrt(total_distance)
     end
   end
 
