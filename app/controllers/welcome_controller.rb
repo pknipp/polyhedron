@@ -362,7 +362,8 @@ class WelcomeController < ApplicationController
           if is_flat
             vertices[key0].delete_edge_with(key1, edges)
           end
-          ab = vertices[key0].distance_to(vertices[key1])
+          # ab = vertices[key0].distance_to(vertices[key1])
+          ab = edge.length
 
           key0 = tetrahedron.vertices[0].key
           key2 = tetrahedron.vertices[2].key
