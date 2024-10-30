@@ -26,18 +26,9 @@ class WelcomeController < ApplicationController
       }
       Math.sqrt(total_distance)
     end
-    def make_edge_with(other_key, vertices, edges)
-      # Ensure that two strings in tuple are sorted.
-      tuple_key = [key, other_key].sort
-      # zeroth_key = key
-      # first_key = other_key
-      # if zeroth_key > first_key
-        # swap = first_key
-        # first_key = zeroth_key
-        # zeroth_key = swap
-      # end
-      # edges[[zeroth_key, first_key]] = Edge.new([vertices[zeroth_key], vertices[first_key]])
-      edges[tuple_key] = Edge.new(self, vertices[other_key], true)
+    def make_edge_with(other_vertex, edges, render)
+      sorted_keys = [key, other_vertex.key].sort
+      edges[sorted_keys] = Edge.new(self, other_vertex, render)
     end
     def delete_edge_with(other_key, edges)
       # Ensure that two strings in tuple are sorted.
@@ -54,15 +45,17 @@ class WelcomeController < ApplicationController
 
   class Edge
     attr_accessor :ends
-    def initialize(ends)
-      end0 = ends[0]
-      end1 = ends[1]
-      if end0.key > end1.key
-        swap = end0
-        end0 = end1
-        end1 = swap
+    attr_accessor :render
+    def initialize(end0, end1, render)
+      zeroth_end = end0
+      first_end = end1
+      if zeroth_end.key > first_end.key
+        swap = zeroth_end
+        zeroth_end = end1
+        first_end = swap
       end
-      @ends = [end0, end1]
+      @ends = [zeroth_end, first_end]
+      @render = render
     end
   end
 
@@ -181,7 +174,7 @@ class WelcomeController < ApplicationController
           @error = "The tuple (" + edge_string + ") should have 2 elements not " + edge_tuple.length.to_s + "."
           return render :error
         end
-        vertices[edge_tuple[0]].make_edge_with(edge_tuple[1], vertices, edges)
+        vertices[edge_tuple[0]].make_edge_with(vertices[edge_tuple[1]], edges, true)
       end
       @edges = edges
     end
@@ -219,7 +212,7 @@ class WelcomeController < ApplicationController
     else
       vertices[first_key] = Vertex.new(first_key, first_key, [ab, 0, 0])
     end
-    vertices[zeroth_key].make_edge_with(first_key, vertices, edges)
+    vertices[zeroth_key].make_edge_with(vertices[first_key], edges, true)
     first_key = triangle_keys[2]
     if vertices.has_key?(first_key)
       @error = "The label " + first_key + " is used to label more than one vertex in this polyhedron."
@@ -238,8 +231,8 @@ class WelcomeController < ApplicationController
     cx = (ac * ac + ab * ab - bc * bc) / 2 / ab
     cy = Math.sqrt(ac * ac - cx * cx)
     vertices[first_key] = Vertex.new(first_key, first_key, [cx, cy, 0])
-    vertices[triangle_keys[1]].make_edge_with(first_key, vertices, edges)
-    vertices[triangle_keys[0]].make_edge_with(first_key, vertices, edges)
+    vertices[triangle_keys[1]].make_edge_with(vertices[first_key], edges, true)
+    vertices[triangle_keys[0]].make_edge_with(vertices[first_key], edges, true)
 
     tetrahedra_string = params[:tetrahedra]
     if tetrahedra_string
@@ -286,7 +279,7 @@ class WelcomeController < ApplicationController
           if edges.key?([zeroth_key, first_key])
             vertices[base_keys[0]].delete_edge_with(base_keys[1], edges)
           else
-            vertices[base_keys[0]].make_edge_with(base_keys[1], vertices, edges)
+            vertices[base_keys[0]].make_edge_with(vertices[base_keys[1]], edges, true)
           end
         else
           if vertices.has_key?(new_key)
@@ -435,7 +428,7 @@ class WelcomeController < ApplicationController
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
-          base_keys.each {|base_key| vertices[base_key].make_edge_with(new_key, vertices, edges)}
+          base_keys.each {|base_key| vertices[base_key].make_edge_with(vertices[new_key], edges, true)}
         end
       end
     end
