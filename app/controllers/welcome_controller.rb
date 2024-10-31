@@ -393,6 +393,7 @@ class WelcomeController < ApplicationController
               sin_x * coords[j][1] + cos_x * coords[j][2],
             ]
           end
+          p tetrahedron.vertices[3].coords
 
           # back-rotation about y-axis
           coords = dup(tetrahedron.vertices)
@@ -403,6 +404,7 @@ class WelcomeController < ApplicationController
               sin_y * coords[j][0] + cos_y * coords[j][2],
             ]
           end
+          p tetrahedron.vertices[3].coords
 
           # back-rotation about z-axis
           coords = dup(tetrahedron.vertices)
@@ -413,9 +415,11 @@ class WelcomeController < ApplicationController
               coords[j][2],
             ]
           end
+          p tetrahedron.vertices[3].coords
 
           # back-translation
           (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
+          p tetrahedron.vertices[3].coords
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
