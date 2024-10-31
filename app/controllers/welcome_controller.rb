@@ -295,11 +295,13 @@ class WelcomeController < ApplicationController
 
           # translation
           origin = tetrahedron.vertices[0].coords.dup
+          p origin
           tetrahedron.vertices.each {|vertex| (0..2).each {|k| vertex.coords[k] -= origin[k]}}
 
           # rotation about z-axis
           coords = dup(tetrahedron.vertices)
           theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
+          p theta_z
           cos_z = Math.cos(theta_z)
           sin_z = Math.sin(theta_z)
           for j in 0..2
@@ -313,6 +315,7 @@ class WelcomeController < ApplicationController
           # rotation about y-axis
           coords = dup(tetrahedron.vertices)
           theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
+          p theta_y
           cos_y = Math.cos(theta_y)
           sin_y = Math.sin(theta_y)
           for j in 0..2
@@ -326,6 +329,7 @@ class WelcomeController < ApplicationController
           # rotation about x-axis
           coords = dup(tetrahedron.vertices)
           theta_x = Math.atan2(coords[2][2] - coords[0][2], coords[2][1] - coords[0][1])
+          p theta_x
           cos_x = Math.cos(theta_x)
           sin_x = Math.sin(theta_x)
           for j in 0..2
