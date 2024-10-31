@@ -417,7 +417,7 @@ class WelcomeController < ApplicationController
         end
       end
     end
-    # rescale(vertices, svg_size)
+    rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
     render 'show'
