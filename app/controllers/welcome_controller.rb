@@ -415,10 +415,12 @@ class WelcomeController < ApplicationController
               coords[j][2],
             ]
           end
+          p tetrahedron.vertices[1].coords
           p tetrahedron.vertices[3].coords
 
           # back-translation
           (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
+          p tetrahedron.vertices[1].coords
           p tetrahedron.vertices[3].coords
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
