@@ -48,6 +48,9 @@ class WelcomeController < ApplicationController
       end
       @length = Math.sqrt(total_distance)
     end
+    def toggle_visilibility
+      @render = !render
+    end
   end
 
   class Tetrahedron
