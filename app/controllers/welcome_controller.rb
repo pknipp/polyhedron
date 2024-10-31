@@ -36,7 +36,7 @@ class WelcomeController < ApplicationController
       if zeroth_end.key > first_end.key
         swap = zeroth_end
         zeroth_end = end1
-        first_end = swap
+        first_end =
       end
       @ends = [zeroth_end, first_end]
       @render = render
@@ -344,7 +344,7 @@ class WelcomeController < ApplicationController
           key1 = tetrahedron.vertices[1].key
           edge = edges[[key0, key1]] || edges[[key1, key0]]
           if is_flat
-            vertices[key0].delete_edge_with(key1, edges)
+            # vertices[key0].delete_edge_with(key1, edges)
           end
           ab = edge.length
 
