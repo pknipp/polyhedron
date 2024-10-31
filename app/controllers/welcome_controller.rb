@@ -260,7 +260,7 @@ class WelcomeController < ApplicationController
           end
         }
         if is_edge
-          edge = edges([base_keys[0], base_keys[1]].sort)
+          edge = edges[[base_keys[0], base_keys[1]].sort]
           if edge.nil?
             edge = vertices[base_keys[0]].make_edge_with(vertices[base_keys[1]], edges, true)
           else
