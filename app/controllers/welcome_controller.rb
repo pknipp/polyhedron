@@ -343,9 +343,9 @@ class WelcomeController < ApplicationController
           key0 = tetrahedron.vertices[0].key
           key1 = tetrahedron.vertices[1].key
           edge = edges[[key0, key1]] || edges[[key1, key0]]
-          if is_flat
+          # if is_flat
             # vertices[key0].delete_edge_with(key1, edges)
-          end
+          # end
           ab = edge.length
 
           key0 = tetrahedron.vertices[0].key
