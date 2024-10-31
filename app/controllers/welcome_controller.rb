@@ -420,11 +420,15 @@ class WelcomeController < ApplicationController
 
           # back-translation
           (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
+          p tetrahedron.vertices[0].coords
+          p tetrahedron.vertices[2].coords
           p tetrahedron.vertices[1].coords
           p tetrahedron.vertices[3].coords
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
+          p vertices["A"]
+          p vertices["B"]
           p vertices["C"]
           p vertices["D"]
           base_keys.each_with_index {|base_key, j|
@@ -432,12 +436,18 @@ class WelcomeController < ApplicationController
             vertices[base_key] = tetrahedron.vertices[j]
           }
         end
+        p vertices["A"]
+        p vertices["B"]
         p vertices["C"]
         p vertices["D"]
       end
+      p vertices["A"]
+      p vertices["B"]
       p vertices["C"]
       p vertices["D"]
     end
+    p vertices["A"]
+    p vertices["B"]
     p vertices["C"]
     p vertices["D"]
     rescale(vertices, svg_size)
