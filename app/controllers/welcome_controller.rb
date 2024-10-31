@@ -345,7 +345,6 @@ class WelcomeController < ApplicationController
           key1 = tetrahedron.vertices[1].key
           edge = edges[[key0, key1].sort]
           if is_flat
-            # vertices[key0].delete_edge_with(key1, edges)
             edge.toggle_visilibility
           end
           ab = edge.length
@@ -418,7 +417,7 @@ class WelcomeController < ApplicationController
         end
       end
     end
-    rescale(vertices, svg_size)
+    # rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
     render 'show'
