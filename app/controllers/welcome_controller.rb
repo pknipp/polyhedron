@@ -21,9 +21,6 @@ class WelcomeController < ApplicationController
       sorted_keys = [key, other_vertex.key].sort
       edges[sorted_keys] = Edge.new(self, other_vertex, render)
     end
-    def delete_edge_with(other_key, edges)
-      edges.delete([key, other_key].sort)
-    end
   end
 
   class Edge
@@ -264,8 +261,6 @@ class WelcomeController < ApplicationController
         }
         if is_edge
           if !edges.key?([base_keys[0], base_keys[1]].sort)
-            # vertices[base_keys[0]].delete_edge_with(base_keys[1], edges)
-          # else
             vertices[base_keys[0]].make_edge_with(vertices[base_keys[1]], edges, true)
           end
         else
@@ -345,7 +340,7 @@ class WelcomeController < ApplicationController
 
           key0 = tetrahedron.vertices[0].key
           key1 = tetrahedron.vertices[1].key
-          edge = edges[[key0, key1]] || edges[[key1, key0]]
+          edge = edges[[key0, key1].sort]
           if is_flat
             # vertices[key0].delete_edge_with(key1, edges)
             edge.toggle_visilibility
@@ -354,7 +349,7 @@ class WelcomeController < ApplicationController
 
           key0 = tetrahedron.vertices[0].key
           key2 = tetrahedron.vertices[2].key
-          edge = edges[[key0, key2]] || edges[[key2, key0]]
+          edge = edges[[key0, key2].sort]
           ac = edge.length
 
           if !is_flat
