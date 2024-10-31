@@ -427,7 +427,10 @@ class WelcomeController < ApplicationController
           vertices[new_key] = tetrahedron.vertices[3]
           p vertices["C"]
           p vertices["D"]
-          base_keys.each {|base_key| vertices[base_key].make_edge_with(vertices[new_key], edges, true)}
+          base_keys.each_with_index {|base_key, j|
+            vertices[base_key].make_edge_with(vertices[new_key], edges, true)
+            vertices[base_key] = tetrahedron.vertices[j]
+          }
         end
         p vertices["C"]
         p vertices["D"]
