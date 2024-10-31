@@ -348,6 +348,7 @@ class WelcomeController < ApplicationController
           edge = edges[[key0, key1]] || edges[[key1, key0]]
           if is_flat
             # vertices[key0].delete_edge_with(key1, edges)
+            edge.toggle_visilibility
           end
           ab = edge.length
 
