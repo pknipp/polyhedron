@@ -372,10 +372,12 @@ class WelcomeController < ApplicationController
             # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
             coords = tetrahedron.vertices.map {|vertex| vertex.coords}
             cw = (coords[1][0] - coords[0][0]) * (coords[2][1] - coords[0][1]) > (coords[1][1] - coords[0][1]) * (coords[2][0] - coords[0][0])
+            p [dx, dy, Math.sqrt(dz_sq)]
             tetrahedron.vertices.push(Vertex.new(new_key, new_key, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
           else
             dx = (ad * ad + ab * ab - bd * bd) / 2 / ab
             dy = -Math.sqrt(ad * ad - dx * dx)
+            p [dx, dy]
             vertices[new_key] = Vertex.new(new_key, new_key, [dx, dy, 0])
             tetrahedron.vertices.push(vertices[new_key])
           end
