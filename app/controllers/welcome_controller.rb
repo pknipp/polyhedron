@@ -347,7 +347,7 @@ class WelcomeController < ApplicationController
           key2 = tetrahedron.vertices[2].key
           edge = edges[[key0, key2].sort]
           ac = edge.length
-          p [key0, key1, key2, theta_z, theta_y, theta_z]
+          p [key0, key1, key2, new_key, theta_z, theta_y, theta_z]
 
           if !is_flat
             dx = nil
