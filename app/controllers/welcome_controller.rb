@@ -288,9 +288,9 @@ class WelcomeController < ApplicationController
               end
             end
           }
-          if is_flat
-            base_keys.pop
-          end
+          # if is_flat
+            # base_keys.pop
+          # end
           tetrahedron.vertices = tetrahedron_vertices
 
           # translation
