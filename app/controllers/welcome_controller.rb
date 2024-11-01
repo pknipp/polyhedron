@@ -415,6 +415,8 @@ class WelcomeController < ApplicationController
               coords[j][2],
             ]
           end
+          p tetrahedron.vertices[2].coords
+          p tetrahedron.vertices[0].coords
           p tetrahedron.vertices[1].coords
           p tetrahedron.vertices[3].coords
 
