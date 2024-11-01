@@ -414,9 +414,13 @@ class WelcomeController < ApplicationController
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
           base_keys.each_with_index {|base_key, j|
-            hide_edge = (j == 2 && is_flat)
-            vertices[base_key].make_edge_with(vertices[new_key], edges, !hide_edge)
+            # hide_edge = (j == 2 && is_flat)
+            vertices[base_key].make_edge_with(vertices[new_key], edges, true) #!hide_edge)
           }
+          if is_flat
+            edges[[base_keys[0], base_keys[1]].sort].toggle_visilibility
+            edges[[base_keys[2], new_key].sort].toggle_visilibility
+          end
         end
       end
     end
