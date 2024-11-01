@@ -414,17 +414,13 @@ class WelcomeController < ApplicationController
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
           base_keys.each_with_index {|base_key, j|
-            # vertices[base_key] = tetrahedron.vertices[j]
-            vertices[base_key].make_edge_with(vertices[new_key], edges, true)
+            hide_edge = (j == 2 && is_flat)
+            vertices[base_key].make_edge_with(vertices[new_key], edges, !hide_edge)
           }
         end
       end
     end
     rescale(vertices, svg_size)
-    puts "vertices"
-    p vertices
-    puts "edges"
-    p edges
     @vertices = vertices
     @edges = edges
     render 'show'
