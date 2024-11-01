@@ -295,7 +295,6 @@ class WelcomeController < ApplicationController
 
           # translation
           origin = tetrahedron.vertices[0].coords.dup
-          p origin
           tetrahedron.vertices.each {|vertex| (0..2).each {|k| vertex.coords[k] -= origin[k]}}
 
           # rotation about z-axis
@@ -423,6 +422,7 @@ class WelcomeController < ApplicationController
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
           base_keys.each_with_index {|base_key, j|
+            p [j, tetrahedron.vertices[j].coords]
             vertices[base_key].make_edge_with(vertices[new_key], edges, true)
             vertices[base_key] = tetrahedron.vertices[j]
           }
