@@ -416,6 +416,7 @@ class WelcomeController < ApplicationController
         end
       end
     end
+    p [vertices["A"], vertices["B"], vertices["C"], vertices["D"],]
     rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
