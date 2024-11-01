@@ -357,7 +357,7 @@ class WelcomeController < ApplicationController
             dy = (s * ac - dx * tetrahedron.vertices[2].coords[0]) / tetrahedron.vertices[2].coords[1]
             dz_sq = ad * ad - dx * dx - dy * dy
             if dz_sq < 0
-              @error = "The three edge lengths are not long enough to form a tetrahedron with this triangle."
+              @error = "The three edge lengths are not long enough to form a tetrahedron with triangle " + key0 + "-" + key1 + "-" + key2 + " and vertex " + new_key + "."
               return render :error
             end
             # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
