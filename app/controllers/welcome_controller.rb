@@ -140,8 +140,8 @@ class WelcomeController < ApplicationController
         vertices[key] = Vertex.new(key, label, coords)
       end
     end
-    rescale(vertices, svg_size)
-    @vertices = vertices
+    # rescale(vertices, svg_size)
+    # @vertices = vertices
 
     edges_string = params[:edges].gsub(/\s+/, "")
     if edges_string
