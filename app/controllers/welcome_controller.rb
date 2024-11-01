@@ -347,7 +347,7 @@ class WelcomeController < ApplicationController
           key2 = tetrahedron.vertices[2].key
           edge = edges[[key0, key2].sort]
           ac = edge.length
-          p [key0, key1, key2, new_key, theta_z, theta_y, theta_z]
+          # p [key0, key1, key2, new_key, theta_z, theta_y, theta_z]
 
           if !is_flat
             dx = nil
@@ -413,8 +413,11 @@ class WelcomeController < ApplicationController
             edges[[base_keys[0], base_keys[1]].sort].toggle_visilibility
             edges[[base_keys[2], new_key].sort].toggle_visilibility
           end
+          p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
         end
+        p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
       end
+      p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
     end
     p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
     rescale(vertices, svg_size)
