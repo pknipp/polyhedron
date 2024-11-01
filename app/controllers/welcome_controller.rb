@@ -140,8 +140,8 @@ class WelcomeController < ApplicationController
         vertices[key] = Vertex.new(key, label, coords)
       end
     end
-    # rescale(vertices, svg_size)
-    # @vertices = vertices
+    rescale(vertices, svg_size)
+    @vertices = vertices
 
     edges_string = params[:edges].gsub(/\s+/, "")
     if edges_string
@@ -407,44 +407,20 @@ class WelcomeController < ApplicationController
               coords[j][2],
             ]
           end
-          p tetrahedron.vertices[2].coords
-          p tetrahedron.vertices[0].coords
-          p tetrahedron.vertices[1].coords
-          p tetrahedron.vertices[3].coords
 
           # back-translation
           (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
-          p tetrahedron.vertices[2].coords
-          p tetrahedron.vertices[0].coords
-          p tetrahedron.vertices[1].coords
-          p tetrahedron.vertices[3].coords
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
           base_keys.each_with_index {|base_key, j|
-            p [j, tetrahedron.vertices[j].coords]
             vertices[base_key] = tetrahedron.vertices[j]
             vertices[base_key].make_edge_with(vertices[new_key], edges, true)
           }
-          p vertices["A"]
-          p vertices["B"]
-          p vertices["C"]
-          p vertices["D"]
         end
-        p vertices["A"]
-        p vertices["B"]
-        p vertices["C"]
-        p vertices["D"]
       end
-      p vertices["A"]
-      p vertices["B"]
-      p vertices["C"]
-      p vertices["D"]
     end
-    p vertices["A"]
-    p vertices["B"]
-    p vertices["C"]
-    p vertices["D"]
+    p edges
     rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
