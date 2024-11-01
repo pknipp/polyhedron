@@ -421,11 +421,11 @@ class WelcomeController < ApplicationController
           p tetrahedron.vertices[3].coords
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
-          vertices[new_key] = tetrahedron.vertices[3]
           p vertices["A"]
           p vertices["B"]
           p vertices["C"]
           p vertices["D"]
+          vertices[new_key] = tetrahedron.vertices[3]
           base_keys.each_with_index {|base_key, j|
             vertices[base_key].make_edge_with(vertices[new_key], edges, true)
             vertices[base_key] = tetrahedron.vertices[j]
