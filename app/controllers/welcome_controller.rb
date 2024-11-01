@@ -301,7 +301,6 @@ class WelcomeController < ApplicationController
           # rotation about z-axis
           coords = dup(tetrahedron.vertices)
           theta_z = Math.atan2(coords[1][1] - coords[0][1], coords[1][0] - coords[0][0])
-          p theta_z
           cos_z = Math.cos(theta_z)
           sin_z = Math.sin(theta_z)
           for j in 0..2
@@ -315,7 +314,6 @@ class WelcomeController < ApplicationController
           # rotation about y-axis
           coords = dup(tetrahedron.vertices)
           theta_y = Math.atan2(coords[1][2] - coords[0][2], coords[1][0] - coords[0][0])
-          p theta_y
           cos_y = Math.cos(theta_y)
           sin_y = Math.sin(theta_y)
           for j in 0..2
@@ -329,7 +327,6 @@ class WelcomeController < ApplicationController
           # rotation about x-axis
           coords = dup(tetrahedron.vertices)
           theta_x = Math.atan2(coords[2][2] - coords[0][2], coords[2][1] - coords[0][1])
-          p theta_x
           cos_x = Math.cos(theta_x)
           sin_x = Math.sin(theta_x)
           for j in 0..2
@@ -348,9 +345,9 @@ class WelcomeController < ApplicationController
           key0 = tetrahedron.vertices[0].key
           key1 = tetrahedron.vertices[1].key
           edge = edges[[key0, key1].sort]
-          if is_flat
-            edge.toggle_visilibility
-          end
+          # if is_flat
+            # edge.toggle_visilibility
+          # end
           ab = edge.length
 
           key0 = tetrahedron.vertices[0].key
@@ -372,12 +369,10 @@ class WelcomeController < ApplicationController
             # Determine whether tetrahedral base vertices are listed clockwise when viewed from above.
             coords = tetrahedron.vertices.map {|vertex| vertex.coords}
             cw = (coords[1][0] - coords[0][0]) * (coords[2][1] - coords[0][1]) > (coords[1][1] - coords[0][1]) * (coords[2][0] - coords[0][0])
-            p [dx, dy, Math.sqrt(dz_sq)]
             tetrahedron.vertices.push(Vertex.new(new_key, new_key, [dx, dy, Math.sqrt(dz_sq) * (cw ? 1 : -1)]))
           else
             dx = (ad * ad + ab * ab - bd * bd) / 2 / ab
             dy = -Math.sqrt(ad * ad - dx * dx)
-            p [dx, dy]
             vertices[new_key] = Vertex.new(new_key, new_key, [dx, dy, 0])
             tetrahedron.vertices.push(vertices[new_key])
           end
@@ -393,7 +388,6 @@ class WelcomeController < ApplicationController
               sin_x * coords[j][1] + cos_x * coords[j][2],
             ]
           end
-          p tetrahedron.vertices[3].coords
 
           # back-rotation about y-axis
           coords = dup(tetrahedron.vertices)
@@ -404,7 +398,6 @@ class WelcomeController < ApplicationController
               sin_y * coords[j][0] + cos_y * coords[j][2],
             ]
           end
-          p tetrahedron.vertices[3].coords
 
           # back-rotation about z-axis
           coords = dup(tetrahedron.vertices)
