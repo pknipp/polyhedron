@@ -347,6 +347,7 @@ class WelcomeController < ApplicationController
           key2 = tetrahedron.vertices[2].key
           edge = edges[[key0, key2].sort]
           ac = edge.length
+          p [key0, key1, key2, theta_z, theta_y, theta_z]
 
           if !is_flat
             dx = nil
@@ -372,8 +373,6 @@ class WelcomeController < ApplicationController
 
           # back-rotation about x-axis
           coords = dup(tetrahedron.vertices)
-          # cos_x = Math.cos(theta_x)
-          # sin_x = Math.sin(theta_x)
           for j in 0..3
             tetrahedron.vertices[j].coords = [
               coords[j][0],
