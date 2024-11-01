@@ -421,6 +421,9 @@ class WelcomeController < ApplicationController
       end
     end
     rescale(vertices, svg_size)
+    puts "vertices"
+    p vertices
+    puts "edges"
     p edges
     @vertices = vertices
     @edges = edges
