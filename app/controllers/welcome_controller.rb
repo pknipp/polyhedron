@@ -264,7 +264,7 @@ class WelcomeController < ApplicationController
           if edge.nil?
             edge = vertices[base_keys[0]].make_edge_with(vertices[base_keys[1]], edges, true)
           else
-            edge.toggle_visilibility
+            edge.toggle_visibility
           end
         else
           if vertices.has_key?(new_key)
