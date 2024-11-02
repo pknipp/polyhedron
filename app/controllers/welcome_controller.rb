@@ -403,6 +403,8 @@ class WelcomeController < ApplicationController
 
           # back-translation
           (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
+          p [tetrahedron.vertices.coords]
+          p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
@@ -413,13 +415,13 @@ class WelcomeController < ApplicationController
             edges[[base_keys[0], base_keys[1]].sort].toggle_visilibility
             edges[[base_keys[2], new_key].sort].toggle_visilibility
           end
-          p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
+          # p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
         end
         p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
       end
-      p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
+      # p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
     end
-    p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
+    # p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
     rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
