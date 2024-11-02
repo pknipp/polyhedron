@@ -240,9 +240,9 @@ class WelcomeController < ApplicationController
         return render :error
       end
       details_array = details_string[1..-2].split("),(")
-      details_array.each_with_index do |tetrahedron_string, i|
+      details_array.each_with_index do |detail_string, i|
         tetrahedron = Tetrahedron.new([])
-        tetrahedron_array = tetrahedron_string.split(",")
+        tetrahedron_array = detail_string.split(",")
         is_edge = tetrahedron_array.length == 2
         is_flat = tetrahedron_array.length == 6
         is_tetrahedron = tetrahedron_array.length == 7
