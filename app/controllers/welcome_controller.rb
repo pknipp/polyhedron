@@ -242,15 +242,15 @@ class WelcomeController < ApplicationController
       details_array = details_string[1..-2].split("),(")
       details_array.each_with_index do |detail_string, i|
         tetrahedron = Tetrahedron.new([])
-        tetrahedron_array = detail_string.split(",")
-        is_edge = tetrahedron_array.length == 2
-        is_flat = tetrahedron_array.length == 6
-        is_tetrahedron = tetrahedron_array.length == 7
+        detail_array = detail_string.split(",")
+        is_edge = detail_array.length == 2
+        is_flat = detail_array.length == 6
+        is_tetrahedron = detail_array.length == 7
         if !(is_edge || is_flat || is_tetrahedron)
-          @error = "The " + i.to_s + "-th element of the path's array should have 2, 6, or 7 elements, not " + tetrahedron_array.length.to_s + "."
+          @error = "The " + i.to_s + "-th element of the path's array should have 2, 6, or 7 elements, not " + detail_array.length.to_s + "."
           return render :error
         end
-        base_keys = tetrahedron_array.first(is_edge ? 2 : 4)
+        base_keys = detail_array.first(is_edge ? 2 : 4)
         new_key = is_edge ? nil : base_keys.pop
         base_keys.each {|key|
           if !vertices.has_key?(key)
@@ -271,7 +271,7 @@ class WelcomeController < ApplicationController
             @error = "The label " + new_key + " is used to specify more than one vertex in this polyhedron."
             return render :error
           end
-          edge_length_strings = tetrahedron_array.last(is_flat ? 2 : 3)
+          edge_length_strings = detail_array.last(is_flat ? 2 : 3)
           tetrahedron_vertices = []
           edge_lengths = []
           base_keys.each_with_index {|key, j|
