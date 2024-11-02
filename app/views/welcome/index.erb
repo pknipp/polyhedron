@@ -26,15 +26,15 @@
         <b>Instructions:</b> There are two different ways that the user can create a structure for rendering.  The first ("polyhedron") uses the <a href="https://en.wikipedia.org/wiki/Solution_of_triangles#Three_sides_given_(SSS)">side-side-side</a> method for solving triangles, whereas the second ("stick figure") simply uses Cartesian coordinates.  Examples for each may be copy-and-pasted from below.
         <ol>
           <li>
-            <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>, ie any three dimensional shape consisting of faces that are <a href="https://en.wikipedia.org/wiki/Polygon">polygons</a> and edges that are straight <a href="https://en.wikipedia.org/wiki/Line_segment">line segments.</a>
-            <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose <a href="https://en.wikipedia.org/wiki/Face_(geometry)">faces</a> are triangular:<br/>
+            <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>, ie any three dimensional shape consisting of faces that are <a href="https://en.wikipedia.org/wiki/Polygon">polygons</a> and edges that are straight <a href="https://en.wikipedia.org/wiki/Line_segment">line segments.</a>  (The easiest polyhedra to generate via this approach are <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose <a href="https://en.wikipedia.org/wiki/Face_(geometry)">faces</a> are triangular.)
+            <br/>
             After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/&lt;triangle&gt;/&lt;details&gt;</tt>, where the <tt>&lt;triangle&gt;</tt> path fragment describes the shape's foundational triangle, and the <tt>&lt;details&gt;</tt> path fragment describes each step in expanding this shape, as follows
             <ul>
               <li>
-                <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>.  The first three items are vertex names, and the last three are lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
+                <tt>&lt;triangle&gt;</tt>: This is a six-item comma-separated list that characterizes the first triangular face of the <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>.  The first three items are vertex names, and the last three are lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
               </li>
               <li>
-                <b>Second fragment (optional):</b>  This is a comma-separated list of parenthesis-enclosed lists, each containing either seven, six, or two items, described below.
+                <tt>&lt;details&gt; (optional):  This is a comma-separated list of parenthesis-enclosed lists, each containing either seven, six, or two items, described below.
                 <ul>
                   <li> seven:
                     <br/> This characterizes a tetrahedron that defines a vertex added to the existing polyhedron.  The list's first three items specify the names of existing polyhedron vertices (tetrahedron "base"), and the fourth names the vertex added here (tetrahedron "apex"). The last three items are the lengths of the three edges that connect the tetrahedron's base vertices with the apex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the apex is <i>above</i> the triangle formed by the existing vertices when the existing ones are viewed clockwise.
