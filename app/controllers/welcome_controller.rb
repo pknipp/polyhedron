@@ -275,7 +275,7 @@ class WelcomeController < ApplicationController
           tetrahedron_vertices = []
           edge_lengths = []
           base_keys.each_with_index {|key, j|
-            tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords))
+            tetrahedron_vertices.push(Vertex.new(key, key, vertices[key].coords.dup))
             if !is_flat || j < 2
               length_string = edge_length_strings[j]
               length_attempt = Float(length_string.sub('*', '.')) rescue nil
