@@ -28,14 +28,7 @@ class WelcomeController < ApplicationController
     attr_accessor :render
     attr_accessor :length
     def initialize(end0, end1, render)
-      zeroth_end = end0
-      first_end = end1
-      if zeroth_end.key > first_end.key
-        swap = zeroth_end
-        zeroth_end = end1
-        first_end = swap
-      end
-      @ends = [zeroth_end, first_end]
+      @ends = end0 < end1 ? [end0, end1] : [end1, end0]
       @render = render
       total_distance = 0
       for i in 0..2 do
