@@ -23,7 +23,7 @@
       </div>
       <br/>
       <div>
-        <b>Instructions:</b> There are two different ways that the user can create a structure for rendering.  The first uses the <a href="https://en.wikipedia.org/wiki/Solution_of_triangles#Three_sides_given_(SSS)">side-side-side</a> method for solving triangles, whereas the second simply uses Cartesian coordinates.  Examples for each may be copy-and-pasted from below.
+        <b>Instructions:</b> There are two different ways that the user can create a structure for rendering.  The first ("polyhedron") uses the <a href="https://en.wikipedia.org/wiki/Solution_of_triangles#Three_sides_given_(SSS)">side-side-side</a> method for solving triangles, whereas the second ("stick figure") simply uses Cartesian coordinates.  Examples for each may be copy-and-pasted from below.
         <ol>
           <li>
             <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>, ie any three dimensional shape consisting of faces that are <a href="https://en.wikipedia.org/wiki/Polygon">polygons</a> and edges that are straight <a href="https://en.wikipedia.org/wiki/Line_segment">line segments.</a>
@@ -47,11 +47,12 @@
                     <br/>
                     This toggles on or off the rendering of any edge.  Each item in this is the name of an existing vertex.
                   </li>
+                </ul>
               </li>
             </ul>
           </li>
           <li>
-            collection of vertices and edges (aka "stick figure"):<br/>
+            "stick figure":<br/>
             After <tt>...herokuapp.com</tt> above the user should type <tt>/points/&lt;vertices&gt;/&lt;edges&gt;</tt>, where the <tt>&lt;vertices&gt;</tt> path fragment describes the vertices of the shape, and the <tt>&lt;edges&gt;</tt> path fragment specifies which pairs of vertices should be connected by a line segment, as follows
             <ul>
               <li>
