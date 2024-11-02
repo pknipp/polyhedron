@@ -239,8 +239,8 @@ class WelcomeController < ApplicationController
         @error = "The second path fragment [" + details_string + "] should end with a close paren, not with " + last_char + "."
         return render :error
       end
-      tetrahedra_array = details_string[1..-2].split("),(")
-      tetrahedra_array.each_with_index do |tetrahedron_string, i|
+      details_array = details_string[1..-2].split("),(")
+      details_array.each_with_index do |tetrahedron_string, i|
         tetrahedron = Tetrahedron.new([])
         tetrahedron_array = tetrahedron_string.split(",")
         is_edge = tetrahedron_array.length == 2
