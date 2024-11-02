@@ -241,6 +241,7 @@ class WelcomeController < ApplicationController
       end
       tetrahedra_array = tetrahedra_string[1..-2].split("),(")
       tetrahedra_array.each_with_index do |tetrahedron_string, i|
+        puts i
         tetrahedron = Tetrahedron.new([])
         tetrahedron_array = tetrahedron_string.split(",")
         is_edge = tetrahedron_array.length == 2
