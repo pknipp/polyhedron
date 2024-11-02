@@ -241,7 +241,6 @@ class WelcomeController < ApplicationController
       end
       tetrahedra_array = tetrahedra_string[1..-2].split("),(")
       tetrahedra_array.each_with_index do |tetrahedron_string, i|
-        puts i
         tetrahedron = Tetrahedron.new([])
         tetrahedron_array = tetrahedron_string.split(",")
         is_edge = tetrahedron_array.length == 2
@@ -404,7 +403,7 @@ class WelcomeController < ApplicationController
 
           # back-translation
           (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
-          p [tetrahedron.vertices[0].coords, tetrahedron.vertices[1].coords, tetrahedron.vertices[2].coords, tetrahedron.vertices[3].coords]
+          p [tetrahedron.vertices[1].coords, tetrahedron.vertices[2].coords, tetrahedron.vertices[0].coords, tetrahedron.vertices[3].coords]
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
