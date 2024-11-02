@@ -225,21 +225,21 @@ class WelcomeController < ApplicationController
     vertices[triangle_keys[1]].make_edge_with(vertices[first_key], edges, true)
     vertices[triangle_keys[0]].make_edge_with(vertices[first_key], edges, true)
 
-    tetrahedra_string = params[:details]
-    if tetrahedra_string
+    details_string = params[:details]
+    if details_string
       # parse the tetrahedra
-      tetrahedra_string = tetrahedra_string.gsub(/\s+/, "")
-      first_char = tetrahedra_string[0]
+      details_string = details_string.gsub(/\s+/, "")
+      first_char = details_string[0]
       if first_char != "("
-        @error = "The second path fragment (" + tetrahedra_string + ") should start with an open paren, not with " + first_char
+        @error = "The second path fragment (" + details_string + ") should start with an open paren, not with " + first_char
         return render :error
       end
-      last_char = tetrahedra_string[-1]
+      last_char = details_string[-1]
       if last_char != ")"
-        @error = "The second path fragment [" + tetrahedra_string + "] should end with a close paren, not with " + last_char + "."
+        @error = "The second path fragment [" + details_string + "] should end with a close paren, not with " + last_char + "."
         return render :error
       end
-      tetrahedra_array = tetrahedra_string[1..-2].split("),(")
+      tetrahedra_array = details_string[1..-2].split("),(")
       tetrahedra_array.each_with_index do |tetrahedron_string, i|
         tetrahedron = Tetrahedron.new([])
         tetrahedron_array = tetrahedron_string.split(",")

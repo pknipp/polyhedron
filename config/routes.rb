@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get '/points/:vertices', to: 'welcome#points'
   get '/points/:vertices/:edges', to: 'welcome#points'
   get '/edges/:triangle', to: 'welcome#edges'
-  get '/edges/:triangle/:tetrahedra', to: 'welcome#edges'
+  get '/edges/:triangle/:details', to: 'welcome#edges'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
