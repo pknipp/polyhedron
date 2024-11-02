@@ -45,7 +45,7 @@ class WelcomeController < ApplicationController
       end
       @length = Math.sqrt(total_distance)
     end
-    def toggle_visilibility
+    def toggle_visibility
       @render = !render
     end
   end
@@ -347,7 +347,6 @@ class WelcomeController < ApplicationController
           key2 = tetrahedron.vertices[2].key
           edge = edges[[key0, key2].sort]
           ac = edge.length
-          # p [key0, key1, key2, new_key, theta_z, theta_y, theta_z]
 
           if !is_flat
             dx = nil
@@ -403,7 +402,6 @@ class WelcomeController < ApplicationController
 
           # back-translation
           (0..2).each {|k| tetrahedron.vertices.each {|vertex| vertex.coords[k] += origin[k]}}
-          p [tetrahedron.vertices[1].coords, tetrahedron.vertices[2].coords, tetrahedron.vertices[0].coords, tetrahedron.vertices[3].coords]
 
           # Insert one entry to vertices hashmap and three to edges hashmap.
           vertices[new_key] = tetrahedron.vertices[3]
@@ -411,16 +409,12 @@ class WelcomeController < ApplicationController
             vertices[base_key].make_edge_with(vertices[new_key], edges, true)
           }
           if is_flat
-            edges[[base_keys[0], base_keys[1]].sort].toggle_visilibility
-            edges[[base_keys[2], new_key].sort].toggle_visilibility
+            edges[[base_keys[0], base_keys[1]].sort].toggle_visibility
+            edges[[base_keys[2], new_key].sort].toggle_visibility
           end
-          # p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
         end
-        p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
       end
-      # p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
     end
-    # p [vertices["A"].coords, vertices["B"].coords, vertices["C"].coords, vertices["D"].coords]
     rescale(vertices, svg_size)
     @vertices = vertices
     @edges = edges
