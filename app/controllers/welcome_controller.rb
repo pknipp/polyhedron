@@ -172,7 +172,7 @@ class WelcomeController < ApplicationController
     render 'show'
   end
 
-  # GET /:triangle/:tetrahedra
+  # GET /:triangle/:details
   def edges
     svg_size = 900
     @size = svg_size
@@ -225,7 +225,7 @@ class WelcomeController < ApplicationController
     vertices[triangle_keys[1]].make_edge_with(vertices[first_key], edges, true)
     vertices[triangle_keys[0]].make_edge_with(vertices[first_key], edges, true)
 
-    tetrahedra_string = params[:tetrahedra]
+    tetrahedra_string = params[:details]
     if tetrahedra_string
       # parse the tetrahedra
       tetrahedra_string = tetrahedra_string.gsub(/\s+/, "")
