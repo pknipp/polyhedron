@@ -26,14 +26,26 @@
         <b>Instructions:</b> There are two different ways that the user can create a structure for rendering.  A example for each may be copy-and-pasted from below.
         <ol>
           <li>
+            <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>, ie any three dimensional shape consisting of faces that are <a href="https://en.wikipedia.org/wiki/Polygon">polygons</a> and edges that are straight <a href="https://en.wikipedia.org/wiki/Line_segment">line segments.</a>
             <a href="https://en.wikipedia.org/wiki/Simplicial_polytope">simplicial polyhedron</a>, ie any 3-dimensional shape whose <a href="https://en.wikipedia.org/wiki/Face_(geometry)">faces</a> are triangular:<br/>
-            After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/&lt;triangle&gt;/&lt;tetrahedra&gt;</tt>, where the <tt>&lt;triangle&gt;</tt> path fragment describes the first triangle, and the <tt>&lt;tetrahedra&gt;</tt> path fragment describes the <a href="https://en.wikipedia.org/wiki/Tetrahedron">tetrahedra</a> that are built atop that triangle, as follows
+            After <tt>...herokuapp.com</tt> above the user should type <tt>/edges/&lt;triangle&gt;/&lt;details&gt;</tt>, where the <tt>&lt;triangle&gt;</tt> path fragment describes the shape's foundational triangle, and the <tt>&lt;details&gt;</tt> path fragment describes each step in expanding this shape, as follows
             <ul>
               <li>
                 <b>First fragment:</b> This is a six-item comma-separated list that characterizes the first triangular face of the <a href="https://en.wikipedia.org/wiki/Polyhedron">polyhedron</a>.  The first three items are vertex names, and the last three are lengths of the edges connecting the 1st and 2nd vertices, the 2nd and 3rd vertices, and the 1st and 3rd vertices respectively.
               </li>
               <li>
-                <b>Second fragment (optional):</b>  This is a comma-separated list of seven-element tuples, each of which characterizes a tetrahedron that defines a vertex added to this polyhedron.  Each of the tuple's first three items specifies the name an existing vertex of the polyhedron, and the fourth names the vertex added here. The last three items are the lengths of the three edges that connect the existing vertices with the added vertex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the added vertex is <i>above</i> the triangle formed by the existing vertices, when the existing ones are viewed clockwise.
+                <b>Second fragment (optional):</b>  This is a comma-separated list of parenthesis-enclosed lists, each containing either seven, six, or two items, described below.
+                <ul>
+                  <li> seven:
+                    <br/> This characterizes a tetrahedron that defines a vertex added to the existing polyhedron.  The list's first three items specify the names of existing polyhedron vertices (tetrahedron "base"), and the fourth names the vertex added here (tetrahedron "apex"). The last three items are the lengths of the three edges that connect the tetrahedron's base vertices with the apex.  Note that there are two such tetrahedra defined by these numbers.  The convention here is to take the tetrahedron such that the apex is <i>above</i> the triangle formed by the existing vertices when the existing ones are viewed clockwise.
+                  </li> six:
+                    <br/>
+                    This increases by one the number of sides of an existing polygonal face.  The first three items are the names of three existing non-collinear vertices, and the fourth item is the name of a new vertex which is in the same plane as the former three.  The next two items are lengths to the new vertex, the first from the first vertex in the trio of existing ones and the second from the second.
+                  <li>
+                  <li> two:
+                    <br/>
+                    This toggles on or off the rendering of any edge.  Each item in this is the name of an existing vertex.
+                  </li>
               </li>
             </ul>
           </li>
@@ -65,11 +77,33 @@
         <b>Examples:</b>
         <ol>
           <li>
-            <b>polyhedron:</b> Type <tt>...heroku.com/edges/A,C,B,1,1,1*414/(A,C,B,D,1*414,1,1*414),(A,D,B,E,1*732,1,1*732),(A,E,B,F,2,1,2),(A,F,B,G,2*24,1,2*24),(A,G,B,H,2*45,1,2*45),(A,H,B,I,2*65,1,2*65),(A,I,B,J,2*83,1,2*83),(A,J,B,K,3,1,3),(A,K,B,L,3*16,1,3*16),(A,L,B,M,3*32,1,3*32),(A,M,B,N,3*46,1,3*46),(A,N,B,O,3*61,1,3*61),(A,O,B,P,3*74,1,3*74),(A,P,B,Q,3*87,1,3*87),(A,Q,B,R,4,1,4),(A,R,B,S,4*12,1,4*12),(A,S,B,T,4*24,1,4*24)</tt> generates the shell of a 16-chambered <a href="https://earthsky.org/human-world/nautilus-shell-fibonacci-logarithmic-spiral-golden-spiral/">Nautilus</a> whose outline coincides with the <a href="https://en.wikipedia.org/wiki/Spiral_of_Theodorus">spiral of Theodorus</a>.  (The nature of this shape will become more apparent when you drag it in order to gain a sideways perspective.)  Note that the non-1 numbers in this url are the square roots of the integers from 2 to 17, inclusive.
+            <b>polyhedra:</b>
+            <ul>
+              <li>
+                <a href="https://en.wikipedia.org/wiki/Tetrahedron">tetrahedron</a>:
+                <br/>
+                <tt>...heroku.com/edges/A,B,C,1,1,1/(A,B,C,D,1,1,1)</tt>
+              </li>
+              <li>
+                <a href="https://en.wikipedia.org/wiki/Pyramid_(geometry)">pyramid:</a>
+                <br/>
+                <tt>...heroku/edges/A,B,C,1,1,1*414/(C,A,B,D,1,1),(A,B,C,E,1,1,1),(D,E)</tt>
+              </li>
+              <li>
+                <a href="https://en.wikipedia.org/wiki/Icosahedron">icosahedron:</a>
+                <br/>
+                <tt>...heroku.com/edges/A,B,C,1,1,1/(A,B,C,D,1,1,1*618),(C,D),(B,C,A,E,1,1,1*618),(A,E),(C,A,B,F,1,1,1*618),(B,F),(D,B,A,G,1,1,1*618),(A,G),(G,E),(E,C,B,H,1,1,1*618),(B,H),(H,F),(F,A,C,I,1,1,1*618),(C,I),(I,D),(D,G,B,J,1,1,1*618),(B,J),(J,I),(G,E,B,K,1,1,1*618),(B,K),(J,K),(H,K),(H,F,C,L,1,1,1*618),(C,L),(K,L),(I,L),(J,L)</tt>
+              </li>
+              <li>
+                <a href="https://earthsky.org/human-world/nautilus-shell-fibonacci-logarithmic-spiral-golden-spiral/">Nautilus</a> shell whose outline coincides with <a href="https://en.wikipedia.org/wiki/Spiral_of_Theodorus">spiral of Theodorus:</a>
+                <br/>
+                <tt>...heroku.com/edges/A,C,B,1,1,1*414/(A,C,B,D,1*414,1,1*414),(A,D,B,E,1*732,1,1*732),(A,E,B,F,2,1,2),(A,F,B,G,2*24,1,2*24),(A,G,B,H,2*45,1,2*45),(A,H,B,I,2*65,1,2*65),(A,I,B,J,2*83,1,2*83),(A,J,B,K,3,1,3),(A,K,B,L,3*16,1,3*16),(A,L,B,M,3*32,1,3*32),(A,M,B,N,3*46,1,3*46),(A,N,B,O,3*61,1,3*61),(A,O,B,P,3*74,1,3*74),(A,P,B,Q,3*87,1,3*87),(A,Q,B,R,4,1,4),(A,R,B,S,4*12,1,4*12),(A,S,B,T,4*24,1,4*24)</tt>
+                <br/>
+                Note that the non-unit numbers in this url are the square roots of the integers from 2 to 17, inclusive.
+              </li>
           </li>
-          <li> <b>platonic solid:</b> Type <tt>...heroku.com/edges/A,B,C,1,1,1/(A,B,C,D,1,1,1*618),(C,D),(B,C,A,E,1,1,1*618),(A,E),(C,A,B,F,1,1,1*618),(B,F),(D,B,A,G,1,1,1*618),(A,G),(G,E),(E,C,B,H,1,1,1*618),(B,H),(H,F),(F,A,C,I,1,1,1*618),(C,I),(I,D),(D,G,B,J,1,1,1*618),(B,J),(J,I),(G,E,B,K,1,1,1*618),(B,K),(J,K),(H,K),(H,F,C,L,1,1,1*618),(C,L),(K,L),(I,L),(J,L)</tt> in order to get a <a href="https://en.wikipedia.org/wiki/Icosahedron">regular icosahedron</a>.
           <li>
-            <b>stick figure:</b> Type <tt>...heroku.com/points/(C,0,0,0),(H1,H,1,1,1),(H2,H,-1,-1,1),(H3,H,-1,1,-1),(H4,H,1,-1,-1)/(C,H1),(C,H2),(C,H3),(C,H4)</tt> in order to get a molecular model for <a href="https://en.wikipedia.org/wiki/Methane">methane</a> (CH<sub>4</sub>).
+            <b>stick figure</b> (<a href="https://en.wikipedia.org/wiki/Methane">methane</a>:</b> <tt>...heroku.com/points/(C,0,0,0),(H1,H,1,1,1),(H2,H,-1,-1,1),(H3,H,-1,1,-1),(H4,H,1,-1,-1)/(C,H1),(C,H2),(C,H3),(C,H4)</tt>
           </li>
       </div>
     </div>

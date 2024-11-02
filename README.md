@@ -9,7 +9,7 @@
 1. Create three buttons to provide user with coarse control over drag-sensitivity.
 1. Replace each 3-button array with a slider that utilizes throttling.
 1. Improve handling of perspective (and change example to an asterism).</li>
-1. Enable the creation of non-triangular faces.
+1. Enable the creation of faces that are not convex.
 
 # ruby-getting-started
 
