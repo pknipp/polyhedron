@@ -90,6 +90,7 @@
             <b>polyhedra:</b>
             <ul>
               <li>
+                <button id="tetrahedron">render</button>
                 <a href="https://en.wikipedia.org/wiki/Tetrahedron">tetrahedron</a>:
                 <br/>
                 <tt>.../edges/A,B,C,1,1,1/(A,B,C,D,1,1,1)</tt>
@@ -119,5 +120,23 @@
           </li>
       </div>
     </div>
+    <script>
+      const buttons = Array.from(document.getElementsByTagName("button");
+      const setExample = example => {
+        const prePath = "https://polyhedron-648b37a48f42.herokuapp.com/";
+        const postPaths = {
+          "tetrahedron": "edges/A,B,C,1,1,1/(A,B,C,D,1,1,1)",
+          "pyramid": "",
+          "icosahedron": "",
+          "nautilus": "",
+          "methane": "",
+        };
+        window.location.href = `${prepath}${postPaths[example]`;
+      };
+      buttons.forEach(button => {
+        const example = button.getAttribute("id");
+        button.addEventListener("click", e => setExample(path, example));
+      });
+    </script>
   </body>
 </html>
